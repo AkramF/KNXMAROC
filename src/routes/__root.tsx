@@ -4,15 +4,21 @@ import type { ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { ADRESSE_UNE_LIGNE, COORDONNEES, LIEN_EMAIL } from "../lib/coordonnees";
 
+// À remplacer par le domaine réel une fois acheté, si différent.
+const URL_SITE = "https://knxmaroc.ma";
+
 const TITRE = "KNX MAROC — intégrateur KNX certifié à Rabat";
+// 155 caractères : au-delà, Google tronque la description dans les résultats.
 const DESCRIPTION =
-  "Bureau d'études et intégrateur KNX au Maroc. Éclairage, stores, chauffage, climatisation, sécurité, audio et supervision sur un seul bus, pour la villa, l'hôtellerie et le tertiaire.";
+  "Bureau d'études et intégrateur KNX au Maroc. Éclairage, stores, climatisation, sécurité et supervision sur un seul bus, pour la villa, l'hôtel et le tertiaire.";
 
 const ficheEntreprise = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "KNX MAROC",
   description: DESCRIPTION,
+  url: URL_SITE,
+  image: `${URL_SITE}/assets/brand/knx-maroc-og.png`,
   telephone: COORDONNEES.telephone.affichage,
   email: COORDONNEES.email,
   areaServed: "MA",
@@ -86,16 +92,18 @@ export const Route = createRootRoute({
       { property: "og:title", content: TITRE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: URL_SITE },
       { property: "og:locale", content: "fr_MA" },
       { property: "og:site_name", content: "KNX MAROC" },
-      { property: "og:image", content: "/assets/brand/knx-maroc-og.png" },
+      { property: "og:image", content: `${URL_SITE}/assets/brand/knx-maroc-og.png` },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "/assets/brand/knx-maroc-og.png" },
+      { name: "twitter:image", content: `${URL_SITE}/assets/brand/knx-maroc-og.png` },
       { name: "geo.region", content: "MA-RAB" },
       { name: "geo.placename", content: ADRESSE_UNE_LIGNE },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: URL_SITE },
       { rel: "icon", href: "/assets/brand/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {

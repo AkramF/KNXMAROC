@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { COORDONNEES, LIEN_TELEPHONE } from "../../lib/coordonnees";
 import { Wordmark } from "../brand/logo";
@@ -207,43 +207,137 @@ const DOMAINES = [
   },
 ];
 
+const BOUTON_RAIL =
+  "inline-flex h-11 w-11 items-center justify-center border border-rule-strong font-mono text-sm text-ink transition-colors duration-200 hover:border-blueprint hover:text-blueprint disabled:pointer-events-none disabled:opacity-30 motion-reduce:transition-none";
+
 export function Solutions() {
+  const railRef = useRef<HTMLUListElement>(null);
+  const [progression, setProgression] = useState(0);
+  const [enButee, setEnButee] = useState<{ debut: boolean; fin: boolean }>({
+    debut: true,
+    fin: false,
+  });
+
+  const lireScroll = () => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const parcourable = rail.scrollWidth - rail.clientWidth;
+    const ratio = parcourable > 0 ? rail.scrollLeft / parcourable : 0;
+    setProgression(ratio);
+    setEnButee({ debut: rail.scrollLeft < 4, fin: rail.scrollLeft > parcourable - 4 });
+  };
+
+  useEffect(() => {
+    lireScroll();
+    window.addEventListener("resize", lireScroll);
+    return () => window.removeEventListener("resize", lireScroll);
+  }, []);
+
+  const defiler = (direction: 1 | -1) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    rail.scrollBy({ left: direction * rail.clientWidth * 0.85, behavior: "smooth" });
+  };
+
   return (
     <section className="border-t border-rule bg-paper" id="solutions">
-      <div className="mx-auto w-full max-w-[1400px] px-5 pt-24 md:px-10 md:pt-32">
-        <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-blueprint">
-          Six domaines, un seul projet
-        </p>
-        <h2 className="mt-5 max-w-[16ch] font-display text-4xl font-semibold leading-none tracking-tighter text-ink md:text-6xl">
-          Ce que nous mettons sur le bus.
-        </h2>
+      <div className="mx-auto flex w-full max-w-[1400px] items-end justify-between gap-6 px-5 pt-24 md:px-10 md:pt-32">
+        <div>
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-blueprint">
+            Six domaines, un seul projet
+          </p>
+          <h2 className="mt-5 max-w-[16ch] font-display text-4xl font-semibold leading-none tracking-tighter text-ink md:text-6xl">
+            Ce que nous mettons sur le bus.
+          </h2>
+        </div>
+
+        {/* Une seule chose défile au clavier ou à la molette sur cette page :
+         * sans ces flèches, rien ne signale que la liste continue hors champ. */}
+        <div className="hidden shrink-0 gap-2 md:flex">
+          <button
+            aria-label="Domaine précédent"
+            className={BOUTON_RAIL}
+            disabled={enButee.debut}
+            onClick={() => defiler(-1)}
+            type="button"
+          >
+            ‹
+          </button>
+          <button
+            aria-label="Domaine suivant"
+            className={BOUTON_RAIL}
+            disabled={enButee.fin}
+            onClick={() => defiler(1)}
+            type="button"
+          >
+            ›
+          </button>
+        </div>
       </div>
 
-      {/* Un rail défilable au clavier doit être focusable, sinon son contenu
-       * est inatteignable sans souris (WCAG 2.1.1). */}
-      <ul
-        aria-label="Les six domaines"
-        className="mt-14 flex snap-x snap-mandatory gap-px overflow-x-auto bg-rule pb-24 md:pb-32"
-        tabIndex={0}
-      >
-        {DOMAINES.map((domaine) => (
-          <li
-            className="flex min-h-[24rem] w-[19rem] shrink-0 snap-start flex-col bg-paper p-8 first:ml-5 last:mr-5 md:w-[23rem] md:first:ml-10 md:last:mr-10"
-            key={domaine.label}
-          >
-            <img alt="" className="h-12 w-12" decoding="async" loading="lazy" src={domaine.icon} />
-            {/* Le nom du domaine passe avant sa description : on ne lit pas le
-             * détail de l'éclairage sans savoir qu'il s'agit d'éclairage. */}
-            <h3 className="mt-8 font-display text-xl font-normal leading-tight text-ink">
-              {domaine.label}
-            </h3>
-            <span aria-hidden="true" className="mt-3 block h-px w-10 bg-blueprint" />
-            <p className="mt-5 max-w-[34ch] text-base leading-relaxed text-graphite">
-              {domaine.body}
-            </p>
-          </li>
-        ))}
-      </ul>
+      <div className="relative mt-14">
+        {/* Un rail défilable au clavier doit être focusable, sinon son contenu
+         * est inatteignable sans souris (WCAG 2.1.1). */}
+        <ul
+          aria-label="Les six domaines"
+          className="flex snap-x snap-mandatory gap-px overflow-x-auto bg-rule pb-16 md:pb-20"
+          onScroll={lireScroll}
+          ref={railRef}
+          tabIndex={0}
+        >
+          {DOMAINES.map((domaine, index) => (
+            <li
+              className="flex min-h-[24rem] w-[19rem] shrink-0 snap-start flex-col bg-paper p-8 first:ml-5 last:mr-5 md:w-[23rem] md:first:ml-10 md:last:mr-10"
+              key={domaine.label}
+            >
+              <div className="flex items-start justify-between">
+                <img
+                  alt=""
+                  className="h-12 w-12"
+                  decoding="async"
+                  loading="lazy"
+                  src={domaine.icon}
+                />
+                {/* Le numéro est mérité ici : la section promet six domaines et
+                 * ce compte aide à s'orienter dans un rail qui défile hors
+                 * champ, contrairement aux quatre segments plus bas. */}
+                <span className="font-mono text-[0.72rem] tracking-[0.14em] text-blueprint">
+                  {String(index + 1).padStart(2, "0")} / 06
+                </span>
+              </div>
+              {/* Le nom du domaine passe avant sa description : on ne lit pas
+               * le détail de l'éclairage sans savoir qu'il s'agit d'éclairage. */}
+              <h3 className="mt-8 font-display text-xl font-normal leading-tight text-ink">
+                {domaine.label}
+              </h3>
+              <span aria-hidden="true" className="mt-3 block h-px w-10 bg-blueprint" />
+              <p className="mt-5 max-w-[34ch] text-base leading-relaxed text-graphite">
+                {domaine.body}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        {/* Fondu indiquant qu'il reste du contenu hors champ à droite. Il
+         * s'efface lui-même une fois la fin du rail atteinte. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 hidden w-24 bg-gradient-to-l from-paper to-transparent transition-opacity duration-300 md:block"
+          style={{ opacity: enButee.fin ? 0 : 1 }}
+        />
+      </div>
+
+      {/* Filet de progression : même vocabulaire que la barre du héros, pour
+       * que le rail se lise comme une continuation du même système plutôt
+       * qu'un composant importé d'ailleurs. */}
+      <div className="mx-auto w-full max-w-[1400px] px-5 pb-24 md:px-10 md:pb-32" aria-hidden="true">
+        <div className="h-px bg-rule">
+          <div
+            className="h-px bg-blueprint transition-[width] duration-150 motion-reduce:transition-none"
+            style={{ width: `${Math.max(progression * 100, 100 / DOMAINES.length)}%` }}
+          />
+        </div>
+      </div>
     </section>
   );
 }
