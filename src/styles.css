@@ -1,0 +1,90 @@
+@import "tailwindcss" source(none);
+@source "../src";
+
+/* ---------------------------------------------------------------
+ * KNX MAROC — couche de marque.
+ * Palette et typographie verrouillées dans design-brief.md.
+ *
+ * La palette vient de la matière du métier : la chaux des enduits
+ * marocains, l'encre du dessin d'architecte, le bleu du plan. Le
+ * blueprint est le seul élément saturé de la page, ce qui lui permet
+ * de porter tous les états, focus et repères actifs sans concurrence.
+ * --------------------------------------------------------------- */
+@theme {
+  --color-chalk: #f2f2ef;
+  --color-paper: #ffffff;
+  --color-ink: #15181b;
+
+  /* Texte secondaire. Assombri depuis #6e7479, qui plafonnait à 4.22:1
+   * sur chalk — sous le seuil WCAG AA. Ici : 5.52:1 sur chalk,
+   * 6.19:1 sur paper. */
+  --color-graphite: #5c6266;
+
+  /* Filet décoratif entre blocs de contenu. */
+  --color-rule: #dfdfd9;
+
+  /* Bordure des contrôles (champs, boutons secondaires). WCAG 1.4.11
+   * exige 3:1 pour une limite de composant : 3.58:1 sur paper. */
+  --color-rule-strong: #82888e;
+
+  --color-blueprint: #2e4a7d;
+
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-chalk);
+    color: var(--color-ink);
+    color-scheme: light;
+    scroll-behavior: smooth;
+    /* Décale les ancres sous l'en-tête fixe (72 px + respiration). */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-chalk);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-blueprint);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-blueprint);
+    outline-offset: 3px;
+  }
+}
+
+/* Le lien d'évitement n'existe que pour le clavier : il sort de l'écran
+ * jusqu'à ce qu'il reçoive le focus. */
+.saut-contenu {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 100;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.saut-contenu:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
