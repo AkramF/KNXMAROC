@@ -219,7 +219,20 @@ const DOMAINES = [
 ];
 
 const BOUTON_RAIL =
-  "inline-flex h-11 w-11 items-center justify-center border border-rule-strong font-mono text-sm text-ink transition-colors duration-200 hover:border-blueprint hover:text-blueprint disabled:pointer-events-none disabled:opacity-30 motion-reduce:transition-none";
+  "inline-flex h-11 w-11 items-center justify-center border border-rule-strong font-mono text-base text-ink transition-colors duration-200 hover:border-blueprint hover:bg-blueprint hover:text-white disabled:pointer-events-none disabled:opacity-25 motion-reduce:transition-none";
+
+/* Le nœud carré des schémas KNX, repris du calque du héros pour que le rail
+ * se lise comme la suite du même dessin. */
+function NoeudBus() {
+  return (
+    <span
+      aria-hidden="true"
+      className="relative z-10 block h-3.5 w-3.5 shrink-0 border-2 border-blueprint bg-paper"
+    >
+      <span className="absolute inset-1 block bg-blueprint" />
+    </span>
+  );
+}
 
 export function Solutions() {
   const railRef = useRef<HTMLUListElement>(null);
@@ -286,43 +299,53 @@ export function Solutions() {
         </div>
       </div>
 
-      <div className="relative mt-14">
-        {/* Un rail défilable au clavier doit être focusable, sinon son contenu
-         * est inatteignable sans souris (WCAG 2.1.1). */}
+      {/* Le titre dit « sur le bus » : la section EST le bus. Une ligne
+       * continue traverse le rail, chaque domaine est un nœud dessus. Plus de
+       * cartes bordées toutes identiques — le conteneur par défaut ne disait
+       * rien du métier et laissait les deux tiers de sa surface vides. */}
+      <div className="relative mt-16">
         <ul
           aria-label="Les six domaines"
-          className="flex snap-x snap-mandatory gap-px overflow-x-auto bg-rule pb-16 md:pb-20"
+          className="flex snap-x snap-mandatory overflow-x-auto pb-16 md:pb-20"
           onScroll={lireScroll}
           ref={railRef}
           tabIndex={0}
         >
           {DOMAINES.map((domaine, index) => (
             <li
-              className="flex min-h-[24rem] w-[19rem] shrink-0 snap-start flex-col bg-paper p-8 first:ml-5 last:mr-5 md:w-[23rem] md:first:ml-10 md:last:mr-10"
+              className="relative w-[17rem] shrink-0 snap-start pr-10 first:ml-5 last:mr-5 md:w-[21rem] md:pr-14 md:first:ml-10 md:last:mr-10"
               key={domaine.label}
             >
-              <div className="flex items-start justify-between">
-                <img
-                  alt=""
-                  className="h-12 w-12"
-                  decoding="async"
-                  loading="lazy"
-                  src={domaine.icon}
-                />
-                {/* Le numéro est mérité ici : la section promet six domaines et
-                 * ce compte aide à s'orienter dans un rail qui défile hors
-                 * champ, contrairement aux quatre segments plus bas. */}
+              {/* Segment de bus. Il déborde à droite pour rejoindre le nœud
+               * suivant sans rupture ; le dernier s'arrête net sur son nœud. */}
+              <span
+                aria-hidden="true"
+                className={`absolute left-0 top-[7px] h-px bg-blueprint/35 ${
+                  index === DOMAINES.length - 1 ? "w-3.5" : "right-0"
+                }`}
+              />
+
+              <div className="relative flex items-center gap-4">
+                <NoeudBus />
                 <span className="font-mono text-[0.72rem] tracking-[0.14em] text-blueprint">
                   {String(index + 1).padStart(2, "0")} / 06
                 </span>
               </div>
+
+              <img
+                alt=""
+                className="mt-9 h-14 w-14"
+                decoding="async"
+                loading="lazy"
+                src={domaine.icon}
+              />
+
               {/* Le nom du domaine passe avant sa description : on ne lit pas
                * le détail de l'éclairage sans savoir qu'il s'agit d'éclairage. */}
-              <h3 className="mt-8 font-display text-xl font-normal leading-tight text-ink">
+              <h3 className="mt-7 font-display text-2xl font-normal leading-tight tracking-tight text-ink">
                 {domaine.label}
               </h3>
-              <span aria-hidden="true" className="mt-3 block h-px w-10 bg-blueprint" />
-              <p className="mt-5 max-w-[34ch] text-base leading-relaxed text-graphite">
+              <p className="mt-4 max-w-[32ch] text-base leading-relaxed text-graphite">
                 {domaine.body}
               </p>
             </li>
@@ -333,7 +356,7 @@ export function Solutions() {
          * s'efface lui-même une fois la fin du rail atteinte. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 hidden w-24 bg-gradient-to-l from-paper to-transparent transition-opacity duration-300 md:block"
+          className="pointer-events-none absolute inset-y-0 right-0 hidden w-28 bg-gradient-to-l from-paper to-transparent transition-opacity duration-300 md:block"
           style={{ opacity: enButee.fin ? 0 : 1 }}
         />
       </div>
