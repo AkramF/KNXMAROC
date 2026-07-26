@@ -34,7 +34,7 @@ const SCENES: ScrollScrubScene[] = [
     objectPosition: "92% 50%",
     poster: "/assets/world/clavier-poster.webp",
     scroll: 1.4,
-    tags: ["Standard ISO/IEC 14543-3", "Bus filaire inviolable"],
+    tags: ["Standard ISO/IEC 14543-3", "Bus filaire sécurisé"],
     title: "KNX: Le protocole domotique absolu.",
   },
   {
