@@ -7,11 +7,12 @@ import { EtudeCta } from "../cta/etude-cta";
 import { TitreRevele } from "../lumiere/titre-revele";
 
 const LIENS = [
-  { href: "#solutions", label: "Solutions" },
-  { href: "#segments", label: "Segments" },
-  { href: "#methode", label: "Méthode" },
-  { href: "#marques", label: "Marques" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#solutions", label: "Solutions" },
+  { href: "/#segments", label: "Segments" },
+  { href: "/#methode", label: "Méthode" },
+  { href: "/#marques", label: "Marques" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/blog", label: "Blog" },
 ];
 
 const LIEN_BUREAU =

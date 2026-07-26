@@ -66,8 +66,8 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
-                <a className={LIEN_PIED} href="#solutions">
-                  Audio Multiroom Haute-Fidélité
+                <a className={LIEN_PIED} href="/blog">
+                  Blog & Guides Domotiques
                 </a>
               </li>
             </ul>
