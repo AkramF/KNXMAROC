@@ -3,14 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 
-import { SchemaKnx, type SchemaId } from "./schema-knx";
 import "./scroll-scrub.css";
 
 export interface ScrollScrubScene {
   id: string;
   label: string;
-  /* Schéma de bus superposé à la scène. Omis, la scène reste nue. */
-  schema?: SchemaId;
   poster: string;
   mobilePoster?: string;
   clip: string;
@@ -574,7 +571,6 @@ export function ScrollScrub({
                     src={segment.poster}
                   />
                 </picture>
-                {segment.scene?.schema ? <SchemaKnx id={segment.scene.schema} /> : null}
               </figure>
             );
           })}

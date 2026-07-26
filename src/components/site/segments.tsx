@@ -112,21 +112,17 @@ export function Methode() {
           </div>
 
           {/* La numérotation est méritée ici : les étapes s'enchaînent
-           * réellement, et le filet vertical qui les relie est la même ligne
-           * de bus que partout ailleurs. */}
-          <ol className="relative mt-16">
-            <span aria-hidden="true" className="absolute bottom-8 left-[5px] top-3 w-px bg-rule" />
+           * réellement. Elle suffit à dire la séquence — le filet vertical et
+           * les nœuds qui la doublaient ont été retirés avec le reste du
+           * vocabulaire de lignes dessinées. */}
+          <ol className="mt-16">
             {ETAPES.map((etape, index) => (
               <li
-                className="revelation relative grid grid-cols-[3rem_1fr] gap-6 pb-12 last:pb-0"
+                className="revelation grid grid-cols-[3rem_1fr] gap-6 pb-12 last:pb-0"
                 key={etape.titre}
                 style={{ "--revelation-delai": `${index * 90}ms` } as React.CSSProperties}
               >
-                <span
-                  aria-hidden="true"
-                  className="absolute left-0 top-2.5 block h-3 w-3 border-2 border-blueprint bg-encre"
-                />
-                <span className="pt-1 pl-6 font-mono text-[0.72rem] tracking-[0.14em] text-blueprint">
+                <span className="pt-1.5 font-mono text-[0.72rem] tracking-[0.14em] text-blueprint">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>

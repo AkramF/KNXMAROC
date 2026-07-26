@@ -15,15 +15,12 @@ const LIENS = [
 const LIEN_BUREAU =
   "relative py-1 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-graphite transition-colors duration-200 hover:text-chalk after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-blueprint after:transition-transform after:duration-300 hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:after:transition-none";
 
-/* Intertitre commun à toutes les sections : un repère de plan tracé, puis
- * l'étiquette. Le même geste que le kicker du héros, pour que le vocabulaire
- * tienne d'un bout à l'autre de la page. */
+/* Intertitre commun à toutes les sections. Le tiret tracé qui le précédait a
+ * été retiré : le vocabulaire de lignes dessinées alourdissait la page sans
+ * rien ajouter que la couleur ne dise déjà. */
 export function Eyebrow({ children }: { children: string }) {
   return (
-    <p className="flex items-center gap-3.5 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-blueprint">
-      <span aria-hidden="true" className="h-px w-9 bg-current" />
-      {children}
-    </p>
+    <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-blueprint">{children}</p>
   );
 }
 
@@ -249,28 +246,15 @@ const DOMAINES = [
 const BOUTON_RAIL =
   "inline-flex h-11 w-11 items-center justify-center border border-rule-strong font-mono text-base text-chalk transition-colors duration-200 hover:border-blueprint hover:bg-blueprint hover:text-encre disabled:pointer-events-none disabled:opacity-25 motion-reduce:transition-none";
 
-function NoeudBus() {
-  return (
-    <span
-      aria-hidden="true"
-      className="relative z-10 block h-3.5 w-3.5 shrink-0 border-2 border-blueprint bg-encre"
-    >
-      <span className="absolute inset-1 block bg-blueprint" />
-    </span>
-  );
-}
-
 export function Solutions() {
   const railRef = useRef<HTMLUListElement>(null);
   const sectionRef = useRevelation<HTMLElement>();
-  const [progression, setProgression] = useState(0);
   const [enButee, setEnButee] = useState({ debut: true, fin: false });
 
   const lireScroll = () => {
     const rail = railRef.current;
     if (!rail) return;
     const parcourable = rail.scrollWidth - rail.clientWidth;
-    setProgression(parcourable > 0 ? rail.scrollLeft / parcourable : 0);
     setEnButee({ debut: rail.scrollLeft < 4, fin: rail.scrollLeft > parcourable - 4 });
   };
 
@@ -318,9 +302,6 @@ export function Solutions() {
         </div>
       </div>
 
-      {/* Le titre dit « sur le bus » : la section EST le bus. Une ligne
-       * traverse le rail, chaque domaine est un nœud dessus — le même nœud
-       * que le schéma du héros. */}
       <div className="relative mt-16">
         <ul
           aria-label="Les six domaines"
@@ -331,29 +312,19 @@ export function Solutions() {
         >
           {DOMAINES.map((domaine, index) => (
             <li
-              className="revelation relative w-[17rem] shrink-0 snap-start pr-10 first:ml-5 last:mr-5 md:w-[21rem] md:pr-14 md:first:ml-10 md:last:mr-10"
+              className="revelation w-[17rem] shrink-0 snap-start pr-10 first:ml-5 last:mr-5 md:w-[21rem] md:pr-14 md:first:ml-10 md:last:mr-10"
               key={domaine.label}
               style={{ "--revelation-delai": `${index * 70}ms` } as React.CSSProperties}
             >
-              <span
-                aria-hidden="true"
-                className={`absolute left-0 top-[7px] h-px bg-blueprint/30 ${
-                  index === DOMAINES.length - 1 ? "w-3.5" : "right-0"
-                }`}
-              />
-
-              <div className="relative flex items-center gap-4">
-                <NoeudBus />
-                <span className="font-mono text-[0.72rem] tracking-[0.14em] text-blueprint">
-                  {String(index + 1).padStart(2, "0")} / 06
-                </span>
-              </div>
+              <span className="font-mono text-[0.72rem] tracking-[0.14em] text-blueprint">
+                {String(index + 1).padStart(2, "0")} / 06
+              </span>
 
               {/* Les icônes sont des traits sombres : sur fond noir elles
                * disparaîtraient. L'inversion les rend au bleu de plan. */}
               <img
                 alt=""
-                className="mt-9 h-14 w-14 opacity-90 [filter:invert(1)_sepia(1)_saturate(2.4)_hue-rotate(178deg)_brightness(1.05)]"
+                className="mt-8 h-14 w-14 opacity-90 [filter:invert(1)_sepia(1)_saturate(2.4)_hue-rotate(178deg)_brightness(1.05)]"
                 decoding="async"
                 loading="lazy"
                 src={domaine.icon}
@@ -374,17 +345,7 @@ export function Solutions() {
         />
       </div>
 
-      <div
-        aria-hidden="true"
-        className="mx-auto w-full max-w-[1480px] px-5 pb-28 md:px-10 md:pb-40"
-      >
-        <div className="h-px bg-rule">
-          <div
-            className="h-px bg-blueprint transition-[width] duration-150 motion-reduce:transition-none"
-            style={{ width: `${Math.max(progression * 100, 100 / DOMAINES.length)}%` }}
-          />
-        </div>
-      </div>
+      <div className="pb-28 md:pb-40" />
     </section>
   );
 }

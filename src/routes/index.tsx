@@ -21,46 +21,25 @@ const THEME: ScrollScrubTheme = {
   muted: "#9AA0A4",
 };
 
-/* Trois temps : la promesse, la preuve, la maîtrise. Les scènes intermédiaires
- * du parcours d'origine racontaient la même promesse que la première — huit
- * hauteurs d'écran et 16 Mo avant le premier argument commercial.
+/* Deux temps : ce que la maison fait, ce que vous en gardez. Le parcours
+ * d'origine en comptait cinq — huit hauteurs d'écran et 16 Mo avant le
+ * premier argument commercial.
  *
- * Chaque scène porte un schéma de bus (voir schema-knx.tsx). Sans lui, ces
- * plans photoréalistes pourraient illustrer n'importe quelle annonce
- * immobilière : rien dans l'image ne dit KNX. Le schéma trace le câble au
- * rythme du scroll et rend visible ce que la copie affirme. */
+ * Une troisième scène en ouverture (macro d'un clavier mural) est générée
+ * mais pas encore déposée dans public/assets/world/. Elle s'insérera ici. */
 const SCENES: ScrollScrubScene[] = [
   {
     actions: <EtudeCta />,
-    body: "KNX MAROC conçoit et met en service des installations KNX pour la villa, l'hôtel et le bâtiment tertiaire. Une norme ouverte, un seul bus, un interlocuteur unique.",
-    clip: "/assets/world/clavier.mp4",
+    body: "KNX MAROC conçoit et met en service des installations KNX pour la villa, l'hôtel et le bâtiment tertiaire. Les stores suivent la course du soleil, l'éclairage bascule en fin de journée, la climatisation s'arrête quand une baie s'ouvre.",
+    clip: "/assets/world/sejour.mp4",
     id: "seuil",
     kicker: "Intégrateur KNX au Maroc",
-    label: "Clavier",
-    mobileClip: "/assets/world/clavier-mobile.mp4",
-    mobilePoster: "/assets/world/clavier-mobile-poster.jpg",
-    poster: "/assets/world/clavier-poster.jpg",
-    schema: "seuil",
-    scroll: 1.4,
-    tags: ["Rabat", "Partenaire KNX certifié", "Études et mise en service"],
-    title: "La maison vous reconnaît.",
-  },
-  {
-    /* Le plan montre des stores motorisés qui descendent sur une baie vitrée.
-     * Le texte précédent parlait d'armoire électrique et de rail DIN, qui
-     * n'apparaissent nulle part dans le clip : la copie décrit maintenant ce
-     * que l'image donne réellement à voir. L'argument de rigueur technique
-     * tient sa place dans la section Méthode. */
-    body: "Les stores suivent la course du soleil, l'éclairage bascule en fin de journée, la climatisation s'arrête quand une baie s'ouvre. Le confort se règle une fois et tient.",
-    clip: "/assets/world/sejour.mp4",
-    id: "sejour",
     label: "Séjour",
     mobileClip: "/assets/world/sejour-mobile.mp4",
     mobilePoster: "/assets/world/sejour-mobile-poster.jpg",
     poster: "/assets/world/sejour-poster.jpg",
-    schema: "sejour",
-    scroll: 1.3,
-    tags: ["Protection solaire", "Scènes horaires", "Consigne par zone"],
+    scroll: 1.4,
+    tags: ["Rabat", "Partenaire KNX certifié", "Études et mise en service"],
     title: "La lumière suit la vie.",
   },
   {
@@ -73,8 +52,7 @@ const SCENES: ScrollScrubScene[] = [
     mobileClip: "/assets/world/supervision-mobile.mp4",
     mobilePoster: "/assets/world/supervision-mobile-poster.jpg",
     poster: "/assets/world/supervision-poster.jpg",
-    schema: "supervision",
-    scroll: 1.4,
+    scroll: 1.5,
     tags: ["Projet ETS remis", "Mesure par circuit", "Écran ou téléphone"],
     title: "Tout se pilote, tout se prouve.",
   },
