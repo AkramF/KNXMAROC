@@ -5,6 +5,11 @@ export interface ArticleBlog {
   categorie: "Technique" | "Architecture" | "Énergie" | "Sécurité";
   tempsLecture: string;
   datePublication: string;
+  imageCouverture?: {
+    src: string;
+    alt: string;
+    legende?: string;
+  };
   auteur: {
     nom: string;
     role: string;
@@ -14,10 +19,132 @@ export interface ArticleBlog {
     sectionTitre: string;
     paragraphes: string[];
     citation?: string;
+    imageSection?: {
+      src: string;
+      alt: string;
+      legende?: string;
+    };
+    lienSolution?: {
+      texteAncre: string;
+      url: string;
+      descriptionContextuelle: string;
+    };
   }[];
 }
 
 export const ARTICLES_BLOG: ArticleBlog[] = [
+  {
+    slug: "comprendre-le-protocole-knx-standard-filaire-mondial",
+    titre: "Comprendre le Protocole KNX : Le Standard Filaire Mondial du Bâtiment Intelligent",
+    chapeau:
+      "Qu'est-ce que le protocole KNX ? Pourquoi est-il devenu la référence incontournable de la domotique haut de gamme pour les villas et bâtiments de prestige au Maroc ? Analyse détaillée du standard filaire ISO/IEC 14543-3.",
+    categorie: "Technique",
+    tempsLecture: "8 min",
+    datePublication: "26 Juillet 2026",
+    imageCouverture: {
+      src: "/assets/world/clavier-poster.jpg",
+      alt: "Interface et appareillage KNX filaire haut de gamme",
+      legende:
+        "Appareillage mural KNX Ekinex & Basalte interconnecté sur câble bus 29V à très basse sécurité (SELV).",
+    },
+    auteur: {
+      nom: "Équipe Technique KNX MAROC",
+      role: "Intégrateurs Certifiés KNX Partner",
+    },
+    motsCles: [
+      "Protocole KNX",
+      "Standard Filaire ISO/IEC 14543-3",
+      "Domotique Maroc",
+      "Bus KNX",
+      "DALI-2",
+      "Hypervision",
+    ],
+    contenu: [
+      {
+        sectionTitre: "1. Les Fondements du Protocole KNX : Un Standard Ouvert et Décentralisé",
+        paragraphes: [
+          "Le protocole KNX est le seul standard mondial ouvert et normalisé (ISO/IEC 14543-3, EN 50090, ANSI/ASHRAE 135) dédié au contrôle et à l'automatisation des bâtiments résidentiels et tertiaires.",
+          "À la différence des systèmes domotiques propriétaires ou grand public (Wi-Fi, Zigbee, Z-Wave), KNX repose sur un câble bus vert torsadé blindé à très basse tension de sécurité (29V SELV). Ce câble relie tous les équipements de la maison en une topologie d'une fiabilité absolue.",
+          "La grande force de KNX réside dans son architecture décentralisée : chaque participant (interrupteur, variateur, passerelle CVC, détecteur) intègre son propre microprocesseur. Il n'existe pas de centrale unique dont la panne paralyserait la maison entière.",
+        ],
+        citation:
+          "KNX n'est pas une marque commerciale, c'est une norme internationale partagée par plus de 500 fabricants mondiaux certifiés.",
+        imageSection: {
+          src: "/assets/world/clavier-poster.jpg",
+          alt: "Bouton poussoir et interrupteur KNX haut de gamme",
+          legende: "Commande murale KNX avec finition métal brossé et thermostat intégré.",
+        },
+      },
+      {
+        sectionTitre: "2. Éclairage Architectural : La Synergie KNX & DALI-2",
+        paragraphes: [
+          "L'éclairage est le cœur battant de l'ambiance d'une villa de luxe. Pour obtenir une gradation parfaitement fluide sans aucun scintillement, KNX s'interface de manière native avec le protocole DALI-2 (Digital Addressable Lighting Interface).",
+          "Grâce aux passerelles KNX/DALI-2, chaque luminaire ou ruban LED (Tunable White, RGBW, gradation logarithmique à 0,1%) est adressé numériquement. Vous créez des scénarios lumineux complexes ('Réception', 'Dîner', 'Cinéma') d'une pression sur une seule touche.",
+        ],
+        lienSolution: {
+          texteAncre: "Découvrir nos solutions d'éclairage DALI-2 & Gradation",
+          url: "/#solutions",
+          descriptionContextuelle:
+            "Consultez notre expertise sur l'interfaçage des passerelles DALI-2 et la gestion circadienne de l'éclairage.",
+        },
+        imageSection: {
+          src: "/assets/world/sejour-poster.jpg",
+          alt: "Éclairage architectural et confort dans un séjour de villa",
+          legende:
+            "Gestion des scènes lumineuses DALI-2 et régulation thermique unifiée dans un séjour d'exception.",
+        },
+      },
+      {
+        sectionTitre: "3. Climatisation CVC VRF & Stores Bioclimatiques : Énergie Maîtrisée",
+        paragraphes: [
+          "Au Maroc, où le confort thermique exige une climatisation performante l'été et un chauffage efficace l'hiver, le protocole KNX apporte une réponse énergétique stratégique.",
+          "KNX communique directement avec les bus de communication des grands constructeurs CVC (Daikin, Mitsubishi Electric, LG, Toshiba). Les thermostats KNX régulent chaque zone au dixième de degré près et coupent automatiquement le CVC à l'ouverture des baies vitrées.",
+          "Simultanément, KNX pilote les volets et stores bioclimatiques en fonction de la course du soleil calculée par la station météo, réduisant la charge thermique avant même l'activation de la climatisation.",
+        ],
+        lienSolution: {
+          texteAncre: "Explorer nos passerelles CVC VRF & Stores Bioclimatiques",
+          url: "/#solutions",
+          descriptionContextuelle:
+            "Apprenez comment réduire votre facture énergétique de 35% à 45% grâce au couplage CVC / Météo KNX.",
+        },
+        imageSection: {
+          src: "/assets/segments/residentiel.jpg",
+          alt: "Villa d'exception équipée d'une régulation thermique KNX au Maroc",
+          legende:
+            "Optimisation bioclimatique des volets roulants et du CVC VRF dans une résidence de luxe.",
+        },
+      },
+      {
+        sectionTitre: "4. Hypervision Tactile Murale & Sécurité Biométrique Unifiée",
+        paragraphes: [
+          "L'un des avantages majeurs de l'infrastructure KNX est la centralisation du contrôle. Plus besoin d'accumuler les boîtiers et télécommandes disparates.",
+          "Les écrans tactiles muraux d'hypervision regroupent sur une interface épurée la totalité des fonctions du bâtiment : plan 2D/3D des pièces, état des ouvrants, consommations énergétiques en temps réel et flux vidéo des caméras.",
+          "Côté sécurité, avec l'extension KNX Data Security (chiffrement AES-128), les alarmes anti-intrusion et le contrôle d'accès biométrique sont intégrés sur le bus filaire avec un niveau de sécurité militaire.",
+        ],
+        lienSolution: {
+          texteAncre: "Consulter nos écrans d'hypervision & sécurité biométrique",
+          url: "/#solutions",
+          descriptionContextuelle:
+            "Découvrez nos interfaces tactiles murales et nos solutions de contrôle d'accès sécurisé.",
+        },
+        imageSection: {
+          src: "/assets/world/supervision-poster.jpg",
+          alt: "Écran d'hypervision tactile mural KNX",
+          legende:
+            "Supervision tactile murale centralisée pour le contrôle intégral de la résidence.",
+        },
+      },
+      {
+        sectionTitre: "5. Pérennité & Souveraineté : La Remise du Fichier Source ETS (.knxproj)",
+        paragraphes: [
+          "Le logiciel officiel ETS6 (Engineering Tool Software) est l'outil unique utilisé dans le monde entier pour programmer les installations KNX.",
+          "En tant qu'intégratueur certifié KNX Partner, KNX MAROC remet obligatoirement à chaque maître d'ouvrage le fichier source complet (.knxproj) à la fin du chantier. Vous n'êtes jamais dépendant d'un seul prestataire : n'importe quel intégrateur certifié dans le monde peut intervenir sur votre villa à tout moment.",
+        ],
+        citation:
+          "La remise du fichier source ETS est votre garantie de souveraineté absolue sur votre bâtiment pour les 30 prochaines années.",
+      },
+    ],
+  },
   {
     slug: "pourquoi-knx-standard-filaire-villas-maroc",
     titre: "Pourquoi KNX est le seul standard filaire garanti 30 ans pour une villa au Maroc",
@@ -26,6 +153,10 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
     categorie: "Technique",
     tempsLecture: "6 min",
     datePublication: "24 Juillet 2026",
+    imageCouverture: {
+      src: "/assets/segments/residentiel.jpg",
+      alt: "Villa de haut standing à Rabat",
+    },
     auteur: {
       nom: "Équipe Technique KNX MAROC",
       role: "Intégrateurs Certifiés KNX Partner",
@@ -65,6 +196,10 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
     categorie: "Architecture",
     tempsLecture: "5 min",
     datePublication: "18 Juillet 2026",
+    imageCouverture: {
+      src: "/assets/world/sejour-poster.jpg",
+      alt: "Éclairage architectural séjour villa",
+    },
     auteur: {
       nom: "Bureau d'Ingénierie Éclairage",
       role: "Spécialistes Gradation DALI-2",
@@ -97,6 +232,10 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
     categorie: "Énergie",
     tempsLecture: "7 min",
     datePublication: "10 Juillet 2026",
+    imageCouverture: {
+      src: "/assets/segments/hotellerie.jpg",
+      alt: "Climatisation et confort hôtel de luxe",
+    },
     auteur: {
       nom: "Pôle Efficacité Énergétique",
       role: "Experts Thermique & CVC",
@@ -117,37 +256,6 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
         paragraphes: [
           "KNX s'interface directement avec le bus natif des fabricants de climatisation VRF/DRV (Daikin, Mitsubishi Electric, LG, Toshiba) via des passerelles passerelles BACnet ou KNX directes.",
           "En été, dès que la station météo KNX détecte un fort ensoleillement sur une façade Sud, le système abaisse automatiquement les stores bioclimatiques pour limiter l'apport thermique avant d'activer la climatisation.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "hypervision-securite-integree-villa-connectee",
-    titre: "Hypervision & Sécurité : Remplacer l'alarme autonome par un système KNX unifié",
-    chapeau:
-      "Pourquoi l'intégration des détections de présence, du contrôle d'accès biométrique et des centrales d'alarme sur un bus sécurisé crée un bouclier actif inviolable.",
-    categorie: "Sécurité",
-    tempsLecture: "5 min",
-    datePublication: "02 Juillet 2026",
-    auteur: {
-      nom: "Département Hypervision",
-      role: "Spécialistes Sécurité Bâtiment",
-    },
-    motsCles: ["Hypervision Tactile", "Sécurité KNX", "Contrôle d'Accès Biométrique"],
-    contenu: [
-      {
-        sectionTitre: "L'inconvénient des systèmes de sécurité isolés",
-        paragraphes: [
-          "Dans une conception classique, l'alarme anti-intrusion, les caméras IP, le contrôle d'accès et l'éclairage extérieur fonctionnent en silos isolés. En cas d'alerte périmétrique la nuit, les caméras filment dans l'obscurité car elles n'ont aucun moyen d'allumer l'éclairage de jardin.",
-          "Avec KNX, tous ces sous-systèmes partagent la même dorsale d'information filaire.",
-        ],
-        citation:
-          "Dès qu'une intrusion est détectée sur la ligne périmétrique, KNX allume instantanément les projecteurs extérieurs, baisse les volets de protection et envoie une alerte prioritaire sur votre smartphone.",
-      },
-      {
-        sectionTitre: "Sécurité physique et cybersécurité avec KNX Data Security",
-        paragraphes: [
-          "Les nouvelles installations certifiées KNX Data Security intègrent le chiffrement AES-128 sur le bus filaire et sur le réseau IP. Votre réseau domotique est imperméable aux tentatives de piratage ou d'écoute clandestine.",
         ],
       },
     ],

@@ -25,7 +25,7 @@ function ArticlePage() {
       <article className="pt-32 pb-20 md:pt-40 md:pb-28">
         {/* En-tête Article */}
         <header className="border-b border-rule bg-ardoise/20 pb-16">
-          <div className="mx-auto max-w-[900px] px-5 md:px-10">
+          <div className="mx-auto max-w-[920px] px-5 md:px-10">
             <Link
               className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-blueprint hover:text-chalk transition-colors mb-8"
               to="/blog"
@@ -57,12 +57,28 @@ function ArticlePage() {
                 {article.auteur.role})
               </div>
             </div>
+
+            {/* Image de Couverture */}
+            {article.imageCouverture && (
+              <figure className="mt-12 overflow-hidden border border-rule bg-ardoise/40">
+                <img
+                  src={article.imageCouverture.src}
+                  alt={article.imageCouverture.alt}
+                  className="w-full h-[320px] md:h-[480px] object-cover"
+                />
+                {article.imageCouverture.legende && (
+                  <figcaption className="p-4 font-mono text-xs text-graphite border-t border-rule/50 bg-encre/60">
+                    {article.imageCouverture.legende}
+                  </figcaption>
+                )}
+              </figure>
+            )}
           </div>
         </header>
 
         {/* Contenu Article */}
-        <div className="mx-auto max-w-[900px] px-5 md:px-10 pt-16">
-          <div className="space-y-12 text-base leading-relaxed text-graphite md:text-lg">
+        <div className="mx-auto max-w-[920px] px-5 md:px-10 pt-16">
+          <div className="space-y-14 text-base leading-relaxed text-graphite md:text-lg">
             {article.contenu.map((sec, idx) => (
               <section key={idx} className="space-y-6">
                 <h2 className="font-display text-2xl font-semibold text-chalk md:text-3xl">
@@ -77,6 +93,40 @@ function ArticlePage() {
                   <blockquote className="my-8 border-l-2 border-emerald-400 bg-ardoise/30 p-6 text-chalk font-mono text-sm leading-relaxed italic">
                     « {sec.citation} »
                   </blockquote>
+                )}
+
+                {/* Image de Section */}
+                {sec.imageSection && (
+                  <figure className="my-8 overflow-hidden border border-rule bg-ardoise/40">
+                    <img
+                      src={sec.imageSection.src}
+                      alt={sec.imageSection.alt}
+                      className="w-full h-[260px] md:h-[400px] object-cover"
+                    />
+                    {sec.imageSection.legende && (
+                      <figcaption className="p-3.5 font-mono text-xs text-graphite border-t border-rule/50 bg-encre/60">
+                        {sec.imageSection.legende}
+                      </figcaption>
+                    )}
+                  </figure>
+                )}
+
+                {/* Lien Subtil vers Solution */}
+                {sec.lienSolution && (
+                  <div className="my-8 border-l-2 border-blueprint bg-blueprint/10 p-6 font-mono text-sm">
+                    <p className="text-graphite text-xs uppercase tracking-wider mb-2">
+                      Ancre Solution Associée :
+                    </p>
+                    <a
+                      className="inline-flex items-center gap-2 font-semibold text-chalk hover:text-blueprint transition-colors text-base"
+                      href={sec.lienSolution.url}
+                    >
+                      {sec.lienSolution.texteAncre} →
+                    </a>
+                    <p className="mt-2 text-xs leading-relaxed text-graphite">
+                      {sec.lienSolution.descriptionContextuelle}
+                    </p>
+                  </div>
                 )}
               </section>
             ))}
