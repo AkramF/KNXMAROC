@@ -10,13 +10,13 @@ et les corrections d'`AUDIT.md`.
 
 ### Score de santé
 
-| # | Dimension | Constat |
-|---|-----------|---------|
-| Indexation | Bon | `robots.txt` autorise tout, référence `sitemap.xml` ; une seule URL, canonical et `og:url` ajoutés ce jour (absents avant) |
-| Meta on-page | Bon | Titre 44 caractères, description ramenée de 182 à 159 caractères ; un seul `h1`, hiérarchie `h2`/`h3` propre |
-| Schema | Correct | `ProfessionalService` avec adresse, téléphone, e-mail, langues, `url` et `image` ajoutés ce jour ; aucun `FAQPage`, `Service` par domaine, ni `sameAs` |
-| Contenu / profondeur | **Insuffisant** | Une seule page indexable. Zéro contenu informationnel, zéro page susceptible de capter une recherche autre que la marque elle-même |
-| Vitesse / CWV | Bon | Poster du héros en `fetchPriority="high"`, polices avec `display=swap`, pas de mise en page qui saute |
+| #                    | Dimension       | Constat                                                                                                                                                |
+| -------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Indexation           | Bon             | `robots.txt` autorise tout, référence `sitemap.xml` ; une seule URL, canonical et `og:url` ajoutés ce jour (absents avant)                             |
+| Meta on-page         | Bon             | Titre 44 caractères, description ramenée de 182 à 159 caractères ; un seul `h1`, hiérarchie `h2`/`h3` propre                                           |
+| Schema               | Correct         | `ProfessionalService` avec adresse, téléphone, e-mail, langues, `url` et `image` ajoutés ce jour ; aucun `FAQPage`, `Service` par domaine, ni `sameAs` |
+| Contenu / profondeur | **Insuffisant** | Une seule page indexable. Zéro contenu informationnel, zéro page susceptible de capter une recherche autre que la marque elle-même                     |
+| Vitesse / CWV        | Bon             | Poster du héros en `fetchPriority="high"`, polices avec `display=swap`, pas de mise en page qui saute                                                  |
 
 Le point qui domine tout le reste : **le site n'a qu'une page.** Un audit
 technique propre ne compense pas l'absence totale de surface indexable au-delà
@@ -29,8 +29,7 @@ le reste n'est que de l'entretien.
   Sans canonical, une page unique reste indexable mais perd la déclaration
   explicite de son URL de référence — sensible dès qu'un paramètre de tracking
   ou une variante `www` apparaît un jour.
-- **Description meta à 182 caractères** — Google tronque au-delà d'environ
-  160. Ramenée à 159, sans perdre l'énumération des six domaines.
+- **Description meta à 182 caractères** — Google tronque au-delà d'environ 160. Ramenée à 159, sans perdre l'énumération des six domaines.
 - **`sitemap.xml` mentait sur sa fraîcheur** : `lastmod` était calculé à
   `new Date()` à chaque requête, donc toujours « aujourd'hui » même sans
   changement de contenu. Remplacé par une date fixe à mettre à jour à la main.
@@ -70,36 +69,39 @@ Trois familles de contenu, dans l'ordre où je les construirais :
 
 **Le socle éducatif**, qui capte la recherche de découverte et sert de page
 pivot vers laquelle tout le reste renvoie :
-- *Qu'est-ce que le KNX ? Le guide pour les propriétaires marocains* — la
+
+- _Qu'est-ce que le KNX ? Le guide pour les propriétaires marocains_ — la
   requête la plus large, celle qui doit exister avant toutes les autres.
-- *KNX, Zigbee, Wi-Fi : quelle domotique choisir pour une villa* — capte la
+- _KNX, Zigbee, Wi-Fi : quelle domotique choisir pour une villa_ — capte la
   recherche comparative, celle où un acheteur hésite encore entre technologies
   avant de savoir qu'il veut un intégrateur.
-- *Lexique KNX : bus, ETS, objet de groupe, actionneur, rail DIN* — coûte peu à
+- _Lexique KNX : bus, ETS, objet de groupe, actionneur, rail DIN_ — coûte peu à
   produire, capte une longue traîne de recherches définitionnelles, et devient
   un hub de maillage interne vers tous les autres articles.
 
 **Le contenu à intention commerciale**, celui qui rapproche un lecteur déjà
 convaincu de la décision d'achat :
-- *Prix d'une installation KNX au Maroc : ce qui fait varier le budget* — le
+
+- _Prix d'une installation KNX au Maroc : ce qui fait varier le budget_ — le
   site actuel n'affiche aucun repère de prix nulle part, ce qui est cohérent
   avec un positionnement sur-mesure, mais laisse un vide que la concurrence
   ou un forum remplira à ta place si tu ne le fais pas.
-- *Pourquoi intégrer KNX dès la phase d'étude coûte moins cher qu'après* —
+- _Pourquoi intégrer KNX dès la phase d'étude coûte moins cher qu'après_ —
   reprend et développe l'argument déjà présent dans la section Méthode
   (« le moment le moins cher... »), qui mérite mieux qu'un aparté dans une
   barre latérale.
-- *KNX à l'hôtel : réduire la facture de climatisation par la détection
-  d'occupation* — s'adresse directement au segment hôtellerie avec un
+- _KNX à l'hôtel : réduire la facture de climatisation par la détection
+  d'occupation_ — s'adresse directement au segment hôtellerie avec un
   bénéfice chiffrable, alors que la page actuelle reste générique sur ce
   segment.
 
 **La preuve par l'exemple**, le signal E-E-A-T qui manque le plus au site
 aujourd'hui :
-- *Étude de cas : une villa à Rabat, six domaines sur un seul bus* — premier
+
+- _Étude de cas : une villa à Rabat, six domaines sur un seul bus_ — premier
   contenu à expérience réelle du site ; tout le reste est actuellement
   descriptif, rien n'est narratif.
-- *Ce qu'on remet au client à la réception : le fichier ETS expliqué* —
+- _Ce qu'on remet au client à la réception : le fichier ETS expliqué_ —
   développe l'argument de propriété déjà présent en Positionnement.
 
 Exécution : ajouter `/blog` et `/blog/$slug` comme nouvelles routes TanStack
@@ -120,7 +122,7 @@ facile à faire remonter.
 **Le vocabulaire est spécifique, jamais générique.** « ISO/IEC 14543-3 », « le
 projet ETS vous est remis », « rail DIN » — ce n'est pas la voix d'un
 générateur de copie SaaS, c'est celle d'un bureau d'études qui connaît son
-sujet. Ça sert l'*autorité* (Authority Bias) sans un seul badge ni logo
+sujet. Ça sert l'_autorité_ (Authority Bias) sans un seul badge ni logo
 « featured in » : la précision technique elle-même fait office de crédential.
 
 **Aucune fausse urgence, aucun chiffre gonflé.** Pas de compte à rebours, pas
@@ -129,7 +131,7 @@ sous la photo. Le brief visuel bannit explicitement le « hero-metric template �
 (gros chiffre, petit label, encart d'accent) — et le site le respecte partout,
 y compris là où céder à la tentation aurait été facile. Pour une clientèle
 d'architectes et de bureaux d'études qui repère l'exagération commerciale au
-premier coup d'œil, cette sobriété *est* le signal de confiance.
+premier coup d'œil, cette sobriété _est_ le signal de confiance.
 
 **Le CTA est unique et répété verbatim.** « Demander une étude » apparaît
 identique dans la navigation, le héros et le formulaire — pas de variation
@@ -155,8 +157,8 @@ du « hero-metric » : on peut citer un client, montrer une villa réellement
 de cas » proposée plus haut comble exactement ce vide.
 
 **Le CTA nomme le produit du prestataire, pas le résultat du client.**
-« Demander une étude » décrit ce que KNX MAROC *produit* en interne — un
-livrable technique — pas ce que le visiteur *cherche*. Un propriétaire de
+« Demander une étude » décrit ce que KNX MAROC _produit_ en interne — un
+livrable technique — pas ce que le visiteur _cherche_. Un propriétaire de
 villa ne se lève pas le matin en voulant « une étude » ; il veut que sa maison
 lui obéisse sans qu'il y pense. Ce n'est pas une erreur à corriger d'office —
 pour un public d'architectes et de maîtres d'ouvrage habitués au vocabulaire

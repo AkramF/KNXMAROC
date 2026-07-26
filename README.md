@@ -28,14 +28,14 @@ npm run format      # réécrit le formatage
 2. Sur [vercel.com/new](https://vercel.com/new), importer le dépôt.
    **Ne rien renseigner** en build command ni en output directory : Nitro
    expose la configuration et Vercel la détecte seule.
-3. Dans **Settings → Environment Variables**, ajouter pour *Production* et
-   *Preview* :
+3. Dans **Settings → Environment Variables**, ajouter pour _Production_ et
+   _Preview_ :
 
-   | Variable | Valeur |
-   |---|---|
+   | Variable         | Valeur                                                              |
+   | ---------------- | ------------------------------------------------------------------- |
    | `RESEND_API_KEY` | la clé créée sur [resend.com/api-keys](https://resend.com/api-keys) |
-   | `CONTACT_TO` | `contact@knxmaroc.ma` |
-   | `CONTACT_FROM` | `Site KNX MAROC <site@knxmaroc.ma>` |
+   | `CONTACT_TO`     | `contact@knxmaroc.ma`                                               |
+   | `CONTACT_FROM`   | `Site KNX MAROC <site@knxmaroc.ma>`                                 |
 
 4. Dans Resend, **Domains → Add Domain**, ajouter `knxmaroc.ma` et publier les
    enregistrements DNS chez le registrar. Sans domaine vérifié, Resend refuse

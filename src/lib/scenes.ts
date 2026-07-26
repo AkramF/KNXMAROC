@@ -6,15 +6,15 @@ export interface Scene {
   heure: string;
   /* Ce que la maison fait à ce moment-là — la phrase change avec la scène. */
   recit: string;
-  /* Teinte de la lumière artificielle, en clair : le halo, les accents. */
+  /* Teinte de la lumière artificielle : Bleu de plan (Blueprint Blue) #7FA8E8. */
   lueur: string;
   /* Fond de la pièce. La nuit est plus profonde que le soir. */
   fond: string;
   /* Surface soulevée, dérivée du fond mais jamais identique. */
   surface: string;
-  /* Intensité du halo, 0 → 1. La journée n'allume rien. */
+  /* Intensité du halo, 0 → 1. */
   intensite: number;
-  /* Position verticale de la source, en pourcentage : le soleil descend. */
+  /* Position verticale de la source, en pourcentage. */
   hauteur: number;
 }
 
@@ -46,10 +46,10 @@ export const SCENES: Scene[] = [
     label: "Soirée",
     heure: "20:00",
     recit: "Une pression sur le clavier : lumière basse, stores fermés, musique.",
-    lueur: "#E8A66B",
+    lueur: "#7FA8E8", // Maintien strict du Bleu de Plan (pas d'orange)
     fond: "#0D1012",
     surface: "#161A1D",
-    intensite: 0.92,
+    intensite: 0.75,
     hauteur: 38,
   },
   {
@@ -57,7 +57,7 @@ export const SCENES: Scene[] = [
     label: "Nuit",
     heure: "23:30",
     recit: "Tout s'éteint sauf le balisage du couloir. L'alarme s'arme seule.",
-    lueur: "#7FA8E8",
+    lueur: "#5B86D6",
     fond: "#07090B",
     surface: "#0F1315",
     intensite: 0.34,

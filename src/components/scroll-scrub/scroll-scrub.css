@@ -35,11 +35,14 @@
   margin: 0;
   overflow: hidden;
   opacity: 0;
-  will-change: opacity;
+  transform: scale(1.02);
+  will-change: opacity, transform;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.scroll-scrub__layer[data-visible="true"],
 .scroll-scrub__layer:first-child {
-  opacity: 1;
+  transform: scale(1);
 }
 
 .scroll-scrub__poster,
@@ -70,6 +73,18 @@
   inset: 0;
   content: "";
   background:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--ss-bg) 92%, transparent) 0%,
+      color-mix(in srgb, var(--ss-bg) 65%, transparent) 36%,
+      transparent 72%
+    ),
+    linear-gradient(
+      to left,
+      color-mix(in srgb, var(--ss-bg) 92%, transparent) 0%,
+      color-mix(in srgb, var(--ss-bg) 65%, transparent) 36%,
+      transparent 72%
+    ),
     linear-gradient(
       to top,
       var(--ss-bg) 0%,
@@ -165,33 +180,44 @@
   right: clamp(1rem, 4vw, 4rem);
   bottom: clamp(1.25rem, 3vw, 2.25rem);
   display: flex;
-  justify-content: flex-end;
-  gap: 0;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.35rem;
+  background: color-mix(in srgb, #0b0e14 80%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid color-mix(in srgb, #eaeff8 14%, transparent);
+  border-radius: 9999px;
   pointer-events: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* Repères de chapitre sans chrome : ni cadre, ni filet. Le chapitre courant
- * se distingue par la couleur seule. */
 .scroll-scrub__route-button {
-  min-height: 2.75rem;
-  padding: 0.7rem 1.1rem;
+  min-height: 2.25rem;
+  padding: 0.5rem 1rem;
   border: 0;
+  border-radius: 9999px;
   color: var(--ss-muted);
   background: transparent;
   font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 0.25s ease;
+  transition: all 0.25s ease;
 }
 
 .scroll-scrub__route-button:hover {
   color: var(--ss-ink);
+  background: color-mix(in srgb, #eaeff8 8%, transparent);
 }
 
 .scroll-scrub__route-button[aria-current="step"] {
-  color: var(--ss-accent);
+  color: #ffffff;
+  background: color-mix(in srgb, var(--ss-accent) 25%, transparent);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ss-accent) 40%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -267,7 +293,7 @@
   font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
   font-size: clamp(2.9rem, 6.6vw, 6rem);
   font-weight: 600;
-  line-height: 0.92;
+  line-height: 1.05;
   /* Plancher de -0.04em respecté : on ne serre pas au-delà. */
   letter-spacing: -0.04em;
   text-wrap: balance;

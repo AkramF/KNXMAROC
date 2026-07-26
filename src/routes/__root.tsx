@@ -4,13 +4,11 @@ import type { ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { ADRESSE_UNE_LIGNE, COORDONNEES, LIEN_EMAIL } from "../lib/coordonnees";
 
-// À remplacer par le domaine réel une fois acheté, si différent.
 const URL_SITE = "https://knxmaroc.ma";
 
 const TITRE = "KNX MAROC — intégrateur KNX certifié à Rabat";
-// 155 caractères : au-delà, Google tronque la description dans les résultats.
 const DESCRIPTION =
-  "Bureau d'études et intégrateur KNX au Maroc. Éclairage, stores, climatisation, sécurité et supervision sur un seul bus, pour la villa, l'hôtel et le tertiaire.";
+  "Intégrateur domotique KNX certifié au Maroc. Éclairage, stores, climatisation, sécurité et supervision sur un seul bus, pour la villa, l'hôtel et le tertiaire.";
 
 const ficheEntreprise = {
   "@context": "https://schema.org",
@@ -30,6 +28,37 @@ const ficheEntreprise = {
     addressCountry: COORDONNEES.adresse.codePays,
   },
   knowsLanguage: ["fr", "ar", "en"],
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Pourquoi KNX est-il considéré comme le meilleur standard domotique au monde ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "KNX est la seule norme internationale ouverte (ISO/IEC 14543-3) d'automatisation du bâtiment. Plus de 500 fabricants mondiaux (Gira, JUNG, Basalte, ABB, Schneider) conçoivent des équipements 100 % interopérables sur un câble bus filaire certifié pour 30 à 50 ans d'exploitation.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quelle est la différence entre KNX et une domotique sans-fil (Zigbee, Wi-Fi) ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Le bus filaire KNX garantit zéro latence, aucune saturation radio, aucune dépendance au cloud et ne nécessite pas de changement de batteries.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Suis-je bloqué avec un seul fabricant ou un installateur unique ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Non. À la réception du chantier, KNX MAROC vous remet le fichier source de programmation ETS (.knxproj). Vous êtes 100 % propriétaire de votre installation.",
+      },
+    },
+  ],
 };
 
 function NotFoundComponent() {
@@ -88,6 +117,16 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: TITRE },
       { name: "description", content: DESCRIPTION },
+      {
+        name: "keywords",
+        content:
+          "domotique knx maroc, intégrateur knx rabat, domotique villa marrakech, domotique casablanca, knx association maroc, fichier ets knx, domotique haut de gamme, etude knx",
+      },
+      {
+        name: "robots",
+        content: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
+      },
+      { name: "author", content: "KNX MAROC" },
       { name: "theme-color", content: "#0d1012" },
       { property: "og:title", content: TITRE },
       { property: "og:description", content: DESCRIPTION },
@@ -100,10 +139,19 @@ export const Route = createRootRoute({
       { name: "twitter:image", content: `${URL_SITE}/assets/brand/knx-maroc-og.png` },
       { name: "geo.region", content: "MA-RAB" },
       { name: "geo.placename", content: ADRESSE_UNE_LIGNE },
+      { name: "geo.position", content: "34.020882;-6.841650" },
+      { name: "ICBM", content: "34.020882, -6.841650" },
     ],
     links: [
+      {
+        rel: "preload",
+        as: "image",
+        href: "/assets/world/clavier-poster.webp",
+        type: "image/webp",
+      },
       { rel: "stylesheet", href: appCss },
       { rel: "canonical", href: URL_SITE },
+      { rel: "icon", type: "image/svg+xml", href: "/assets/brand/favicon.svg" },
       { rel: "icon", href: "/assets/brand/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
@@ -120,6 +168,10 @@ export const Route = createRootRoute({
       {
         type: "application/ld+json",
         children: JSON.stringify(ficheEntreprise),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(faqSchema),
       },
     ],
   }),

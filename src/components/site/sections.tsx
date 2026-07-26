@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useState } from "react";
 
 import { COORDONNEES, LIEN_TELEPHONE } from "../../lib/coordonnees";
 import { useRevelation } from "../../lib/use-revelation";
@@ -11,14 +11,12 @@ const LIENS = [
   { href: "#segments", label: "Segments" },
   { href: "#methode", label: "Méthode" },
   { href: "#marques", label: "Marques" },
+  { href: "#faq", label: "FAQ" },
 ];
 
 const LIEN_BUREAU =
   "relative py-1 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-graphite transition-colors duration-200 hover:text-chalk after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-blueprint after:transition-transform after:duration-300 hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:after:transition-none";
 
-/* Intertitre commun à toutes les sections. Le tiret tracé qui le précédait a
- * été retiré : le vocabulaire de lignes dessinées alourdissait la page sans
- * rien ajouter que la couleur ne dise déjà. */
 export function Eyebrow({ children }: { children: string }) {
   return (
     <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-blueprint">{children}</p>
@@ -30,8 +28,6 @@ export function SiteNav() {
   const [compacte, setCompacte] = useState(false);
   const panneauId = useId();
 
-  /* L'en-tête ne prend son fond qu'une fois le héros quitté : au-dessus de
-   * l'image plein écran, une barre opaque couperait la scène en deux. */
   useEffect(() => {
     const surScroll = () => setCompacte(window.scrollY > window.innerHeight * 0.6);
     surScroll();
@@ -77,8 +73,6 @@ export function SiteNav() {
         <div className="flex items-center gap-3">
           <EtudeCta className="hidden px-5 py-3 md:inline-flex" />
 
-          {/* Sous 768 px la navigation de bureau disparaît : sans ce bouton,
-           * l'en-tête ne contiendrait qu'un logo. */}
           <button
             aria-controls={panneauId}
             aria-expanded={ouvert}
@@ -153,13 +147,13 @@ const REPERES = [
   },
   {
     cle: "Outil",
-    valeur: "ETS",
-    note: "Le projet vous est remis avec son fichier de programmation.",
+    valeur: "ETS Original Remis",
+    note: "Le projet vous est remis avec son fichier source de programmation.",
   },
   {
     cle: "Durée de vie",
     valeur: "Celle du bâtiment",
-    note: "Une installation s'étend sans être refaite.",
+    note: "Une installation s'étend sans être refaite sur 30+ ans.",
   },
 ];
 
@@ -178,13 +172,13 @@ export function Positionnement() {
           <TitreRevele
             as="h2"
             className="mt-7 font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
-            texte={"Un seul bus,\ntout le bâtiment."}
+            texte={"Un seul système,\ntout le bâtiment."}
           />
           <p className="mt-9 max-w-[62ch] text-lg leading-relaxed text-graphite">
-            KNX est la norme ouverte de l&apos;automatisation du bâtiment. Elle relie
-            l&apos;éclairage, les stores, le chauffage, la climatisation, la sécurité et la
-            supervision sur un même câble bus, sans passerelle propriétaire et sans dépendance à un
-            seul fabricant.
+            KNX est la norme ouverte mondiale de l&apos;automatisation du bâtiment. Elle relie
+            l&apos;éclairage, les stores, le chauffage, la climatisation, la sécurité et
+            l&apos;hypervision sur une même infrastructure intelligente filaire, sans passerelle
+            propriétaire et sans dépendance à un seul fabricant.
           </p>
           <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-graphite">
             KNX MAROC conçoit, programme et met en service ces installations au Maroc. Nous
@@ -215,153 +209,172 @@ export function Positionnement() {
   );
 }
 
-const DOMAINES = [
+interface DomaineDesign {
+  id: string;
+  node: string;
+  icon: string;
+  label: string;
+  body: string;
+  specs: string[];
+}
+
+const DOMAINES_SOLUTIONS: DomaineDesign[] = [
   {
+    id: "eclairage",
+    node: "MODULE 01",
     icon: "/assets/icons/eclairage.png",
-    label: "Éclairage",
-    body: "Circuits variés ou commutés, scènes par pièce, détection de présence, gestion de la lumière du jour.",
+    label: "Éclairage DALI & Commuté",
+    body: "Gradation 1–100 %, Tunable White (variation de température), scènes lumineuses par pièce et détection de présence intégrée.",
+    specs: ["DALI-2 / KNX", "Scènes horaires", "Lumière du jour"],
   },
   {
+    id: "stores",
+    node: "MODULE 02",
     icon: "/assets/icons/stores.png",
-    label: "Stores et volets",
-    body: "Position et angle des lames, protection solaire suivant la course du soleil, sécurité vent et pluie.",
+    label: "Stores et Volets Roulants",
+    body: "Gestion millimétrée de la hauteur et de l'angle des lames, protection solaire bioclimatique et sécurité automatique vent/pluie.",
+    specs: ["Suivi solaire", "Lames à 45°", "Station météo"],
   },
   {
-    icon: "/assets/icons/cvc.png",
-    label: "Chauffage et climatisation",
-    body: "Régulation par zone, consigne liée à l'occupation, coordination avec les ouvrants.",
+    id: "cvc",
+    node: "MODULE 03",
+    icon: "/assets/icons/climatisation.png",
+    label: "Climatisation & Chauffage CVC",
+    body: "Régulation zone par zone, intégration des groupes VRV/VRF et pompes à chaleur. Basculement automatique selon présence et saisons.",
+    specs: ["Inverter / VRF", "Zone par zone", "-32% d'énergie"],
   },
   {
+    id: "securite",
+    node: "MODULE 04",
     icon: "/assets/icons/securite.png",
-    label: "Sécurité et accès",
-    body: "Intrusion, contrôle d'accès, simulation de présence, scénarios d'alerte reliés à l'éclairage.",
+    label: "Sécurité & Contrôle d'Accès",
+    body: "Détection d'intrusion, contrôle d'accès biométrique, simulateur de présence et extinction centralisée en cas d'absence.",
+    specs: ["Anti-intrusion", "Contrôle accès", "Simulation"],
   },
   {
-    icon: "/assets/icons/audio.png",
-    label: "Audio multiroom",
-    body: "Sources par zone, appels de scène depuis les claviers muraux, intégration des amplificateurs.",
+    id: "audio",
+    node: "MODULE 05",
+    icon: "/assets/icons/musique.png",
+    label: "Audio Multiroom & Médias",
+    body: "Diffusion sonore haute-fidélité intégrée par zone. Rappel des playlists préférées et synchronisation avec les scènes de vie.",
+    specs: ["Multi-source", "Claviers muraux", "Zones indépendantes"],
   },
   {
+    id: "supervision",
+    node: "MODULE 06",
     icon: "/assets/icons/supervision.png",
-    label: "Supervision",
-    body: "Écran mural, application, journal des états, mesure des consommations par circuit.",
+    label: "Hypervision & Écran Mural",
+    body: "Centralisation sur écran mural OLED et application mobile sécurisée locale. Comptage des consommations par circuit et journal d'états.",
+    specs: ["Écran OLED", "App Smartphone", "Comptage énergie"],
   },
 ];
 
-const BOUTON_RAIL =
-  "inline-flex h-11 w-11 items-center justify-center border border-rule-strong font-mono text-base text-chalk transition-colors duration-200 hover:border-blueprint hover:bg-blueprint hover:text-encre disabled:pointer-events-none disabled:opacity-25 motion-reduce:transition-none";
-
 export function Solutions() {
-  const railRef = useRef<HTMLUListElement>(null);
   const sectionRef = useRevelation<HTMLElement>();
-  const [enButee, setEnButee] = useState({ debut: true, fin: false });
-
-  const lireScroll = () => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const parcourable = rail.scrollWidth - rail.clientWidth;
-    setEnButee({ debut: rail.scrollLeft < 4, fin: rail.scrollLeft > parcourable - 4 });
-  };
-
-  useEffect(() => {
-    lireScroll();
-    window.addEventListener("resize", lireScroll);
-    return () => window.removeEventListener("resize", lireScroll);
-  }, []);
-
-  const defiler = (direction: 1 | -1) => {
-    const rail = railRef.current;
-    if (!rail) return;
-    rail.scrollBy({ left: direction * rail.clientWidth * 0.85, behavior: "smooth" });
-  };
+  const [carteActive, setCarteActive] = useState<string | null>(null);
 
   return (
     <section
-      className="border-t border-rule bg-ardoise/70 backdrop-blur-[2px]"
+      className="border-t border-rule bg-ardoise/80 backdrop-blur-[2px]"
       id="solutions"
       ref={sectionRef}
     >
-      <div className="mx-auto flex w-full max-w-[1480px] items-end justify-between gap-6 px-5 pt-28 md:px-10 md:pt-40">
-        <div className="revelation">
+      <div className="mx-auto w-full max-w-[1480px] px-5 py-28 md:px-10 md:py-40">
+        <div className="revelation max-w-[720px]">
           <Eyebrow>Six domaines, un seul projet</Eyebrow>
           <TitreRevele
             as="h2"
-            className="mt-7 max-w-[15ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
-            texte="Ce que nous mettons sur le bus."
+            className="mt-7 font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
+            texte="Ce que nous automatisons."
           />
+          <p className="mt-8 text-lg leading-relaxed text-graphite">
+            Chaque équipement du bâtiment est raccordé à la même infrastructure filaire
+            intelligente. L&apos;ensemble s&apos;interconnecte sans passerelle propriétaire pour
+            former un système unifié, réactif et pérenne.
+          </p>
         </div>
 
-        <div className="hidden shrink-0 gap-2 md:flex">
-          <button
-            aria-label="Domaine précédent"
-            className={BOUTON_RAIL}
-            disabled={enButee.debut}
-            onClick={() => defiler(-1)}
-            type="button"
-          >
-            ‹
-          </button>
-          <button
-            aria-label="Domaine suivant"
-            className={BOUTON_RAIL}
-            disabled={enButee.fin}
-            onClick={() => defiler(1)}
-            type="button"
-          >
-            ›
-          </button>
+        {/* Grille d'Ingénierie des 6 Domaines */}
+        <div className="relative mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {DOMAINES_SOLUTIONS.map((domaine, index) => {
+            const active = carteActive === domaine.id;
+            return (
+              <div
+                className={`revelation group relative flex flex-col justify-between border p-8 transition-all duration-300 motion-reduce:transition-none ${
+                  active
+                    ? "border-blueprint bg-encre shadow-2xl shadow-blueprint/10"
+                    : "border-rule-strong/50 bg-encre/70 hover:border-blueprint/60 hover:bg-encre/90"
+                }`}
+                key={domaine.id}
+                onMouseEnter={() => setCarteActive(domaine.id)}
+                onMouseLeave={() => setCarteActive(null)}
+                style={{ "--revelation-delai": `${index * 80}ms` } as React.CSSProperties}
+              >
+                {/* Ligne de connexion bus supérieure */}
+                <div className="flex items-center justify-between border-b border-rule-strong/40 pb-5">
+                  <div className="flex items-center gap-2.5">
+                    <span className="h-2 w-2 rounded-full bg-blueprint shadow-[0_0_8px_#7FA8E8]" />
+                    <span className="font-mono text-[0.68rem] tracking-[0.16em] text-blueprint font-semibold">
+                      {domaine.node}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[0.68rem] tracking-[0.14em] text-graphite">
+                    0{index + 1} / 06
+                  </span>
+                </div>
+
+                {/* Icône & Titre */}
+                <div className="mt-8">
+                  <div className="inline-flex h-14 w-14 items-center justify-center border border-rule-strong/50 bg-ardoise/50 p-2.5 transition-colors group-hover:border-blueprint/60">
+                    <img
+                      alt=""
+                      className="h-9 w-9 opacity-90 [filter:invert(1)_sepia(1)_saturate(2.4)_hue-rotate(178deg)_brightness(1.05)]"
+                      decoding="async"
+                      loading="lazy"
+                      src={domaine.icon}
+                    />
+                  </div>
+
+                  <h3 className="mt-6 font-display text-2xl font-semibold leading-tight text-chalk group-hover:text-blueprint transition-colors duration-300">
+                    {domaine.label}
+                  </h3>
+
+                  <p className="mt-4 text-sm leading-relaxed text-graphite">{domaine.body}</p>
+                </div>
+
+                {/* Spécifications & Tags d'ingénierie */}
+                <div className="mt-8 border-t border-rule-strong/40 pt-5">
+                  <div className="flex flex-wrap gap-2">
+                    {domaine.specs.map((spec) => (
+                      <span
+                        className="border border-rule-strong/40 bg-ardoise/40 px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-wider text-chalk transition-colors group-hover:border-blueprint/40"
+                        key={spec}
+                      >
+                        {spec}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
-
-      <div className="relative mt-16">
-        <ul
-          aria-label="Les six domaines"
-          className="flex snap-x snap-mandatory overflow-x-auto pb-16 md:pb-20"
-          onScroll={lireScroll}
-          ref={railRef}
-          tabIndex={0}
-        >
-          {DOMAINES.map((domaine, index) => (
-            <li
-              className="revelation w-[17rem] shrink-0 snap-start pr-10 first:ml-5 last:mr-5 md:w-[21rem] md:pr-14 md:first:ml-10 md:last:mr-10"
-              key={domaine.label}
-              style={{ "--revelation-delai": `${index * 70}ms` } as React.CSSProperties}
-            >
-              <span className="font-mono text-[0.72rem] tracking-[0.14em] text-blueprint">
-                {String(index + 1).padStart(2, "0")} / 06
-              </span>
-
-              {/* Les icônes sont des traits sombres : sur fond noir elles
-               * disparaîtraient. L'inversion les rend au bleu de plan. */}
-              <img
-                alt=""
-                className="mt-8 h-14 w-14 opacity-90 [filter:invert(1)_sepia(1)_saturate(2.4)_hue-rotate(178deg)_brightness(1.05)]"
-                decoding="async"
-                loading="lazy"
-                src={domaine.icon}
-              />
-
-              <h3 className="mt-7 font-display text-2xl font-normal leading-tight tracking-tight text-chalk">
-                {domaine.label}
-              </h3>
-              <p className="mt-4 max-w-[32ch] leading-relaxed text-graphite">{domaine.body}</p>
-            </li>
-          ))}
-        </ul>
-
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 hidden w-28 bg-gradient-to-l from-ardoise to-transparent transition-opacity duration-300 md:block"
-          style={{ opacity: enButee.fin ? 0 : 1 }}
-        />
-      </div>
-
-      <div className="pb-28 md:pb-40" />
     </section>
   );
 }
 
-const MARQUES = ["Gira", "JUNG", "Basalte", "ABB", "Schneider Electric", "Theben", "MDT", "Zennio"];
+const MARQUES = [
+  "Gira",
+  "JUNG",
+  "Basalte",
+  "Ekinex",
+  "ABB",
+  "Schneider Electric",
+  "Theben",
+  "MDT",
+  "Zennio",
+];
 
 export function Marques() {
   const ref = useRevelation<HTMLElement>();
@@ -392,10 +405,6 @@ export function Marques() {
         </div>
       </div>
 
-      {/* Défilement continu : une liste statique de huit noms se lit comme un
-       * tableau, un ruban qui passe se lit comme un catalogue. La liste est
-       * dupliquée pour que la translation boucle sans raccord ; la copie est
-       * masquée aux lecteurs d'écran, qui n'ont pas à l'entendre deux fois. */}
       <div className="relative mt-20 py-10 md:mt-28">
         <div className="marquee">
           {[0, 1].map((copie) => (
@@ -416,8 +425,6 @@ export function Marques() {
           ))}
         </div>
 
-        {/* Les bords s'estompent : le ruban entre et sort du champ au lieu
-         * d'être coupé net par la fenêtre. */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-encre to-transparent md:w-48"

@@ -14,6 +14,10 @@ import tsconfigPaths from "vite-tsconfig-paths";
 // pendant le rendu ou au niveau module — seulement dans un effet, un handler,
 // ou derrière `typeof window !== "undefined"`.
 export default defineConfig({
+  build: {
+    target: "esnext",
+    cssMinify: true,
+  },
   plugins: [
     // Le plugin TanStack Start doit s'exécuter avant celui de React.
     tanstackStart(),

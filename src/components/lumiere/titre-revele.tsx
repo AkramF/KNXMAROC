@@ -54,15 +54,15 @@ export function TitreRevele({
     <Balise className={className} ref={ref}>
       {lignes.map((ligne, indexLigne) => (
         <span className="block" key={indexLigne}>
-          {ligne.split(" ").map((mot, indexMot) => {
+          {ligne.split(" ").map((mot, indexMot, tousMots) => {
             const delai = delaiBase + compteur * 55;
             compteur += 1;
             return (
-              <span className="mot" key={`${indexLigne}-${indexMot}`}>
-                <span style={{ "--mot-delai": `${delai}ms` } as React.CSSProperties}>{mot}</span>
-                {/* L'espace vit hors du masque, sinon il se fait rogner et les
-                 * mots se collent pendant l'animation. */}
-                {indexMot < ligne.split(" ").length - 1 ? " " : null}
+              <span key={`${indexLigne}-${indexMot}`}>
+                <span className="mot">
+                  <span style={{ "--mot-delai": `${delai}ms` } as React.CSSProperties}>{mot}</span>
+                </span>
+                {indexMot < tousMots.length - 1 ? " " : null}
               </span>
             );
           })}

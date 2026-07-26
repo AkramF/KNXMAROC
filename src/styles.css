@@ -1,5 +1,4 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 
 /* ---------------------------------------------------------------
  * KNX MAROC.
@@ -11,7 +10,7 @@
  *
  * Les valeurs ci-dessous sont les positions de repli, utilisées avant que
  * le script ne prenne la main. Elles correspondent à la scène « soirée ».
- * --------------------------------------------------------------- */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @theme {
   /* Fond et surface : pilotés par la scène, avec repli. */
   --color-encre: var(--scene-fond, #0d1012);
@@ -144,6 +143,11 @@
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
+  margin-right: 0.28em;
+  padding: 0.25em 0.15em 0.15em 0.05em;
+  margin-top: -0.25em;
+  margin-bottom: -0.15em;
+  margin-left: -0.05em;
 }
 
 .mot > span {

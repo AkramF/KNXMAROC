@@ -193,7 +193,8 @@ export function Contact() {
                 </div>
                 <div>
                   <label className={ETIQUETTE} htmlFor={`${prefixe}-organisation`}>
-                    Société ou cabinet
+                    Société ou cabinet{" "}
+                    <span className="normal-case text-graphite/70 font-normal">(facultatif)</span>
                   </label>
                   <input
                     className={CHAMP}

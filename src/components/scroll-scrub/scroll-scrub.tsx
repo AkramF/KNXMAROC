@@ -10,7 +10,7 @@ export interface ScrollScrubScene {
   label: string;
   poster: string;
   mobilePoster?: string;
-  clip: string;
+  clip?: string;
   mobileClip?: string;
   title: string;
   body: string;
@@ -27,7 +27,7 @@ export interface ScrollScrubScene {
 export interface ScrollScrubConnector {
   poster: string;
   mobilePoster?: string;
-  clip: string;
+  clip?: string;
   mobileClip?: string;
   scroll?: number;
 }
@@ -54,7 +54,7 @@ interface Segment {
   nextSectionIndex: number;
   poster: string;
   mobilePoster?: string;
-  clip: string;
+  clip?: string;
   mobileClip?: string;
   weight: number;
   linger: number;
@@ -365,7 +365,7 @@ export function ScrollScrub({
     const readScroll = () => {
       const pageY = window.scrollY || window.pageYOffset;
       const y = clamp(pageY - rootTop, 0, total);
-      const crossfade = 0.1 * viewportHeight;
+      const fadeWindow = 0.45 * viewportHeight;
       let currentIndex = 0;
 
       for (const [index, segment] of runtime.entries()) {
@@ -377,23 +377,52 @@ export function ScrollScrub({
         const local = clamp((y - segment.start) / length);
         segment.target = segment.linger ? lingerEase(local, segment.linger) : local;
 
-        let outside = 0;
-        if (y < segment.start) {
-          outside = segment.start - y;
+        let opacity = 0;
+        const isFirst = index === 0;
+        const isLast = index === runtime.length - 1;
+
+        if (isFirst) {
+          const fadeStart = segment.end - fadeWindow;
+          if (y <= fadeStart) {
+            opacity = 1;
+          } else if (y < segment.end) {
+            opacity = smoothstep(1 - (y - fadeStart) / fadeWindow);
+          } else {
+            opacity = 0;
+          }
+        } else if (isLast) {
+          const fadeStart = segment.start - fadeWindow;
+          if (y < fadeStart) {
+            opacity = 0;
+          } else if (y < segment.start) {
+            opacity = smoothstep((y - fadeStart) / fadeWindow);
+          } else {
+            opacity = 1;
+          }
+        } else {
+          const fadeInStart = segment.start - fadeWindow;
+          const fadeOutStart = segment.end - fadeWindow;
+          if (y < fadeInStart) {
+            opacity = 0;
+          } else if (y < segment.start) {
+            opacity = smoothstep((y - fadeInStart) / fadeWindow);
+          } else if (y < fadeOutStart) {
+            opacity = 1;
+          } else if (y < segment.end) {
+            opacity = smoothstep(1 - (y - fadeOutStart) / fadeWindow);
+          } else {
+            opacity = 0;
+          }
         }
-        if (y > segment.end) {
-          outside = y - segment.end;
-        }
-        let opacity = smoothstep(1 - outside / Math.max(crossfade, 1));
+
         if (reduceMotion) {
-          opacity = outside === 0 ? 1 : 0;
+          opacity = y >= segment.start && y < segment.end ? 1 : 0;
         }
 
         segment.visible = opacity > 0.001;
+        segment.layer.dataset.visible = opacity > 0.1 ? "true" : "false";
         segment.layer.style.opacity = String(opacity);
-        segment.layer.style.zIndex = index === currentIndex ? "2" : "1";
-        /* Progression locale du segment : le calque schématique s'en sert pour
-         * tracer la ligne de bus au rythme exact de la caméra. */
+        segment.layer.style.zIndex = String(10 + index);
         segment.layer.style.setProperty("--ss-segment", String(segment.target));
 
         if (y > segment.start - 1.5 * viewportHeight && y < segment.end + 1.5 * viewportHeight) {
@@ -642,8 +671,10 @@ export function ScrollScrub({
           const titre = (
             <span className="scroll-scrub__title">
               {scene.title.split(" ").map((mot, index, tous) => (
-                <span className="mot" key={index}>
-                  <span style={{ "--mot-delai": `${index * 70}ms` } as CSSProperties}>{mot}</span>
+                <span key={index}>
+                  <span className="mot">
+                    <span style={{ "--mot-delai": `${index * 70}ms` } as CSSProperties}>{mot}</span>
+                  </span>
                   {index < tous.length - 1 ? " " : null}
                 </span>
               ))}
