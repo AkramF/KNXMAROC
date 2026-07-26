@@ -47,10 +47,11 @@
   display: block;
   object-fit: cover;
   object-position: var(--ss-object-position);
-  /* Les rushes sont exposés en plein jour ; le site vit dans le noir. On les
-   * ramène à la scène réelle d'usage — une villa le soir — en écrasant les
-   * hautes lumières et en refroidissant légèrement. */
-  filter: brightness(0.52) contrast(1.14) saturate(0.72);
+  /* Les clips sont désormais tournés de nuit : luminance moyenne mesurée
+   * entre 22 et 29 sur 255. L'étalonnage sombre qui rattrapait les anciens
+   * rushes de plein jour les écraserait ici — on se contente d'un léger
+   * appui sur le contraste. */
+  filter: var(--ss-etalonnage, contrast(1.06) saturate(0.92));
 }
 
 .scroll-scrub__poster {

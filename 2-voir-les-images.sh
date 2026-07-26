@@ -10,7 +10,7 @@ set -euo pipefail
 DEST="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_candidats-hero"
 mkdir -p "$DEST"
 
-BASE="https://d8j0ntlcm91z4.cloudfront.net/user_3H0ObVqxuFE92uSehkAHQtDZLyP"
+BASE="${HIGGSFIELD_CDN_BASE:-https://d8j0ntlcm91z4.cloudfront.net/user_3H0ObVqxuFE92uSehkAHQtDZLyP}"
 
 echo "==> Téléchargement des propositions..."
 
