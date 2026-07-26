@@ -15,10 +15,10 @@ export const Route = createFileRoute("/")({
 });
 
 const THEME: ScrollScrubTheme = {
-  accent: "#2E4A7D",
-  background: "#F2F2EF",
-  ink: "#15181B",
-  muted: "#5C6266",
+  accent: "#7FA8E8",
+  background: "#0D1012",
+  ink: "#F2F2EF",
+  muted: "#9AA0A4",
 };
 
 /* Trois temps : la promesse, la preuve, la maîtrise. Les scènes intermédiaires

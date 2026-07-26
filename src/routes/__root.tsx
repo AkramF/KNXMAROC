@@ -36,12 +36,12 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
       <p className="font-mono text-xs uppercase tracking-[0.16em] text-blueprint">Erreur 404</p>
-      <h1 className="font-display text-4xl font-semibold tracking-tighter text-ink">
+      <h1 className="font-display text-4xl font-semibold tracking-tighter text-chalk">
         Cette page n&apos;existe pas.
       </h1>
       <a
         href="/"
-        className="font-mono text-sm uppercase tracking-[0.08em] text-ink underline decoration-blueprint decoration-2 underline-offset-4"
+        className="font-mono text-sm uppercase tracking-[0.08em] text-chalk underline decoration-blueprint decoration-2 underline-offset-4"
       >
         Revenir à l&apos;accueil
       </a>
@@ -54,13 +54,13 @@ function ErrorComponent({ reset }: { error: Error; reset: () => void }) {
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
-      <h1 className="font-display text-3xl font-semibold tracking-tighter text-ink">
+      <h1 className="font-display text-3xl font-semibold tracking-tighter text-chalk">
         Cette page ne s&apos;est pas chargée.
       </h1>
       <p className="max-w-[48ch] text-base leading-relaxed text-graphite">
         Un incident est survenu de notre côté. Réessayez, ou écrivez-nous à{" "}
         <a
-          className="text-ink underline decoration-blueprint decoration-2 underline-offset-4"
+          className="text-chalk underline decoration-blueprint decoration-2 underline-offset-4"
           href={LIEN_EMAIL}
         >
           {COORDONNEES.email}
@@ -73,7 +73,7 @@ function ErrorComponent({ reset }: { error: Error; reset: () => void }) {
           router.invalidate();
           reset();
         }}
-        className="font-mono text-sm uppercase tracking-[0.08em] text-ink underline decoration-blueprint decoration-2 underline-offset-4"
+        className="font-mono text-sm uppercase tracking-[0.08em] text-chalk underline decoration-blueprint decoration-2 underline-offset-4"
       >
         Réessayer
       </button>
@@ -88,7 +88,7 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: TITRE },
       { name: "description", content: DESCRIPTION },
-      { name: "theme-color", content: "#f2f2ef" },
+      { name: "theme-color", content: "#0d1012" },
       { property: "og:title", content: TITRE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
@@ -131,7 +131,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr" style={{ colorScheme: "light" }}>
+    <html lang="fr" style={{ colorScheme: "dark" }}>
       <head>
         <HeadContent />
       </head>

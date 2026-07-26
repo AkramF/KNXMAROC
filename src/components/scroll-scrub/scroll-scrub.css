@@ -47,6 +47,10 @@
   display: block;
   object-fit: cover;
   object-position: var(--ss-object-position);
+  /* Les rushes sont exposés en plein jour ; le site vit dans le noir. On les
+   * ramène à la scène réelle d'usage — une villa le soir — en écrasant les
+   * hautes lumières et en refroidissant légèrement. */
+  filter: brightness(0.52) contrast(1.14) saturate(0.72);
 }
 
 .scroll-scrub__poster {
@@ -55,6 +59,28 @@
 
 .scroll-scrub__video {
   z-index: 1;
+}
+
+/* Vignette : la lumière tombe vers les bords, la copie posée dessus gagne son
+ * contraste sans qu'un aplat gris vienne aplatir l'image. */
+.scroll-scrub__layer::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(
+      to top,
+      var(--ss-bg) 0%,
+      color-mix(in srgb, var(--ss-bg) 55%, transparent) 26%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 120% 90% at 50% 45%,
+      transparent 30%,
+      color-mix(in srgb, var(--ss-bg) 78%, transparent) 100%
+    );
+  pointer-events: none;
 }
 
 .scroll-scrub__layer[data-video-painted="true"] .scroll-scrub__poster {
@@ -165,32 +191,51 @@
   pointer-events: auto;
 }
 
+/* Les chapitres deviennent des repères posés sur un filet, plutôt que des
+ * onglets encadrés : moins de chrome, et le filet redit la ligne de bus. */
 .scroll-scrub__route-button {
+  position: relative;
   min-height: 2.75rem;
-  padding: 0.6rem 0.95rem;
+  padding: 0.7rem 1.1rem;
   border: 0;
-  border-left: 1px solid color-mix(in srgb, var(--ss-ink) 16%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--ss-ink) 18%, transparent);
   color: var(--ss-muted);
-  background: color-mix(in srgb, var(--ss-bg) 74%, transparent);
+  background: transparent;
   font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
-  backdrop-filter: blur(6px);
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
 }
 
-.scroll-scrub__route-button:last-child {
-  border-right: 1px solid color-mix(in srgb, var(--ss-ink) 16%, transparent);
+.scroll-scrub__route-button:hover {
+  color: var(--ss-ink);
+  border-top-color: color-mix(in srgb, var(--ss-ink) 45%, transparent);
 }
 
-.scroll-scrub__route-button:hover,
 .scroll-scrub__route-button[aria-current="step"] {
   color: var(--ss-ink);
+  border-top-color: var(--ss-accent);
 }
 
-.scroll-scrub__route-button[aria-current="step"] {
-  box-shadow: inset 0 -3px 0 0 var(--ss-accent);
+/* Le nœud carré du bus marque le chapitre courant. */
+.scroll-scrub__route-button[aria-current="step"]::before {
+  position: absolute;
+  top: -3.5px;
+  left: 1.1rem;
+  width: 6px;
+  height: 6px;
+  background: var(--ss-accent);
+  content: "";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-scrub__route-button {
+    transition: none;
+  }
 }
 
 .scroll-scrub__route-button:focus-visible {
@@ -226,22 +271,8 @@
 
 .scroll-scrub__copy {
   position: relative;
-  width: min(38rem, 46vw);
+  width: min(40rem, 50vw);
   pointer-events: auto;
-}
-
-.scroll-scrub__copy::before {
-  position: absolute;
-  z-index: -1;
-  inset: -3rem -5rem;
-  content: "";
-  background: radial-gradient(
-    ellipse at center,
-    color-mix(in srgb, var(--ss-bg) 90%, transparent) 0%,
-    color-mix(in srgb, var(--ss-bg) 62%, transparent) 54%,
-    transparent 78%
-  );
-  pointer-events: none;
 }
 
 .scroll-scrub__heading {
@@ -249,10 +280,14 @@
   font-weight: inherit;
 }
 
+/* Le kicker est précédé d'un tiret cadratin tracé : petit repère de plan,
+ * cohérent avec le vocabulaire schématique du reste de la page. */
 .scroll-scrub__kicker {
-  display: block;
-  max-width: 30ch;
-  margin: 0 0 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: 34ch;
+  margin: 0 0 1.4rem;
   color: var(--ss-accent);
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   font-size: 0.72rem;
@@ -261,44 +296,65 @@
   text-transform: uppercase;
 }
 
+.scroll-scrub__kicker::before {
+  width: 2.25rem;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  flex: 0 0 auto;
+}
+
 .scroll-scrub__title {
   display: block;
-  max-width: 13ch;
+  max-width: 12ch;
   margin: 0;
   color: var(--ss-ink);
   font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(2.6rem, 5.6vw, 5.75rem);
+  font-size: clamp(2.9rem, 6.6vw, 6rem);
   font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: -0.045em;
+  line-height: 0.92;
+  /* Plancher de -0.04em respecté : on ne serre pas au-delà. */
+  letter-spacing: -0.04em;
   text-wrap: balance;
 }
 
 .scroll-scrub__body {
-  max-width: 42ch;
-  margin: 1.4rem 0 0;
+  max-width: 46ch;
+  margin: 1.6rem 0 0;
   color: var(--ss-muted);
-  font-size: clamp(1rem, 1.3vw, 1.15rem);
-  line-height: 1.6;
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  line-height: 1.65;
 }
 
 .scroll-scrub__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0;
-  margin: 1.5rem 0 0;
+  gap: 0.5rem 1.75rem;
+  margin: 1.75rem 0 0;
   padding: 0;
   list-style: none;
 }
 
+/* Les étiquettes perdent leur boîte : sur fond sombre, six rectangles bordés
+ * font un bandeau de badges. Un point de bus suffit à les rattacher au
+ * système. */
 .scroll-scrub__tags li {
-  padding: 0.4rem 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--ss-ink) 16%, transparent);
-  margin-right: -1px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   color: var(--ss-ink);
   font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 0.74rem;
-  letter-spacing: 0.04em;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.scroll-scrub__tags li::before {
+  width: 5px;
+  height: 5px;
+  background: var(--ss-accent);
+  content: "";
+  flex: 0 0 auto;
 }
 
 .scroll-scrub__actions {
@@ -340,19 +396,13 @@
     width: min(100%, 36rem);
   }
 
-  .scroll-scrub__copy::before {
-    inset: -3rem -2rem;
-    background: linear-gradient(
-      to top,
-      var(--ss-bg) 0%,
-      color-mix(in srgb, var(--ss-bg) 84%, transparent) 58%,
-      transparent 100%
-    );
+  .scroll-scrub__tags {
+    gap: 0.4rem 1.1rem;
   }
 
   .scroll-scrub__title {
-    max-width: 14ch;
-    font-size: clamp(2.3rem, 10.5vw, 4.25rem);
+    max-width: 13ch;
+    font-size: clamp(2.4rem, 11vw, 4.5rem);
   }
 }
 

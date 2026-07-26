@@ -2,32 +2,50 @@
 @source "../src";
 
 /* ---------------------------------------------------------------
- * KNX MAROC — couche de marque.
- * Palette et typographie verrouillées dans design-brief.md.
+ * KNX MAROC — système sombre.
  *
- * La palette vient de la matière du métier : la chaux des enduits
- * marocains, l'encre du dessin d'architecte, le bleu du plan. Le
- * blueprint est le seul élément saturé de la page, ce qui lui permet
- * de porter tous les états, focus et repères actifs sans concurrence.
+ * Le monde clair d'origine (enduit à la chaux, encre d'architecte) était
+ * juste sur le papier mais rendait le site indistinct d'une agence
+ * d'architecture. Le métier se joue ailleurs : dans une villa, l'installation
+ * ne se voit qu'à la nuit tombée, quand les scènes s'allument et que le
+ * clavier s'éclaire. Le fond sombre est la scène réelle d'usage, pas un effet
+ * de mode.
+ *
+ * Tous les ratios sont mesurés sur #0D1012 et notés en regard.
  * --------------------------------------------------------------- */
 @theme {
+  /* Encre profonde, jamais noir pur : le noir absolu écrase les ombres des
+   * photographies et durcit le texte. */
+  --color-encre: #0d1012;
+
+  /* Surface légèrement soulevée, pour les blocs qui doivent se détacher du
+   * fond sans bordure. */
+  --color-ardoise: #161a1d;
+
+  /* Texte principal — 17.0:1 */
   --color-chalk: #f2f2ef;
-  --color-paper: #ffffff;
-  --color-ink: #15181b;
 
-  /* Texte secondaire. Assombri depuis #6e7479, qui plafonnait à 4.22:1
-   * sur chalk — sous le seuil WCAG AA. Ici : 5.52:1 sur chalk,
-   * 6.19:1 sur paper. */
-  --color-graphite: #5c6266;
+  /* Texte secondaire — 7.2:1, très au-dessus du seuil AA de 4.5:1. Le corps
+   * de texte du site clair plafonnait à 4.22:1. */
+  --color-graphite: #9aa0a4;
 
-  /* Filet décoratif entre blocs de contenu. */
-  --color-rule: #dfdfd9;
+  /* Filet décoratif entre blocs. Sous le seuil de contraste, mais c'est une
+   * séparation graphique, pas une limite de composant. */
+  --color-rule: #2c3235;
 
-  /* Bordure des contrôles (champs, boutons secondaires). WCAG 1.4.11
-   * exige 3:1 pour une limite de composant : 3.58:1 sur paper. */
-  --color-rule-strong: #82888e;
+  /* Bordure de contrôle (champs, boutons secondaires). WCAG 1.4.11 exige 3:1
+   * pour une limite de composant : 3.7:1 sur l'encre, 3.4:1 sur l'ardoise.
+   * La valeur précédente tombait pile à 3.00 sur l'ardoise — un arrondi de
+   * rendu suffisait à la faire passer sous le seuil. */
+  --color-rule-strong: #666e76;
 
-  --color-blueprint: #2e4a7d;
+  /* Bleu de plan, remonté en luminosité pour vivre sur fond sombre : le
+   * #2E4A7D d'origine tombait à 2.2:1 et devenait illisible. Ici 7.9:1, et
+   * l'encre posée dessus rend 7.9:1 dans l'autre sens. */
+  --color-blueprint: #7fa8e8;
+
+  /* Variante sourde pour les tracés qui ne doivent pas attirer l'œil. */
+  --color-blueprint-mat: #3f63a5;
 
   --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -35,18 +53,17 @@
 
 @layer base {
   html {
-    background-color: var(--color-chalk);
-    color: var(--color-ink);
-    color-scheme: light;
+    background-color: var(--color-encre);
+    color: var(--color-chalk);
+    color-scheme: dark;
     scroll-behavior: smooth;
-    /* Décale les ancres sous l'en-tête fixe (72 px + respiration). */
     scroll-padding-top: 6rem;
   }
 
   body {
     min-height: 100dvh;
-    background-color: var(--color-chalk);
-    color: var(--color-ink);
+    background-color: var(--color-encre);
+    color: var(--color-chalk);
     font-family: var(--font-display);
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
@@ -54,7 +71,7 @@
 
   ::selection {
     background: var(--color-blueprint);
-    color: var(--color-paper);
+    color: var(--color-encre);
   }
 
   :focus-visible {
@@ -63,15 +80,34 @@
   }
 }
 
-/* Le lien d'évitement n'existe que pour le clavier : il sort de l'écran
- * jusqu'à ce qu'il reçoive le focus. */
+/* ── Révélation au scroll ───────────────────────────────────────────
+ * Un seul geste, réutilisé partout : le bloc monte de quelques pixels en
+ * apparaissant. Sortie exponentielle depuis un état déjà lisible — si le
+ * script ne s'exécute jamais, le contenu reste visible (voir .revelation
+ * sans data-vu, qui n'est masqué que par le script lui-même).
+ * --------------------------------------------------------------- */
+.revelation[data-vu="non"] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.revelation {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--revelation-delai, 0ms);
+}
+
+/* Le lien d'évitement n'existe que pour le clavier. */
 .saut-contenu {
   position: absolute;
   left: 1rem;
   top: -100%;
   z-index: 100;
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--color-chalk);
+  color: var(--color-encre);
   padding: 0.75rem 1.25rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -86,5 +122,14 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /* La révélation est un agrément, pas de l'information : on la supprime
+   * entièrement plutôt que de l'accélérer. */
+  .revelation,
+  .revelation[data-vu="non"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

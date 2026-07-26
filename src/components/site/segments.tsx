@@ -1,5 +1,7 @@
 import { COORDONNEES, LIEN_EMAIL, LIEN_TELEPHONE } from "../../lib/coordonnees";
+import { useRevelation } from "../../lib/use-revelation";
 import { Monogram } from "../brand/logo";
+import { Eyebrow } from "./sections";
 
 const SEGMENTS = [
   {
@@ -29,36 +31,40 @@ const SEGMENTS = [
 ];
 
 export function Segments() {
-  return (
-    <section className="border-t border-rule bg-paper py-24 md:py-32" id="segments">
-      <div className="mx-auto w-full max-w-[1400px] px-5 md:px-10">
-        <h2 className="max-w-[14ch] font-display text-4xl font-semibold leading-none tracking-tighter text-ink md:text-6xl">
-          Quatre terrains, une même norme.
-        </h2>
+  const ref = useRevelation<HTMLElement>();
 
-        <div className="mt-16">
+  return (
+    <section className="border-t border-rule bg-ardoise py-28 md:py-40" id="segments" ref={ref}>
+      <div className="mx-auto w-full max-w-[1480px] px-5 md:px-10">
+        <div className="revelation">
+          <Eyebrow>Terrains</Eyebrow>
+          <h2 className="mt-7 max-w-[14ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]">
+            Quatre terrains, une même norme.
+          </h2>
+        </div>
+
+        <div className="mt-20">
           {/* Quatre marchés parallèles : pas de numérotation, elle laisserait
            * croire à une séquence. Les étapes de la méthode, plus bas, sont
            * numérotées parce qu'elles s'enchaînent réellement. */}
           {SEGMENTS.map((segment) => (
             <article
-              className="grid gap-6 border-t border-rule py-12 md:grid-cols-12 md:gap-10 md:py-16"
+              className="revelation group grid gap-6 border-t border-rule py-12 transition-colors duration-500 last:border-b md:grid-cols-12 md:gap-10 md:py-16 motion-reduce:transition-none"
               id={segment.id}
               key={segment.id}
             >
-              <h3 className="font-display text-2xl font-semibold leading-tight tracking-tight text-ink md:col-span-5 md:text-3xl">
+              <h3 className="font-display text-2xl font-semibold leading-tight tracking-tight text-chalk transition-colors duration-300 group-hover:text-blueprint md:col-span-5 md:text-4xl motion-reduce:transition-none">
                 {segment.titre}
               </h3>
               <div className="md:col-span-6 md:col-start-7">
-                <p className="max-w-[65ch] text-base leading-relaxed text-graphite">
-                  {segment.body}
-                </p>
-                <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+                <p className="max-w-[62ch] text-lg leading-relaxed text-graphite">{segment.body}</p>
+                <ul className="mt-7 flex flex-wrap gap-x-7 gap-y-2.5">
                   {segment.points.map((point) => (
                     <li
-                      className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-ink"
+                      className="flex items-center gap-2.5 font-mono text-[0.72rem] uppercase tracking-[0.1em] text-chalk"
                       key={point}
                     >
+                      <span aria-hidden="true" className="h-[5px] w-[5px] bg-blueprint" />
                       {point}
                     </li>
                   ))}
@@ -92,40 +98,54 @@ const ETAPES = [
 ];
 
 export function Methode() {
+  const ref = useRevelation<HTMLElement>();
+
   return (
-    <section className="border-t border-rule bg-chalk" id="methode">
-      <div className="mx-auto grid w-full max-w-[1400px] gap-14 px-5 py-24 md:grid-cols-12 md:px-10 md:py-32">
+    <section className="border-t border-rule bg-encre" id="methode" ref={ref}>
+      <div className="mx-auto grid w-full max-w-[1480px] gap-16 px-5 py-28 md:grid-cols-12 md:px-10 md:py-40">
         <div className="md:col-span-7">
-          <h2 className="max-w-[16ch] font-display text-4xl font-semibold leading-none tracking-tighter text-ink md:text-5xl">
-            Comment un projet se déroule.
-          </h2>
-          <ol className="mt-14">
+          <div className="revelation">
+            <Eyebrow>Déroulé</Eyebrow>
+            <h2 className="mt-7 max-w-[16ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[3.5rem]">
+              Comment un projet se déroule.
+            </h2>
+          </div>
+
+          {/* La numérotation est méritée ici : les étapes s'enchaînent
+           * réellement, et le filet vertical qui les relie est la même ligne
+           * de bus que partout ailleurs. */}
+          <ol className="relative mt-16">
+            <span aria-hidden="true" className="absolute bottom-8 left-[5px] top-3 w-px bg-rule" />
             {ETAPES.map((etape, index) => (
               <li
-                className="grid grid-cols-[3rem_1fr] gap-5 border-t border-rule py-8"
+                className="revelation relative grid grid-cols-[3rem_1fr] gap-6 pb-12 last:pb-0"
                 key={etape.titre}
+                style={{ "--revelation-delai": `${index * 90}ms` } as React.CSSProperties}
               >
-                <span className="font-mono text-[0.72rem] tracking-[0.14em] text-blueprint">
+                <span
+                  aria-hidden="true"
+                  className="absolute left-0 top-2.5 block h-3 w-3 border-2 border-blueprint bg-encre"
+                />
+                <span className="pt-1 pl-6 font-mono text-[0.72rem] tracking-[0.14em] text-blueprint">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="font-display text-xl font-semibold tracking-tight text-ink">
+                  <h3 className="font-display text-2xl font-semibold tracking-tight text-chalk">
                     {etape.titre}
                   </h3>
-                  <p className="mt-3 max-w-[60ch] text-base leading-relaxed text-graphite">
-                    {etape.body}
-                  </p>
+                  <p className="mt-3 max-w-[58ch] leading-relaxed text-graphite">{etape.body}</p>
                 </div>
               </li>
             ))}
           </ol>
         </div>
-        <aside className="self-start border border-rule bg-paper p-8 md:col-span-4 md:col-start-9 md:sticky md:top-28">
-          <Monogram className="h-8 w-8" />
-          <p className="mt-7 font-display text-xl font-normal leading-snug text-ink">
+
+        <aside className="revelation self-start border border-rule bg-ardoise p-9 md:col-span-4 md:col-start-9 md:sticky md:top-28">
+          <Monogram className="h-8 w-8 text-chalk" />
+          <p className="mt-8 font-display text-2xl font-normal leading-snug text-chalk">
             Le moment le moins cher pour intégrer KNX est la phase études.
           </p>
-          <p className="mt-4 text-sm leading-relaxed text-graphite">
+          <p className="mt-5 leading-relaxed text-graphite">
             Une fois les saignées faites et les gaines tirées, le câblage bus devient un surcoût.
             Consultez-nous pendant que le plan électrique est encore modifiable.
           </p>
@@ -136,18 +156,18 @@ export function Methode() {
 }
 
 const LIEN_PIED =
-  "text-ink underline decoration-rule-strong decoration-1 underline-offset-4 transition-colors hover:decoration-blueprint motion-reduce:transition-none";
+  "text-chalk underline decoration-rule-strong decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-blueprint motion-reduce:transition-none";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-ink/15 bg-chalk">
-      <div className="mx-auto w-full max-w-[1400px] px-5 py-16 md:px-10">
-        <div className="grid gap-10 md:grid-cols-12">
+    <footer className="border-t border-rule bg-encre">
+      <div className="mx-auto w-full max-w-[1480px] px-5 py-20 md:px-10">
+        <div className="grid gap-12 md:grid-cols-12">
           <address className="not-italic md:col-span-4">
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-graphite">
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-blueprint">
               KNX MAROC
             </p>
-            <p className="mt-4 text-base leading-relaxed text-ink">
+            <p className="mt-5 text-lg leading-relaxed text-chalk">
               {COORDONNEES.adresse.rue}
               <br />
               {COORDONNEES.adresse.quartier}, {COORDONNEES.adresse.ville}
@@ -157,10 +177,10 @@ export function SiteFooter() {
           </address>
 
           <div className="md:col-span-4">
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-graphite">
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-blueprint">
               Nous joindre
             </p>
-            <p className="mt-4 flex flex-col gap-2 text-base leading-relaxed">
+            <p className="mt-5 flex flex-col gap-2.5 text-lg leading-relaxed">
               <a className={LIEN_PIED} href={LIEN_TELEPHONE}>
                 {COORDONNEES.telephone.affichage}
               </a>
@@ -171,19 +191,17 @@ export function SiteFooter() {
           </div>
 
           <div className="md:col-span-4">
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-graphite">
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-blueprint">
               Interventions
             </p>
-            <p className="mt-4 text-base leading-relaxed text-ink">
+            <p className="mt-5 text-lg leading-relaxed text-chalk">
               Tout le Maroc, depuis {COORDONNEES.adresse.ville}.
             </p>
-            <p className="mt-2 text-base leading-relaxed text-graphite">
-              Français, arabe, anglais.
-            </p>
+            <p className="mt-2 text-lg leading-relaxed text-graphite">Français, arabe, anglais.</p>
           </div>
         </div>
 
-        <p className="mt-14 max-w-[62ch] border-t border-rule pt-6 text-sm leading-relaxed text-graphite">
+        <p className="mt-16 max-w-[62ch] border-t border-rule pt-7 text-sm leading-relaxed text-graphite">
           KNX est une marque déposée de la KNX Association. KNX MAROC est un intégrateur indépendant
           et n&apos;est affilié à aucun fabricant.
         </p>

@@ -1,31 +1,34 @@
-/* Intention primaire, une seule identité, un seul libellé. Bloc encre, filet
- * blueprint qui se trace sous le label. Rendu en lien dans le chrome de la
- * page et en bouton de soumission du formulaire. Aucun autre contrôle du site
- * n'emprunte ce style. */
+/* Intention primaire, une seule identité, un seul libellé.
+ *
+ * Sur fond sombre, le bloc encre du site clair disparaîtrait. L'action prend
+ * la couleur du bus : bloc blueprint plein, texte encre — 7.9:1. C'est le
+ * seul aplat saturé de la page, donc le seul endroit où l'œil va d'abord. */
 
 import type { ReactNode } from "react";
 
 const SURFACE =
-  "group inline-flex min-h-11 items-center gap-3 bg-ink px-6 py-4 font-mono text-xs uppercase tracking-[0.14em] text-white transition-transform duration-200 active:translate-y-px motion-reduce:transition-none";
+  "group relative inline-flex min-h-12 items-center justify-center gap-3 overflow-hidden bg-blueprint px-7 py-4 font-mono text-xs uppercase tracking-[0.14em] text-encre transition-transform duration-200 active:translate-y-px motion-reduce:transition-none";
 
 const LABEL = "Demander une étude";
 
-function Label({ children = LABEL }: { children?: ReactNode }) {
+function Contenu({ children = LABEL }: { children?: ReactNode }) {
   return (
-    <span className="relative">
-      {children}
+    <>
+      {/* Balayage clair au survol : le bloc s'éclaircit depuis la gauche
+       * plutôt que de changer de teinte d'un coup. */}
       <span
         aria-hidden="true"
-        className="absolute -bottom-1.5 left-0 h-px w-0 bg-blueprint transition-[width] duration-300 group-hover:w-full group-focus-visible:w-full motion-reduce:transition-none"
+        className="absolute inset-0 origin-left scale-x-0 bg-chalk transition-transform duration-300 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100 motion-reduce:transition-none"
       />
-    </span>
+      <span className="relative">{children}</span>
+    </>
   );
 }
 
 export function EtudeCta({ href = "#contact", className }: { href?: string; className?: string }) {
   return (
     <a className={[SURFACE, className].filter(Boolean).join(" ")} href={href}>
-      <Label />
+      <Contenu />
     </a>
   );
 }
@@ -40,13 +43,11 @@ export function EtudeSubmit({
   return (
     <button
       aria-busy={pending || undefined}
-      className={[SURFACE, "justify-center disabled:opacity-60", className]
-        .filter(Boolean)
-        .join(" ")}
+      className={[SURFACE, "disabled:opacity-60", className].filter(Boolean).join(" ")}
       disabled={pending}
       type="submit"
     >
-      <Label>{pending ? "Envoi en cours…" : LABEL}</Label>
+      <Contenu>{pending ? "Envoi en cours…" : LABEL}</Contenu>
     </button>
   );
 }

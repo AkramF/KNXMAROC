@@ -13,13 +13,25 @@
 
 type SchemaId = "seuil" | "sejour" | "supervision";
 
-const TRAIT = "#2E4A7D";
+/* Bleu de plan remonté en luminosité : sur le fond sombre, le #2E4A7D du
+ * monde clair tombait à 2.2:1 et disparaissait dans l'image. */
+const TRAIT = "#7FA8E8";
 
 /* Un nœud du bus : le petit carré des schémas KNX, pas une pastille décorative. */
 function Noeud({ x, y, delai = 0 }: { x: number; y: number; delai?: number }) {
   return (
     <g className="schema-knx__noeud" style={{ "--noeud-delai": delai } as React.CSSProperties}>
-      <rect x={x - 7} y={y - 7} width={14} height={14} fill="none" stroke={TRAIT} strokeWidth={2} />
+      {/* Le nœud est rempli d'encre : posé sur une photographie, un carré
+       * vide laisse passer l'image et devient illisible. */}
+      <rect
+        x={x - 7}
+        y={y - 7}
+        width={14}
+        height={14}
+        fill="#0D1012"
+        stroke={TRAIT}
+        strokeWidth={2}
+      />
       <rect x={x - 2.5} y={y - 2.5} width={5} height={5} fill={TRAIT} />
     </g>
   );
