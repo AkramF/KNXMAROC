@@ -91,7 +91,7 @@ export function SiteFooter() {
                 </a>
               </p>
               <p className="pt-2 font-mono text-xs uppercase tracking-wider text-emerald-400 font-semibold">
-                Partenaire Certifié KNX Partner
+                KNX Partner
               </p>
             </address>
           </div>
