@@ -22,10 +22,13 @@ const THEME: ScrollScrubTheme = {
 };
 
 /* Trois temps : la promesse, la preuve, la maîtrise. Les scènes intermédiaires
- * du parcours d'origine (le geste, le séjour) racontaient la même promesse que
- * la première — huit hauteurs d'écran et 16 Mo avant le premier argument
- * commercial. Le fondu enchaîné du composant absorbe la coupe entre le seuil et
- * le tableau. */
+ * du parcours d'origine racontaient la même promesse que la première — huit
+ * hauteurs d'écran et 16 Mo avant le premier argument commercial.
+ *
+ * Chaque scène porte un schéma de bus (voir schema-knx.tsx). Sans lui, ces
+ * plans photoréalistes pourraient illustrer n'importe quelle annonce
+ * immobilière : rien dans l'image ne dit KNX. Le schéma trace le câble au
+ * rythme du scroll et rend visible ce que la copie affirme. */
 const SCENES: ScrollScrubScene[] = [
   {
     actions: <EtudeCta />,
@@ -37,21 +40,28 @@ const SCENES: ScrollScrubScene[] = [
     mobileClip: "/assets/world/scene-1-mobile.mp4",
     mobilePoster: "/assets/world/scene-1-mobile-poster.jpg",
     poster: "/assets/world/scene-1-poster.jpg",
+    schema: "seuil",
     scroll: 1.4,
-    tags: ["Rabat", "Norme ouverte", "Études et mise en service"],
+    tags: ["Rabat", "Partenaire KNX certifié", "Études et mise en service"],
     title: "La maison vous reconnaît.",
   },
   {
-    body: "Actionneurs sur rail DIN, repérage complet, schémas à jour. Une armoire lisible se dépanne en minutes et s'étend sans être refaite.",
+    /* Le plan montre des stores motorisés qui descendent sur une baie vitrée.
+     * Le texte précédent parlait d'armoire électrique et de rail DIN, qui
+     * n'apparaissent nulle part dans le clip : la copie décrit maintenant ce
+     * que l'image donne réellement à voir. L'argument de rigueur technique
+     * tient sa place dans la section Méthode. */
+    body: "Les stores suivent la course du soleil, l'éclairage bascule en fin de journée, la climatisation s'arrête quand une baie s'ouvre. Le confort se règle une fois et tient.",
     clip: "/assets/world/scene-4.mp4",
-    id: "tableau",
-    label: "Tableau",
+    id: "sejour",
+    label: "Séjour",
     mobileClip: "/assets/world/scene-4-mobile.mp4",
     mobilePoster: "/assets/world/scene-4-mobile-poster.jpg",
     poster: "/assets/world/scene-4-poster.jpg",
+    schema: "sejour",
     scroll: 1.3,
-    tags: ["Rail DIN", "Repérage", "Schémas remis"],
-    title: "Derrière le calme, la rigueur.",
+    tags: ["Protection solaire", "Scènes horaires", "Consigne par zone"],
+    title: "La lumière suit la vie.",
   },
   {
     actions: <EtudeCta />,
@@ -63,7 +73,9 @@ const SCENES: ScrollScrubScene[] = [
     mobileClip: "/assets/world/scene-5-mobile.mp4",
     mobilePoster: "/assets/world/scene-5-mobile-poster.jpg",
     poster: "/assets/world/scene-5-poster.jpg",
+    schema: "supervision",
     scroll: 1.4,
+    tags: ["Projet ETS remis", "Mesure par circuit", "Écran ou téléphone"],
     title: "Tout se pilote, tout se prouve.",
   },
 ];

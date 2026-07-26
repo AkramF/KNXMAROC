@@ -143,6 +143,17 @@ export function Positionnement() {
         <dl className="grid gap-px self-start border border-rule bg-rule md:col-span-5 md:col-start-8">
           <div className="bg-paper p-7">
             <dt className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-blueprint">
+              Statut
+            </dt>
+            <dd className="mt-3 font-display text-xl font-normal text-ink">
+              Partenaire KNX certifié
+            </dd>
+            <dd className="mt-2 text-sm leading-relaxed text-graphite">
+              Formation et accréditation reconnues par la KNX Association.
+            </dd>
+          </div>
+          <div className="bg-paper p-7">
+            <dt className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-blueprint">
               Norme
             </dt>
             <dd className="mt-3 font-display text-xl font-normal text-ink">ISO/IEC 14543-3</dd>
@@ -330,7 +341,10 @@ export function Solutions() {
       {/* Filet de progression : même vocabulaire que la barre du héros, pour
        * que le rail se lise comme une continuation du même système plutôt
        * qu'un composant importé d'ailleurs. */}
-      <div className="mx-auto w-full max-w-[1400px] px-5 pb-24 md:px-10 md:pb-32" aria-hidden="true">
+      <div
+        className="mx-auto w-full max-w-[1400px] px-5 pb-24 md:px-10 md:pb-32"
+        aria-hidden="true"
+      >
         <div className="h-px bg-rule">
           <div
             className="h-px bg-blueprint transition-[width] duration-150 motion-reduce:transition-none"

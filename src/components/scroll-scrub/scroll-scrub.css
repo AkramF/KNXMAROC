@@ -61,6 +61,78 @@
   visibility: hidden;
 }
 
+/* ── Calque schématique KNX ─────────────────────────────────────────
+ * Superposé à la vidéo, il trace le bus au rythme du scrub. Toute
+ * l'animation est pilotée par --ss-segment (0 → 1), posée sur le calque
+ * parent par le contrôleur : rien ne bouge sans le visiteur.
+ * --------------------------------------------------------------- */
+.schema-knx {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.schema-knx__ligne,
+.schema-knx__descente,
+.schema-knx__ecran {
+  /* Longueur généreuse : couvre le plus long tracé sans mesure JS. */
+  stroke-dasharray: 4000;
+  stroke-dashoffset: calc(4000 - var(--ss-segment, 0) * 4000);
+  opacity: 0.85;
+}
+
+.schema-knx__descente,
+.schema-knx__ecran {
+  stroke-dasharray: 900;
+  /* Chaque descente attend son tour : le peigne se remplit de gauche à
+   * droite au lieu d'apparaître d'un bloc. */
+  stroke-dashoffset: calc(
+    900 - clamp(0, (var(--ss-segment, 0) - var(--noeud-delai, 0)) * 4, 1) * 900
+  );
+  opacity: 0.8;
+}
+
+/* Les nœuds et étiquettes n'ont pas de tracé à dérouler : ils se posent
+ * quand la ligne les atteint. */
+.schema-knx__noeud,
+.schema-knx__etiquette {
+  opacity: clamp(0, (var(--ss-segment, 0) - var(--noeud-delai, 0)) * 8, 1);
+}
+
+.schema-knx__etiquette {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+/* Le schéma est une annotation, pas un décor : sous prefers-reduced-motion
+ * il s'affiche entier et fixe plutôt que de disparaître, parce qu'il porte
+ * de l'information que la photo seule ne donne pas. */
+@media (prefers-reduced-motion: reduce) {
+  .schema-knx__ligne,
+  .schema-knx__descente,
+  .schema-knx__ecran {
+    stroke-dashoffset: 0;
+  }
+
+  .schema-knx__noeud,
+  .schema-knx__etiquette {
+    opacity: 1;
+  }
+}
+
+/* Sur petit écran le peigne d'actionneurs devient illisible : on garde la
+ * ligne maîtresse et les nœuds, on retire les étiquettes. */
+@media (max-width: 860px) {
+  .schema-knx__etiquette {
+    display: none;
+  }
+}
+
 .scroll-scrub__progress {
   position: absolute;
   z-index: 5;

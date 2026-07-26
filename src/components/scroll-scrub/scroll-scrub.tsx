@@ -3,11 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 
+import { SchemaKnx, type SchemaId } from "./schema-knx";
 import "./scroll-scrub.css";
 
 export interface ScrollScrubScene {
   id: string;
   label: string;
+  /* Schéma de bus superposé à la scène. Omis, la scène reste nue. */
+  schema?: SchemaId;
   poster: string;
   mobilePoster?: string;
   clip: string;
@@ -392,6 +395,9 @@ export function ScrollScrub({
         segment.visible = opacity > 0.001;
         segment.layer.style.opacity = String(opacity);
         segment.layer.style.zIndex = index === currentIndex ? "2" : "1";
+        /* Progression locale du segment : le calque schématique s'en sert pour
+         * tracer la ligne de bus au rythme exact de la caméra. */
+        segment.layer.style.setProperty("--ss-segment", String(segment.target));
 
         if (y > segment.start - 1.5 * viewportHeight && y < segment.end + 1.5 * viewportHeight) {
           void loadClip(segment);
@@ -568,6 +574,7 @@ export function ScrollScrub({
                     src={segment.poster}
                   />
                 </picture>
+                {segment.scene?.schema ? <SchemaKnx id={segment.scene.schema} /> : null}
               </figure>
             );
           })}
