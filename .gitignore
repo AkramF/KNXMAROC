@@ -25,3 +25,8 @@ dist-ssr
 .idea
 .DS_Store
 *.sw?
+
+# Propositions d'images générées : matériel de travail, pas du code source.
+# 15 Mo qui alourdiraient le clone pour rien — les fichiers retenus vivent
+# dans public/assets/, les autres restent en local.
+_candidats-hero/
