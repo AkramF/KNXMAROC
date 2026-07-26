@@ -1,11 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Lumiere } from "../lib/lumiere";
 import { EtudeCta } from "../components/cta/etude-cta";
+import { Halo } from "../components/lumiere/halo";
 import {
   ScrollScrub,
   type ScrollScrubScene,
   type ScrollScrubTheme,
 } from "../components/scroll-scrub/scroll-scrub";
+import { Clavier } from "../components/site/clavier";
 import { Contact } from "../components/site/contact";
 import { Marques, Positionnement, SiteNav, Solutions } from "../components/site/sections";
 import { Methode, Segments, SiteFooter } from "../components/site/segments";
@@ -14,9 +17,11 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+/* Le héros emprunte ses couleurs au système de lumière : quand la scène
+ * change, la cinématique change avec elle. */
 const THEME: ScrollScrubTheme = {
-  accent: "#7FA8E8",
-  background: "#0D1012",
+  accent: "var(--lueur, #7FA8E8)",
+  background: "var(--scene-fond, #0D1012)",
   ink: "#F2F2EF",
   muted: "#9AA0A4",
 };
@@ -60,21 +65,30 @@ const SCENES: ScrollScrubScene[] = [
 
 function Index() {
   return (
-    <>
+    <Lumiere>
       <a className="saut-contenu" href="#positionnement">
         Aller au contenu
       </a>
-      <SiteNav />
-      <main id="contenu">
-        <ScrollScrub scenes={SCENES} theme={THEME} />
-        <Positionnement />
-        <Solutions />
-        <Segments />
-        <Methode />
-        <Marques />
-        <Contact />
-      </main>
-      <SiteFooter />
-    </>
+
+      {/* La source de lumière de la page, derrière tout le reste. */}
+      <Halo />
+
+      <div className="au-dessus">
+        <SiteNav />
+        <main id="contenu">
+          <ScrollScrub scenes={SCENES} theme={THEME} />
+          <Positionnement />
+          {/* Le clavier arrive tôt : c'est la démonstration, elle doit
+           * précéder le catalogue de ce qu'on sait faire. */}
+          <Clavier />
+          <Solutions />
+          <Segments />
+          <Methode />
+          <Marques />
+          <Contact />
+        </main>
+        <SiteFooter />
+      </div>
+    </Lumiere>
   );
 }

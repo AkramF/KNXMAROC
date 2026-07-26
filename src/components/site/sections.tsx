@@ -4,6 +4,7 @@ import { COORDONNEES, LIEN_TELEPHONE } from "../../lib/coordonnees";
 import { useRevelation } from "../../lib/use-revelation";
 import { Wordmark } from "../brand/logo";
 import { EtudeCta } from "../cta/etude-cta";
+import { TitreRevele } from "../lumiere/titre-revele";
 
 const LIENS = [
   { href: "#solutions", label: "Solutions" },
@@ -166,15 +167,19 @@ export function Positionnement() {
   const ref = useRevelation<HTMLElement>();
 
   return (
-    <section className="border-t border-rule bg-encre" id="positionnement" ref={ref}>
+    <section
+      className="border-t border-rule bg-encre/70 backdrop-blur-[2px]"
+      id="positionnement"
+      ref={ref}
+    >
       <div className="mx-auto grid w-full max-w-[1480px] gap-14 px-5 py-28 md:grid-cols-12 md:gap-16 md:px-10 md:py-40">
         <div className="revelation md:col-span-7">
           <Eyebrow>La norme</Eyebrow>
-          <h2 className="mt-7 font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]">
-            Un seul bus,
-            <br />
-            tout le bâtiment.
-          </h2>
+          <TitreRevele
+            as="h2"
+            className="mt-7 font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
+            texte={"Un seul bus,\ntout le bâtiment."}
+          />
           <p className="mt-9 max-w-[62ch] text-lg leading-relaxed text-graphite">
             KNX est la norme ouverte de l&apos;automatisation du bâtiment. Elle relie
             l&apos;éclairage, les stores, le chauffage, la climatisation, la sécurité et la
@@ -271,13 +276,19 @@ export function Solutions() {
   };
 
   return (
-    <section className="border-t border-rule bg-ardoise" id="solutions" ref={sectionRef}>
+    <section
+      className="border-t border-rule bg-ardoise/70 backdrop-blur-[2px]"
+      id="solutions"
+      ref={sectionRef}
+    >
       <div className="mx-auto flex w-full max-w-[1480px] items-end justify-between gap-6 px-5 pt-28 md:px-10 md:pt-40">
         <div className="revelation">
           <Eyebrow>Six domaines, un seul projet</Eyebrow>
-          <h2 className="mt-7 max-w-[15ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]">
-            Ce que nous mettons sur le bus.
-          </h2>
+          <TitreRevele
+            as="h2"
+            className="mt-7 max-w-[15ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
+            texte="Ce que nous mettons sur le bus."
+          />
         </div>
 
         <div className="hidden shrink-0 gap-2 md:flex">
@@ -356,15 +367,19 @@ export function Marques() {
   const ref = useRevelation<HTMLElement>();
 
   return (
-    <section className="border-t border-rule bg-encre" id="marques" ref={ref}>
-      <div className="mx-auto w-full max-w-[1480px] px-5 py-28 md:px-10 md:py-40">
+    <section className="overflow-hidden border-t border-rule" id="marques" ref={ref}>
+      <div className="mx-auto w-full max-w-[1480px] px-5 pt-28 md:px-10 md:pt-40">
         <div className="grid gap-14 md:grid-cols-12 md:gap-16">
           <div className="revelation md:col-span-5">
             <Eyebrow>Appareillage</Eyebrow>
-            <h2 className="mt-7 max-w-[16ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[3.5rem]">
-              Ce que nous programmons.
-            </h2>
-            <p className="mt-9 max-w-[52ch] text-lg leading-relaxed text-graphite">
+            <TitreRevele
+              as="h2"
+              className="mt-7 max-w-[16ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[3.5rem]"
+              texte="Ce que nous programmons."
+            />
+          </div>
+          <div className="revelation md:col-span-6 md:col-start-7">
+            <p className="max-w-[52ch] text-lg leading-relaxed text-graphite">
               Le choix de l&apos;appareillage se fait après l&apos;étude, sur des critères de
               finition, de disponibilité au Maroc et de budget. La norme reste la même quel que soit
               le fabricant retenu.
@@ -374,25 +389,46 @@ export function Marques() {
               fabricants.
             </p>
           </div>
-
-          <ul className="self-start md:col-span-6 md:col-start-7">
-            {MARQUES.map((marque, index) => (
-              <li
-                className="revelation group flex items-baseline gap-5 border-t border-rule py-5 last:border-b"
-                key={marque}
-                style={{ "--revelation-delai": `${index * 50}ms` } as React.CSSProperties}
-              >
-                <span className="font-mono text-[0.68rem] tracking-[0.14em] text-graphite">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="font-display text-xl font-normal tracking-tight text-chalk">
-                  {marque}
-                </span>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
+
+      {/* Défilement continu : une liste statique de huit noms se lit comme un
+       * tableau, un ruban qui passe se lit comme un catalogue. La liste est
+       * dupliquée pour que la translation boucle sans raccord ; la copie est
+       * masquée aux lecteurs d'écran, qui n'ont pas à l'entendre deux fois. */}
+      <div className="relative mt-20 py-10 md:mt-28">
+        <div className="marquee">
+          {[0, 1].map((copie) => (
+            <ul
+              aria-hidden={copie === 1 ? "true" : undefined}
+              className="flex shrink-0 items-center"
+              key={copie}
+            >
+              {MARQUES.map((marque) => (
+                <li
+                  className="px-8 font-display text-3xl font-normal tracking-tight whitespace-nowrap text-graphite transition-colors duration-300 hover:text-chalk md:px-12 md:text-5xl motion-reduce:transition-none"
+                  key={marque}
+                >
+                  {marque}
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+
+        {/* Les bords s'estompent : le ruban entre et sort du champ au lieu
+         * d'être coupé net par la fenêtre. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-encre to-transparent md:w-48"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-encre to-transparent md:w-48"
+        />
+      </div>
+
+      <div className="pb-28 md:pb-40" />
     </section>
   );
 }

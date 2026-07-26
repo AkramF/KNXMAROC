@@ -108,12 +108,62 @@
   transform-origin: left center;
 }
 
+/* ── Invitation à défiler ───────────────────────────────────────────
+ * Un trait qui descend en boucle, à la vitesse d'un geste de scroll.
+ * Disparaît dès le deuxième chapitre : elle a fait son travail.
+ * --------------------------------------------------------------- */
+.scroll-scrub__invite {
+  position: absolute;
+  z-index: 6;
+  bottom: clamp(1.25rem, 3vw, 2.25rem);
+  left: clamp(1rem, 4vw, 4rem);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: var(--ss-muted);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.scroll-scrub__invite[data-visible="non"] {
+  opacity: 0;
+}
+
+.scroll-scrub__invite-trait {
+  position: relative;
+  width: 1px;
+  height: 2.5rem;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--ss-ink) 18%, transparent);
+}
+
+.scroll-scrub__invite-trait::after {
+  position: absolute;
+  inset-inline: 0;
+  height: 45%;
+  background: var(--ss-accent);
+  content: "";
+  animation: invite-descend 2.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes invite-descend {
+  0% {
+    top: -50%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
 .scroll-scrub__route {
   position: absolute;
   z-index: 6;
   right: clamp(1rem, 4vw, 4rem);
   bottom: clamp(1.25rem, 3vw, 2.25rem);
-  left: clamp(1rem, 4vw, 4rem);
   display: flex;
   justify-content: flex-end;
   gap: 0;
@@ -204,6 +254,11 @@
   text-transform: uppercase;
 }
 
+.scroll-scrub__title-hote {
+  margin: 0;
+  font-weight: inherit;
+}
+
 .scroll-scrub__title {
   display: block;
   max-width: 12ch;
@@ -218,12 +273,44 @@
   text-wrap: balance;
 }
 
+/* Le titre se découvre quand son chapitre prend la main, et se recouvre
+ * quand il la perd : le geste se rejoue à chaque passage, parce que le
+ * visiteur peut remonter dans le parcours. */
+.scroll-scrub__chapter[data-actif="non"] .mot > span {
+  transform: translateY(110%);
+}
+
+/* La copie et les étiquettes suivent le titre avec un temps de retard. */
+.scroll-scrub__body,
+.scroll-scrub__tags li,
+.scroll-scrub__actions {
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-scrub__chapter[data-actif="non"] .scroll-scrub__body,
+.scroll-scrub__chapter[data-actif="non"] .scroll-scrub__tags li,
+.scroll-scrub__chapter[data-actif="non"] .scroll-scrub__actions {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
 .scroll-scrub__body {
   max-width: 46ch;
   margin: 1.6rem 0 0;
   color: var(--ss-muted);
   font-size: clamp(1rem, 1.25vw, 1.15rem);
   line-height: 1.65;
+  transition-delay: 260ms;
+}
+
+.scroll-scrub__tags li {
+  transition-delay: calc(360ms + var(--tag-delai, 0ms));
+}
+
+.scroll-scrub__actions {
+  transition-delay: 520ms;
 }
 
 .scroll-scrub__tags {
@@ -307,6 +394,22 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Le chapitre inactif reste entièrement lisible : sans animation, masquer
+   * le texte reviendrait à le supprimer. */
+  .scroll-scrub__chapter[data-actif="non"] .mot > span,
+  .scroll-scrub__chapter[data-actif="non"] .scroll-scrub__body,
+  .scroll-scrub__chapter[data-actif="non"] .scroll-scrub__tags li,
+  .scroll-scrub__chapter[data-actif="non"] .scroll-scrub__actions {
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-scrub__body,
+  .scroll-scrub__tags li,
+  .scroll-scrub__actions {
+    transition: none;
+  }
+
   .scroll-scrub__chapter {
     min-height: 100dvh !important;
   }

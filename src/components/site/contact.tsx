@@ -11,6 +11,7 @@ import { COORDONNEES, LIEN_EMAIL } from "../../lib/coordonnees";
 import { useRevelation } from "../../lib/use-revelation";
 import { AppelCta } from "../cta/appel-cta";
 import { EtudeSubmit } from "../cta/etude-cta";
+import { TitreRevele } from "../lumiere/titre-revele";
 import { Eyebrow } from "./sections";
 
 type Etat =
@@ -96,13 +97,19 @@ export function Contact() {
   }
 
   return (
-    <section className="border-t border-rule bg-ardoise" id="contact" ref={ref}>
+    <section
+      className="border-t border-rule bg-ardoise/70 backdrop-blur-[2px]"
+      id="contact"
+      ref={ref}
+    >
       <div className="mx-auto grid w-full max-w-[1480px] gap-16 px-5 py-28 md:grid-cols-12 md:px-10 md:py-40">
         <div className="revelation md:col-span-5">
           <Eyebrow>Contact</Eyebrow>
-          <h2 className="mt-7 max-w-[12ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]">
-            Parlons du projet.
-          </h2>
+          <TitreRevele
+            as="h2"
+            className="mt-7 max-w-[12ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
+            texte="Parlons du projet."
+          />
           <p className="mt-9 max-w-[50ch] text-lg leading-relaxed text-graphite">
             Envoyez-nous les plans et la phase d&apos;avancement. Nous revenons vers vous avec un
             schéma de principe et un ordre de grandeur budgétaire.

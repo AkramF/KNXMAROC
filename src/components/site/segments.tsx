@@ -1,6 +1,7 @@
 import { COORDONNEES, LIEN_EMAIL, LIEN_TELEPHONE } from "../../lib/coordonnees";
 import { useRevelation } from "../../lib/use-revelation";
 import { Monogram } from "../brand/logo";
+import { TitreRevele } from "../lumiere/titre-revele";
 import { Eyebrow } from "./sections";
 
 const SEGMENTS = [
@@ -34,13 +35,19 @@ export function Segments() {
   const ref = useRevelation<HTMLElement>();
 
   return (
-    <section className="border-t border-rule bg-ardoise py-28 md:py-40" id="segments" ref={ref}>
+    <section
+      className="border-t border-rule bg-ardoise/70 py-28 backdrop-blur-[2px] md:py-40"
+      id="segments"
+      ref={ref}
+    >
       <div className="mx-auto w-full max-w-[1480px] px-5 md:px-10">
         <div className="revelation">
           <Eyebrow>Terrains</Eyebrow>
-          <h2 className="mt-7 max-w-[14ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]">
-            Quatre terrains, une même norme.
-          </h2>
+          <TitreRevele
+            as="h2"
+            className="mt-7 max-w-[14ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
+            texte="Quatre terrains, une même norme."
+          />
         </div>
 
         <div className="mt-20">
@@ -101,14 +108,20 @@ export function Methode() {
   const ref = useRevelation<HTMLElement>();
 
   return (
-    <section className="border-t border-rule bg-encre" id="methode" ref={ref}>
+    <section
+      className="border-t border-rule bg-encre/70 backdrop-blur-[2px]"
+      id="methode"
+      ref={ref}
+    >
       <div className="mx-auto grid w-full max-w-[1480px] gap-16 px-5 py-28 md:grid-cols-12 md:px-10 md:py-40">
         <div className="md:col-span-7">
           <div className="revelation">
             <Eyebrow>Déroulé</Eyebrow>
-            <h2 className="mt-7 max-w-[16ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[3.5rem]">
-              Comment un projet se déroule.
-            </h2>
+            <TitreRevele
+              as="h2"
+              className="mt-7 max-w-[16ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[3.5rem]"
+              texte="Comment un projet se déroule."
+            />
           </div>
 
           {/* La numérotation est méritée ici : les étapes s'enchaînent

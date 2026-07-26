@@ -580,6 +580,18 @@ export function ScrollScrub({
           <span />
         </div>
 
+        {/* Invitation à descendre, visible tant qu'on n'a pas quitté le
+         * premier chapitre. Sans elle, un héros plein écran laisse croire
+         * que la page s'arrête là. */}
+        <div
+          aria-hidden="true"
+          className="scroll-scrub__invite"
+          data-visible={activeSection === 0 ? "oui" : "non"}
+        >
+          <span className="scroll-scrub__invite-trait" />
+          Faites défiler
+        </div>
+
         <nav aria-label="Chapitres" className="scroll-scrub__route">
           {scenes.map((scene, index) => (
             <button
@@ -623,9 +635,25 @@ export function ScrollScrub({
           const estPremier = segment.sectionIndex === 0;
           const Heading = estPremier ? "h1" : "h2";
 
+          /* Le titre se découvre mot à mot quand son chapitre prend la main.
+           * Les mots restent dans un seul nœud de texte lisible : la
+           * sélection, la recherche dans la page et les lecteurs d'écran
+           * voient une phrase normale. */
+          const titre = (
+            <span className="scroll-scrub__title">
+              {scene.title.split(" ").map((mot, index, tous) => (
+                <span className="mot" key={index}>
+                  <span style={{ "--mot-delai": `${index * 70}ms` } as CSSProperties}>{mot}</span>
+                  {index < tous.length - 1 ? " " : null}
+                </span>
+              ))}
+            </span>
+          );
+
           return (
             <article
               className="scroll-scrub__chapter"
+              data-actif={activeSection === segment.sectionIndex ? "oui" : "non"}
               data-align={scene.align ?? "left"}
               data-scroll-scrub-band=""
               id={scene.id}
@@ -639,19 +667,21 @@ export function ScrollScrub({
                       {scene.kicker ? (
                         <span className="scroll-scrub__kicker">{scene.kicker}</span>
                       ) : null}
-                      <span className="scroll-scrub__title">{scene.title}</span>
+                      {titre}
                     </Heading>
                   ) : (
                     <>
                       {scene.kicker ? <p className="scroll-scrub__kicker">{scene.kicker}</p> : null}
-                      <Heading className="scroll-scrub__title">{scene.title}</Heading>
+                      <Heading className="scroll-scrub__title-hote">{titre}</Heading>
                     </>
                   )}
                   <p className="scroll-scrub__body">{scene.body}</p>
                   {scene.tags?.length ? (
                     <ul className="scroll-scrub__tags">
-                      {scene.tags.map((tag) => (
-                        <li key={tag}>{tag}</li>
+                      {scene.tags.map((tag, index) => (
+                        <li key={tag} style={{ "--tag-delai": `${index * 90}ms` } as CSSProperties}>
+                          {tag}
+                        </li>
                       ))}
                     </ul>
                   ) : null}

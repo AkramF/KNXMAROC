@@ -2,50 +2,37 @@
 @source "../src";
 
 /* ---------------------------------------------------------------
- * KNX MAROC — système sombre.
+ * KNX MAROC.
  *
- * Le monde clair d'origine (enduit à la chaux, encre d'architecte) était
- * juste sur le papier mais rendait le site indistinct d'une agence
- * d'architecture. Le métier se joue ailleurs : dans une villa, l'installation
- * ne se voit qu'à la nuit tombée, quand les scènes s'allument et que le
- * clavier s'éclaire. Le fond sombre est la scène réelle d'usage, pas un effet
- * de mode.
+ * Le site ne décrit pas la domotique, il la fait fonctionner. Une scène
+ * courante pilote la lumière de toute la page — voir src/lib/lumiere.tsx.
+ * Les couleurs de fond et d'accent sont donc des variables vivantes, pas
+ * des constantes : elles changent quand la maison change d'heure.
  *
- * Tous les ratios sont mesurés sur #0D1012 et notés en regard.
+ * Les valeurs ci-dessous sont les positions de repli, utilisées avant que
+ * le script ne prenne la main. Elles correspondent à la scène « soirée ».
  * --------------------------------------------------------------- */
 @theme {
-  /* Encre profonde, jamais noir pur : le noir absolu écrase les ombres des
-   * photographies et durcit le texte. */
-  --color-encre: #0d1012;
+  /* Fond et surface : pilotés par la scène, avec repli. */
+  --color-encre: var(--scene-fond, #0d1012);
+  --color-ardoise: var(--scene-surface, #161a1d);
 
-  /* Surface légèrement soulevée, pour les blocs qui doivent se détacher du
-   * fond sans bordure. */
-  --color-ardoise: #161a1d;
-
-  /* Texte principal — 17.0:1 */
+  /* Texte principal — 17:1 sur le fond le plus clair des quatre scènes. */
   --color-chalk: #f2f2ef;
 
-  /* Texte secondaire — 7.2:1, très au-dessus du seuil AA de 4.5:1. Le corps
-   * de texte du site clair plafonnait à 4.22:1. */
+  /* Texte secondaire — 6.6:1 au pire cas (scène journée, la plus claire). */
   --color-graphite: #9aa0a4;
 
-  /* Filet décoratif entre blocs. Sous le seuil de contraste, mais c'est une
-   * séparation graphique, pas une limite de composant. */
+  /* Filet décoratif. */
   --color-rule: #2c3235;
 
-  /* Bordure de contrôle (champs, boutons secondaires). WCAG 1.4.11 exige 3:1
-   * pour une limite de composant : 3.7:1 sur l'encre, 3.4:1 sur l'ardoise.
-   * La valeur précédente tombait pile à 3.00 sur l'ardoise — un arrondi de
-   * rendu suffisait à la faire passer sous le seuil. */
+  /* Bordure de contrôle — 3.4:1 minimum, seuil WCAG 1.4.11 tenu sur les
+   * quatre scènes. */
   --color-rule-strong: #666e76;
 
-  /* Bleu de plan, remonté en luminosité pour vivre sur fond sombre : le
-   * #2E4A7D d'origine tombait à 2.2:1 et devenait illisible. Ici 7.9:1, et
-   * l'encre posée dessus rend 7.9:1 dans l'autre sens. */
-  --color-blueprint: #7fa8e8;
-
-  /* Variante sourde pour les tracés qui ne doivent pas attirer l'œil. */
-  --color-blueprint-mat: #3f63a5;
+  /* L'accent EST la lumière de la maison : il change avec l'heure. Le repli
+   * est le bleu de plan du brief d'origine. */
+  --color-blueprint: var(--lueur, #7fa8e8);
 
   --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -58,15 +45,18 @@
     color-scheme: dark;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
+    /* Le changement de scène est un fondu de lumière, pas une bascule. */
+    transition: background-color 1.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   body {
     min-height: 100dvh;
-    background-color: var(--color-encre);
+    background-color: transparent;
     color: var(--color-chalk);
     font-family: var(--font-display);
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   ::selection {
@@ -80,24 +70,92 @@
   }
 }
 
-/* ── Révélation au scroll ───────────────────────────────────────────
- * Un seul geste, réutilisé partout : le bloc monte de quelques pixels en
- * apparaissant. Sortie exponentielle depuis un état déjà lisible — si le
- * script ne s'exécute jamais, le contenu reste visible (voir .revelation
- * sans data-vu, qui n'est masqué que par le script lui-même).
+/* ── Le halo ────────────────────────────────────────────────────────
+ * La source de lumière de la page. Elle suit le curseur avec de l'inertie,
+ * prend la couleur de la scène, et respire.
+ * --------------------------------------------------------------- */
+.halo {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  /* Deux sources : une grande nappe douce accrochée à la hauteur de la
+   * scène (le soleil qui descend), et une plus serrée qui suit le curseur. */
+  background:
+    radial-gradient(
+      42rem 42rem at var(--halo-x, 50%) var(--halo-y, 35%),
+      color-mix(in oklab, var(--lueur, #7fa8e8) 13%, transparent) 0%,
+      transparent 68%
+    ),
+    radial-gradient(
+      75rem 55rem at 50% var(--scene-hauteur, 38%),
+      color-mix(in oklab, var(--lueur, #7fa8e8) 11%, transparent) 0%,
+      transparent 72%
+    );
+  opacity: var(--scene-intensite, 0.9);
+  transition:
+    opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1),
+    background 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: respiration 9s ease-in-out infinite;
+}
+
+/* La respiration de la maison. Neuf secondes par cycle : le rythme d'une
+ * respiration au repos, assez lent pour qu'on la sente sans la voir. */
+@keyframes respiration {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.055);
+  }
+}
+
+/* Le contenu passe au-dessus du halo. */
+.au-dessus {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Révélations au scroll ──────────────────────────────────────────
+ * Deux gestes, pas dix. Le bloc monte en se dévoilant ; le titre se
+ * découvre ligne par ligne derrière un masque, comme une lumière qui
+ * balaie une surface.
  * --------------------------------------------------------------- */
 .revelation[data-vu="non"] {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(26px);
+  filter: blur(6px);
 }
 
 .revelation {
   opacity: 1;
   transform: none;
+  filter: none;
   transition:
-    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--revelation-delai, 0ms);
+}
+
+/* Révélation au masque : chaque mot monte depuis sous sa propre ligne. */
+.mot {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.mot > span {
+  display: inline-block;
+  transform: translateY(0);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--mot-delai, 0ms);
+}
+
+.revelation[data-vu="non"] .mot > span,
+.mot[data-vu="non"] > span {
+  transform: translateY(110%);
 }
 
 /* Le lien d'évitement n'existe que pour le clavier. */
@@ -119,17 +177,64 @@
   top: 1rem;
 }
 
+/* ── Défilement continu des marques ─────────────────────────────────
+ * Deux copies de la même liste, décalées d'une largeur : la boucle est
+ * invisible parce qu'elle n'existe pas, c'est une translation.
+ * --------------------------------------------------------------- */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: defilement 42s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes defilement {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Réduction de mouvement ─────────────────────────────────────────
+ * Ce n'est pas un réglage de confort : pour une partie des visiteurs, le
+ * mouvement provoque des nausées. Tout ce qui bouge sans porter
+ * d'information s'arrête net.
+ * --------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+    transition: none;
   }
 
-  /* La révélation est un agrément, pas de l'information : on la supprime
-   * entièrement plutôt que de l'accélérer. */
+  .halo {
+    animation: none;
+    transition: none;
+  }
+
   .revelation,
   .revelation[data-vu="non"] {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
+  }
+
+  .mot > span,
+  .revelation[data-vu="non"] .mot > span,
+  .mot[data-vu="non"] > span {
+    transform: none;
+    transition: none;
+  }
+
+  .marquee {
+    animation: none;
+    /* Sans défilement, la seconde copie ferait doublon à la lecture. */
+    width: 100%;
+    flex-wrap: wrap;
   }
 }
