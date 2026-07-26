@@ -104,31 +104,40 @@ export function SiteNav() {
       </div>
 
       <div
-        className={`border-t border-rule bg-encre md:hidden ${ouvert ? "block" : "hidden"}`}
+        className={`border-t border-rule bg-encre/95 backdrop-blur-2xl transition-all duration-300 md:hidden ${
+          ouvert ? "block" : "hidden"
+        }`}
         id={panneauId}
       >
-        <nav aria-label="Navigation principale mobile" className="px-5 py-2">
+        <nav aria-label="Navigation principale mobile" className="px-5 py-4 space-y-1">
           {LIENS.map((lien) => (
             <a
-              className="flex min-h-14 items-center border-b border-rule font-display text-lg text-chalk"
+              className="flex min-h-14 items-center justify-between border-b border-rule/50 font-display text-xl text-chalk hover:text-blueprint transition-colors"
               href={lien.href}
               key={lien.href}
               onClick={() => setOuvert(false)}
             >
-              {lien.label}
+              <span>{lien.label}</span>
+              <span className="font-mono text-xs text-graphite">→</span>
             </a>
           ))}
           <a
-            className="flex min-h-14 items-center justify-between gap-4 border-b border-rule font-display text-lg text-chalk"
+            className="flex min-h-14 items-center justify-between gap-4 border-b border-rule/50 font-display text-xl text-chalk hover:text-blueprint transition-colors"
             href={LIEN_TELEPHONE}
             onClick={() => setOuvert(false)}
           >
-            Appeler
-            <span className="font-mono text-sm text-graphite">
+            <span>Appeler</span>
+            <span className="font-mono text-xs text-blueprint font-medium">
               {COORDONNEES.telephone.affichage}
             </span>
           </a>
-          <EtudeCta className="mt-6 mb-4 w-full" href="#contact" />
+          <div className="pt-6 pb-2">
+            <EtudeCta
+              className="w-full text-center py-4 text-xs font-semibold shadow-xl shadow-blueprint/10"
+              href="/#contact"
+              onClick={() => setOuvert(false)}
+            />
+          </div>
         </nav>
       </div>
     </header>

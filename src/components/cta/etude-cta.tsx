@@ -25,9 +25,17 @@ function Contenu({ children = LABEL }: { children?: ReactNode }) {
   );
 }
 
-export function EtudeCta({ href = "#contact", className }: { href?: string; className?: string }) {
+export function EtudeCta({
+  href = "#contact",
+  className,
+  onClick,
+}: {
+  href?: string;
+  className?: string;
+  onClick?: () => void;
+}) {
   return (
-    <a className={[SURFACE, className].filter(Boolean).join(" ")} href={href}>
+    <a className={[SURFACE, className].filter(Boolean).join(" ")} href={href} onClick={onClick}>
       <Contenu />
     </a>
   );
