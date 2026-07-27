@@ -146,8 +146,16 @@ export const Route = createRootRoute({
       {
         rel: "preload",
         as: "image",
+        href: "/assets/world/clavier-mobile-poster.webp",
+        type: "image/webp",
+        media: "(max-width: 860px)",
+      },
+      {
+        rel: "preload",
+        as: "image",
         href: "/assets/world/clavier-poster.webp",
         type: "image/webp",
+        media: "(min-width: 861px)",
       },
       { rel: "stylesheet", href: appCss },
       { rel: "canonical", href: URL_SITE },
