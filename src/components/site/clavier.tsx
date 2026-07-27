@@ -28,11 +28,11 @@ export function Clavier() {
   const ref = useRevelation<HTMLElement>();
 
   return (
-    <section
-      className="relative overflow-hidden border-t border-rule bg-encre/70 backdrop-blur-[2px]"
-      id="clavier"
-      ref={ref}
-    >
+    /* Seule section de la page sans fond ni voile : le halo la traverse
+     * entièrement. C'est la condition de l'immersion — un panneau opaque
+     * amortirait la bascule de lumière au moment précis où elle doit se
+     * voir. Aucune image non plus : ici le sujet, c'est la lumière. */
+    <section className="relative overflow-hidden border-t border-rule" id="clavier" ref={ref}>
       <div className="mx-auto w-full max-w-[1480px] px-5 py-28 md:px-10 md:py-40">
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-14">
           <div className="revelation lg:col-span-5">

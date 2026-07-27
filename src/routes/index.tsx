@@ -48,31 +48,37 @@ const SCENES: ScrollScrubScene[] = [
     title: "Votre maison vous obéit.",
   },
   {
-    body: "Actionneurs sur rail DIN, variateurs DALI-2, passerelles CVC : tout est raccordé au même câble. Aucune batterie à changer, aucune latence radio, aucun serveur distant dont dépendrait votre confort.",
+    /* Une négation — « ne tombe jamais en panne » — fait penser à la panne.
+     * Une projection dans le temps engage l'acheteur sur l'horizon qui le
+     * préoccupe vraiment : celui du bâtiment, pas celui de l'équipement. */
+    body: "Chaque module porte sa propre intelligence : il n'existe aucune centrale dont la panne arrêterait la maison. Pas de pile à remplacer, pas de serveur distant qui ferme, pas d'application abandonnée par son éditeur. La norme est publiée depuis 1990 et reste rétrocompatible.",
     id: "sejour",
-    kicker: "Architecture décentralisée · Rail DIN",
+    kicker: "Architecture décentralisée · Ni pile, ni cloud",
     label: "L'infrastructure",
     mobileObjectPosition: "50% 50%",
     mobilePoster: "/assets/world/sejour-mobile-poster.webp",
     objectPosition: "85% 50%",
     poster: "/assets/world/sejour-poster.webp",
     scroll: 1.3,
-    tags: ["Sans batterie", "Sans cloud", "Pérennité 30 ans+"],
-    title: "Elle ne tombe jamais en panne d'un coup.",
+    tags: ["Norme publiée en 1990", "Aucun point de panne unique", "Rétrocompatible"],
+    title: "Elle sera encore là dans trente ans.",
   },
   {
+    /* L'aveu qui rassure : une entreprise qui reconnaît qu'on peut se passer
+     * d'elle inspire davantage confiance que celle qui se rend indispensable.
+     * Et c'est vérifiable — le fichier ETS est effectivement remis. */
     align: "right",
-    body: "États, consommations, alarmes : tout est visible sur un écran mural ou depuis votre téléphone. À la réception, le fichier de programmation vous est remis — n'importe quel intégrateur certifié au monde peut reprendre votre installation.",
+    body: "À la réception, nous vous remettons le fichier de programmation de votre installation. N'importe quel intégrateur certifié, au Maroc ou ailleurs, peut la reprendre et la faire évoluer. Ce n'est pas une faveur commerciale : c'est ce que la norme impose, et c'est le seul engagement qui vous protège réellement.",
     id: "supervision",
-    kicker: "Fichier ETS remis · Contrôle local",
+    kicker: "Fichier ETS remis à la réception",
     label: "La maîtrise",
     mobileObjectPosition: "50% 50%",
     mobilePoster: "/assets/world/supervision-mobile-poster.webp",
     objectPosition: "20% 50%",
     poster: "/assets/world/supervision-poster.webp",
     scroll: 1.5,
-    tags: ["Projet ETS remis", "Aucune dépendance", "Écran ou téléphone"],
-    title: "Et elle ne vous rend prisonnier de personne.",
+    tags: ["Projet ETS remis", "Aucun verrouillage", "500+ fabricants compatibles"],
+    title: "Vous pouvez nous remplacer. C'est prévu.",
   },
 ];
 
