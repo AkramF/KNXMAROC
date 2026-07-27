@@ -56,7 +56,7 @@ export function SiteNav() {
       {ouvert && (
         <div
           aria-hidden="true"
-          className="fixed inset-0 z-40 bg-encre/80 backdrop-blur-xl transition-opacity duration-300 md:hidden"
+          className="fixed inset-0 z-40 bg-encre/80 backdrop-blur-xl transition-opacity duration-300 lg:hidden"
           onClick={() => setOuvert(false)}
         />
       )}
@@ -73,7 +73,7 @@ export function SiteNav() {
             <Wordmark />
           </a>
 
-          <nav aria-label="Navigation principale" className="hidden items-center gap-9 md:flex">
+          <nav aria-label="Navigation principale" className="hidden items-center gap-9 lg:flex">
             {LIENS.map((lien) => (
               <a className={LIEN_BUREAU} href={lien.href} key={lien.href}>
                 {lien.label}
@@ -82,12 +82,12 @@ export function SiteNav() {
           </nav>
 
           <div className="flex items-center gap-3">
-            {!ouvert && <EtudeCta className="hidden md:inline-flex px-5 py-3" />}
+            {!ouvert && <EtudeCta className="hidden lg:inline-flex px-5 py-3" />}
 
             <button
               aria-controls={panneauId}
               aria-expanded={ouvert}
-              className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-chalk md:hidden"
+              className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-chalk lg:hidden"
               onClick={() => setOuvert((etat) => !etat)}
               type="button"
             >
@@ -114,7 +114,7 @@ export function SiteNav() {
         </div>
 
         <div
-          className={`border-t border-rule bg-encre/98 backdrop-blur-2xl transition-all duration-300 md:hidden ${
+          className={`border-t border-rule bg-encre/98 backdrop-blur-2xl transition-all duration-300 lg:hidden ${
             ouvert ? "block shadow-2xl" : "hidden"
           }`}
           id={panneauId}
