@@ -51,115 +51,129 @@ export function SiteNav() {
   }, [ouvert]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 motion-reduce:transition-none ${
-        compacte || ouvert
-          ? "border-b border-rule bg-encre/90 backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-[76px] w-full max-w-[1480px] items-center justify-between px-5 md:px-10">
-        <a aria-label="KNX MAROC, accueil" href="#seuil" onClick={() => setOuvert(false)}>
-          <Wordmark />
-        </a>
+    <>
+      {/* Backdrop Blur Overlay sur tout l'écran quand le menu mobile est ouvert */}
+      {ouvert && (
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 z-40 bg-encre/80 backdrop-blur-xl transition-opacity duration-300 md:hidden"
+          onClick={() => setOuvert(false)}
+        />
+      )}
 
-        <nav aria-label="Navigation principale" className="hidden items-center gap-9 md:flex">
-          {LIENS.map((lien) => (
-            <a className={LIEN_BUREAU} href={lien.href} key={lien.href}>
-              {lien.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <EtudeCta className="hidden md:inline-flex px-5 py-3" />
-
-          <button
-            aria-controls={panneauId}
-            aria-expanded={ouvert}
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-chalk md:hidden"
-            onClick={() => setOuvert((etat) => !etat)}
-            type="button"
-          >
-            <span className="sr-only">{ouvert ? "Fermer le menu" : "Ouvrir le menu"}</span>
-            <span aria-hidden="true" className="relative block h-4 w-6">
-              <span
-                className={`absolute left-0 block h-px w-full bg-current transition-transform duration-300 motion-reduce:transition-none ${
-                  ouvert ? "top-1/2 rotate-45" : "top-0.5"
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-1/2 block h-px w-full bg-current transition-opacity duration-300 motion-reduce:transition-none ${
-                  ouvert ? "opacity-0" : "opacity-100"
-                }`}
-              />
-              <span
-                className={`absolute left-0 block h-px w-full bg-current transition-transform duration-300 motion-reduce:transition-none ${
-                  ouvert ? "top-1/2 -rotate-45" : "bottom-0.5"
-                }`}
-              />
-            </span>
-          </button>
-        </div>
-      </div>
-
-      <div
-        className={`border-t border-rule bg-encre/98 backdrop-blur-2xl transition-all duration-300 md:hidden ${
-          ouvert ? "block" : "hidden"
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 motion-reduce:transition-none ${
+          compacte || ouvert
+            ? "border-b border-rule bg-encre/95 backdrop-blur-xl"
+            : "border-b border-transparent bg-transparent"
         }`}
-        id={panneauId}
       >
-        <nav aria-label="Navigation principale mobile" className="px-5 py-3 space-y-1">
-          {LIENS.map((lien) => (
-            <a
-              className="flex min-h-12 items-center justify-between border-b border-rule/40 font-display text-lg text-chalk hover:text-blueprint transition-colors"
-              href={lien.href}
-              key={lien.href}
-              onClick={() => setOuvert(false)}
-            >
-              <span>{lien.label}</span>
-              <span className="font-mono text-xs text-graphite">→</span>
-            </a>
-          ))}
+        <div className="mx-auto flex h-[76px] w-full max-w-[1480px] items-center justify-between px-5 md:px-10">
+          <a aria-label="KNX MAROC, accueil" href="#seuil" onClick={() => setOuvert(false)}>
+            <Wordmark />
+          </a>
 
-          {/* Réseaux Sociaux dans le Menu Mobile */}
-          <div className="pt-4 pb-2 flex items-center justify-around border-b border-rule/40 font-mono text-xs uppercase tracking-wider text-graphite">
-            <a
-              className="hover:text-blueprint transition-colors py-1.5"
-              href={RESEAUX_SOCIAUX.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-            <a
-              className="hover:text-blueprint transition-colors py-1.5"
-              href={RESEAUX_SOCIAUX.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Instagram
-            </a>
-            <a
-              className="hover:text-emerald-400 transition-colors py-1.5 text-emerald-400 font-medium"
-              href={LIEN_WHATSAPP}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp
-            </a>
-          </div>
+          <nav aria-label="Navigation principale" className="hidden items-center gap-9 md:flex">
+            {LIENS.map((lien) => (
+              <a className={LIEN_BUREAU} href={lien.href} key={lien.href}>
+                {lien.label}
+              </a>
+            ))}
+          </nav>
 
-          <div className="pt-3 pb-2">
-            <EtudeCta
-              className="w-full text-center py-3.5 text-xs font-semibold shadow-xl shadow-blueprint/10"
-              href="/#contact"
-              onClick={() => setOuvert(false)}
-            />
+          <div className="flex items-center gap-3">
+            <EtudeCta className={`${ouvert ? "hidden" : "hidden md:inline-flex"} px-5 py-3`} />
+
+            <button
+              aria-controls={panneauId}
+              aria-expanded={ouvert}
+              className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-chalk md:hidden"
+              onClick={() => setOuvert((etat) => !etat)}
+              type="button"
+            >
+              <span className="sr-only">{ouvert ? "Fermer le menu" : "Ouvrir le menu"}</span>
+              <span aria-hidden="true" className="relative block h-4 w-6">
+                <span
+                  className={`absolute left-0 block h-px w-full bg-current transition-transform duration-300 motion-reduce:transition-none ${
+                    ouvert ? "top-1/2 rotate-45" : "top-0.5"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-1/2 block h-px w-full bg-current transition-opacity duration-300 motion-reduce:transition-none ${
+                    ouvert ? "opacity-0" : "opacity-100"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 block h-px w-full bg-current transition-transform duration-300 motion-reduce:transition-none ${
+                    ouvert ? "top-1/2 -rotate-45" : "bottom-0.5"
+                  }`}
+                />
+              </span>
+            </button>
           </div>
-        </nav>
-      </div>
-    </header>
+        </div>
+
+        <div
+          className={`border-t border-rule bg-encre/98 backdrop-blur-2xl transition-all duration-300 md:hidden ${
+            ouvert ? "block shadow-2xl" : "hidden"
+          }`}
+          id={panneauId}
+        >
+          <nav
+            aria-label="Navigation principale mobile"
+            className="px-5 py-3 space-y-1 max-h-[calc(100dvh-76px)] overflow-y-auto"
+          >
+            {LIENS.map((lien) => (
+              <a
+                className="flex min-h-12 items-center justify-between border-b border-rule/40 font-display text-lg text-chalk hover:text-blueprint transition-colors"
+                href={lien.href}
+                key={lien.href}
+                onClick={() => setOuvert(false)}
+              >
+                <span>{lien.label}</span>
+                <span className="font-mono text-xs text-graphite">→</span>
+              </a>
+            ))}
+
+            {/* Réseaux Sociaux dans le Menu Mobile */}
+            <div className="pt-4 pb-2 flex items-center justify-around border-b border-rule/40 font-mono text-xs uppercase tracking-wider text-graphite">
+              <a
+                className="hover:text-blueprint transition-colors py-1.5"
+                href={RESEAUX_SOCIAUX.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+              <a
+                className="hover:text-blueprint transition-colors py-1.5"
+                href={RESEAUX_SOCIAUX.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram
+              </a>
+              <a
+                className="hover:text-emerald-400 transition-colors py-1.5 text-emerald-400 font-medium"
+                href={LIEN_WHATSAPP}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp
+              </a>
+            </div>
+
+            <div className="pt-3 pb-2">
+              <EtudeCta
+                className="w-full text-center py-3.5 text-xs font-semibold shadow-xl shadow-blueprint/10"
+                href="/#contact"
+                onClick={() => setOuvert(false)}
+              />
+            </div>
+          </nav>
+        </div>
+      </header>
+    </>
   );
 }
 
