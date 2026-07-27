@@ -40,15 +40,16 @@ export function Clavier() {
             <TitreRevele
               as="h2"
               className="mt-7 font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
-              texte={"Une pression,\ntoute la maison."}
+              texte={"Une pression,\ntout le bâtiment."}
             />
             <p className="mt-9 max-w-[46ch] text-lg leading-relaxed text-graphite">
               Un clavier KNX n&apos;allume pas une lampe : il appelle une scène. Éclairage, stores,
-              température et musique basculent ensemble, en une pression.
+              température et musique basculent ensemble, dans une villa comme dans une suite
+              d&apos;hôtel ou un plateau de bureaux.
             </p>
             <p className="mt-6 max-w-[46ch] text-lg leading-relaxed text-graphite">
               Touchez une heure. C&apos;est la page entière qui change de lumière — exactement ce
-              que fait le bus dans une villa.
+              que fait le bus dans un bâtiment équipé.
             </p>
 
             {/* Tant que personne n'a touché, la maison tourne sur sa propre
