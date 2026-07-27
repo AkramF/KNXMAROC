@@ -4,6 +4,7 @@ import { COORDONNEES, LIEN_TELEPHONE, RESEAUX_SOCIAUX, LIEN_WHATSAPP } from "../
 import { useRevelation } from "../../lib/use-revelation";
 import { Wordmark } from "../brand/logo";
 import { EtudeCta } from "../cta/etude-cta";
+import { CHIFFRES } from "../../lib/preuves";
 import { TitreRevele } from "../lumiere/titre-revele";
 
 const LIENS = [
@@ -236,16 +237,26 @@ export function Positionnement() {
             className="mt-7 font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
             texte={"Un seul système,\ntout le bâtiment."}
           />
+          {/* L'ordre est inversé par rapport à la version précédente : c'est
+           * l'entreprise et l'engagement qui ouvrent, la norme qui explique
+           * ensuite. Un prospect veut d'abord savoir à qui il parle. */}
           <p className="mt-9 max-w-[62ch] text-lg leading-relaxed text-graphite">
-            KNX est la norme ouverte mondiale de l&apos;automatisation du bâtiment. Elle relie
-            l&apos;éclairage, les stores, le chauffage, la climatisation, la sécurité et
-            l&apos;hypervision sur une même infrastructure intelligente filaire, sans passerelle
-            propriétaire et sans dépendance à un seul fabricant.
+            KNX MAROC conçoit, programme et met en service des installations domotiques au Maroc.
+            Nous intervenons dès la phase études, aux côtés de votre architecte et de votre bureau
+            d&apos;études électricité — et nous restons responsables du système une fois le chantier
+            livré.
           </p>
           <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-graphite">
-            KNX MAROC conçoit, programme et met en service ces installations au Maroc. Nous
-            intervenons dès la phase études, aux côtés de l&apos;architecte et du bureau
-            d&apos;études électricité, puis nous restons responsables du système après la livraison.
+            Nous travaillons sur KNX, la norme ouverte mondiale de l&apos;automatisation du
+            bâtiment. Elle relie l&apos;éclairage, les stores, le chauffage, la climatisation, la
+            sécurité et l&apos;hypervision sur une même infrastructure filaire, sans passerelle
+            propriétaire et sans dépendance à un seul fabricant.
+          </p>
+          {/* Reconnaître une limite précise désarme l'objection au lieu de la
+           * laisser vivre dans la tête du prospect. */}
+          <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-graphite">
+            Ce n&apos;est pas la solution la moins chère à installer. C&apos;est celle qui ne se
+            refait pas.
           </p>
         </div>
 
@@ -303,7 +314,7 @@ const DOMAINES_SOLUTIONS: DomaineDesign[] = [
     icon: "/assets/icons/climatisation.png",
     label: "Climatisation & Chauffage CVC",
     body: "Régulation zone par zone, intégration des groupes VRV/VRF et pompes à chaleur. Basculement automatique selon présence et saisons.",
-    specs: ["Inverter / VRF", "Zone par zone", "-32% d'énergie"],
+    specs: ["Inverter / VRF", "Zone par zone", CHIFFRES.economieCvc.court],
   },
   {
     id: "securite",

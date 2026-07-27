@@ -105,7 +105,7 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
           texteAncre: "Explorer nos passerelles CVC VRF & Stores Bioclimatiques",
           url: "/#solutions",
           descriptionContextuelle:
-            "Apprenez comment réduire votre facture énergétique de 35% à 45% grâce au couplage CVC / Météo KNX.",
+            "Apprenez comment le couplage CVC / météo KNX réduit la facture de climatisation.",
         },
         imageSection: {
           src: "/assets/segments/residentiel.jpg",
@@ -138,7 +138,7 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
         sectionTitre: "5. Pérennité & Souveraineté : La Remise du Fichier Source ETS (.knxproj)",
         paragraphes: [
           "Le logiciel officiel ETS6 (Engineering Tool Software) est l'outil unique utilisé dans le monde entier pour programmer les installations KNX.",
-          "En tant qu'intégratueur certifié KNX Partner, KNX MAROC remet obligatoirement à chaque maître d'ouvrage le fichier source complet (.knxproj) à la fin du chantier. Vous n'êtes jamais dépendant d'un seul prestataire : n'importe quel intégrateur certifié dans le monde peut intervenir sur votre villa à tout moment.",
+          "En tant qu'intégrateur certifié KNX Partner, KNX MAROC remet obligatoirement à chaque maître d'ouvrage le fichier source complet (.knxproj) à la fin du chantier. Vous n'êtes jamais dépendant d'un seul prestataire : n'importe quel intégrateur certifié dans le monde peut intervenir sur votre villa à tout moment.",
         ],
         citation:
           "La remise du fichier source ETS est votre garantie de souveraineté absolue sur votre bâtiment pour les 30 prochaines années.",
@@ -166,7 +166,7 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
       {
         sectionTitre: "L'illusion des technologies domotiques propriétaires sans fil",
         paragraphes: [
-          "Lors de la construction ou de la rénovation d'une villa de prestige, le choix de l'infrastucture électrique est déterminant pour les trente prochaines années. Trop souvent, des solutions propriétaires ou sans fil (Zigbee, Wi-Fi, Z-Wave) sont installées en pensant faire l'économie d'un câblage dédié.",
+          "Lors de la construction ou de la rénovation d'une villa de prestige, le choix de l'infrastructure électrique est déterminant pour les trente prochaines années. Trop souvent, des solutions propriétaires ou sans fil (Zigbee, Wi-Fi, Z-Wave) sont installées en pensant faire l'économie d'un câblage dédié.",
           "Cependant, le béton armé, les grandes hauteurs sous plafond et les surfaces en marbre caractéristiques des villas d'exception au Maroc créent une atténuation radio sévère. Les pannes de maillage et l'obsolescence programmée des applications cloud propriétaires rendent ces installations inutilisables au bout de quelques années.",
         ],
         citation:
@@ -226,9 +226,9 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
   },
   {
     slug: "pilotage-cvc-vrf-economie-energie-climatisation-maroc",
-    titre: "Pilotage CVC VRF & KNX : Réduire la consommation électrique de 40% au Maroc",
+    titre: "Pilotage CVC VRF & KNX : maîtriser la consommation de climatisation au Maroc",
     chapeau:
-      "Le climat marocain exige un confort thermique sans compromis. Découvrez comment l'interfaçage direct KNX avec les systèmes VRF (Daikin, LG, Mitsubishi) élimine les gaspillages d'énergie.",
+      "Le climat marocain exige un confort thermique sans compromis. Comment l'interfaçage direct de KNX avec les systèmes VRF (Daikin, LG, Mitsubishi) supprime les gaspillages les plus courants.",
     categorie: "Énergie",
     tempsLecture: "7 min",
     datePublication: "10 Juillet 2026",
@@ -245,16 +245,16 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
       {
         sectionTitre: "Le défi du confort thermique dans les villas et hôtels marocains",
         paragraphes: [
-          "La climatisation et le chauffage représentent jusqu'à 65% de la facture énergétique d'une villa à Marrakech ou d'un hôtel de luxe au Nord du Maroc. Le problème le plus fréquent réside dans la contradiction entre les commandes de clim et l'ouverture des baies vitrées.",
+          "La climatisation et le chauffage constituent le premier poste de dépense énergétique d'une villa à Marrakech comme d'un hôtel au nord du Royaume. Le gaspillage le plus fréquent tient à une contradiction simple : la climatisation tourne pendant que les baies sont ouvertes.",
           "Lorsque la climatisation tourne à plein régime alors que les fenêtres sont ouvertes, l'énergie est littéralement gaspillée.",
         ],
         citation:
-          "En coupant automatiquement le CVC lors de l'ouverture des fenêtres et en régulant selon l'occupation réelle, KNX réduit la facture énergétique de 35% à 45%.",
+          "En coupant automatiquement le CVC à l'ouverture des fenêtres et en régulant selon l'occupation réelle, KNX réduit nettement la facture de climatisation.",
       },
       {
         sectionTitre: "Gestion unifiée du CVC, des stores et de l'ensoleillement",
         paragraphes: [
-          "KNX s'interface directement avec le bus natif des fabricants de climatisation VRF/DRV (Daikin, Mitsubishi Electric, LG, Toshiba) via des passerelles passerelles BACnet ou KNX directes.",
+          "KNX s'interface directement avec le bus natif des fabricants de climatisation VRF/DRV (Daikin, Mitsubishi Electric, LG, Toshiba) via des passerelles BACnet ou KNX directes.",
           "En été, dès que la station météo KNX détecte un fort ensoleillement sur une façade Sud, le système abaisse automatiquement les stores bioclimatiques pour limiter l'apport thermique avant d'activer la climatisation.",
         ],
       },

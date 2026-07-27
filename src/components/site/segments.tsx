@@ -1,6 +1,7 @@
 import { COORDONNEES, LIEN_EMAIL, LIEN_TELEPHONE } from "../../lib/coordonnees";
 import { useRevelation } from "../../lib/use-revelation";
 import { Monogram } from "../brand/logo";
+import { CHIFFRES } from "../../lib/preuves";
 import { TitreRevele } from "../lumiere/titre-revele";
 import { Eyebrow } from "./sections";
 
@@ -16,7 +17,7 @@ const SEGMENTS = [
     id: "hotellerie",
     titre: "Hôtellerie & Hospitality",
     body: "Chambres, suites et parties communes. Logique d'occupation reliée au PMS, consigne de température réduite chambre vide, contrôle centralisé depuis la réception.",
-    badgeMetrique: "up to -32% d'économie sur la climatisation",
+    badgeMetrique: `${CHIFFRES.economieCvc.valeur} d'économie sur la climatisation`,
     points: ["Logique occupation", "Économie sur la climatisation", "Supervision centralisée"],
   },
   {

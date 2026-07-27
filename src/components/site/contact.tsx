@@ -178,6 +178,17 @@ export function Contact() {
             </div>
           ) : (
             <form className="grid gap-9" noValidate onSubmit={onSubmit}>
+              {/* Le visiteur sait ce que ça lui coûte avant de commencer : un
+               * formulaire dont on ne voit pas la fin décourage plus que sa
+               * longueur réelle. */}
+              <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-graphite">
+                <span>Deux minutes</span>
+                <span aria-hidden="true">·</span>
+                <span>Réponse sous deux jours ouvrés</span>
+                <span aria-hidden="true">·</span>
+                <span>Sans engagement</span>
+              </p>
+
               <div className="grid gap-9 sm:grid-cols-2">
                 <div>
                   <label className={ETIQUETTE} htmlFor={`${prefixe}-nom`}>

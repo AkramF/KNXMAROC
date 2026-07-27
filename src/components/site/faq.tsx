@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { useRevelation } from "../../lib/use-revelation";
 import { TitreRevele } from "../lumiere/titre-revele";
+import { CHIFFRES } from "../../lib/preuves";
 import { Eyebrow } from "./sections";
 
 export interface QuestionFaq {
@@ -26,14 +27,23 @@ const QUESTIONS_FAQ: QuestionFaq[] = [
       "Non, c'est le principe fondateur de KNX. Vous pouvez associer un clavier en laiton Basalte, des détecteurs Gira et des actionneurs Schneider sur la même installation. À la réception du chantier, KNX MAROC vous remet l'intégralité du fichier de programmation ETS (.knxproj). Vous restez 100 % propriétaire de votre installation et n'importe quel intégrateur certifié dans le monde peut la maintenir.",
   },
   {
+    question: "KNX coûte-t-il plus cher qu'une solution domotique sans fil ?",
+    reponse:
+      "Oui, à l'installation. Le câble bus, les modules sur rail DIN et l'étude représentent un investissement initial supérieur à un kit sans fil, et il serait malhonnête de prétendre le contraire. La différence se joue sur la durée : pas de batteries à remplacer, pas d'abonnement cloud, pas de remplacement du système quand un fabricant abandonne son application. Sur la durée de vie d'un bâtiment, le coût total est inférieur — mais le premier chèque est plus élevé. C'est un choix d'infrastructure, pas un choix d'équipement.",
+  },
+  {
+    question: "Quel budget prévoir pour une villa ?",
+    reponse:
+      "Le budget dépend du nombre de points pilotés, des lots intégrés et du niveau de finition de l'appareillage — un clavier en laiton massif et un poussoir standard ne se chiffrent pas de la même façon. Nous établissons un ordre de grandeur dès la lecture des plans, avant tout engagement, pour que vous sachiez où vous allez. Un chiffrage par lot vous est remis à l'issue de l'étude.",
+  },
+  {
     question: "À quel moment du projet de construction faut-il consulter KNX MAROC ?",
     reponse:
       "Le moment le plus fluide et efficace est la phase d'études (APS/APD), avant que le réseau électrique ne soit posé. Nous travaillons en coordination directe avec votre architecte et votre bureau d'études électricité pour concevoir l'infrastructure filaire optimale.",
   },
   {
     question: "KNX est-il adapté aux fortes exigences de climatisation au Maroc ?",
-    reponse:
-      "Absolument. KNX excelle dans la régulation thermique multi-zones (FCU, plancher chauffant, VRV/VRF). En croisant la détection de présence, la position solaire des stores et les contacts d'ouverture de fenêtres, KNX réduit la facture de climatisation jusqu'à 32 % tout en maintenant un confort de consigne optimal.",
+    reponse: `Absolument. KNX excelle dans la régulation thermique multi-zones (FCU, plancher chauffant, VRV/VRF). En croisant la détection de présence, la position solaire des stores et les contacts d'ouverture de fenêtres, KNX réduit la facture de climatisation ${CHIFFRES.economieCvc.valeur} tout en maintenant un confort de consigne optimal.`,
   },
 ];
 
