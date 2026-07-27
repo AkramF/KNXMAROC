@@ -1,6 +1,5 @@
 /* Source unique des coordonnées. Tout affichage de téléphone, d'e-mail ou
- * d'adresse sur le site lit ici — un placeholder ne peut plus survivre dans un
- * coin du code. */
+ * d'adresse sur le site lit ici. */
 
 export const COORDONNEES = {
   telephone: {
@@ -19,7 +18,14 @@ export const COORDONNEES = {
   },
 } as const;
 
+export const RESEAUX_SOCIAUX = {
+  linkedin: "https://www.linkedin.com/company/knxmaroc",
+  instagram: "https://www.instagram.com/knxmaroc",
+  whatsapp: "https://wa.me/212663666627",
+} as const;
+
 export const ADRESSE_UNE_LIGNE = `${COORDONNEES.adresse.rue}, ${COORDONNEES.adresse.quartier}, ${COORDONNEES.adresse.ville}`;
 
 export const LIEN_TELEPHONE = `tel:${COORDONNEES.telephone.lien}`;
 export const LIEN_EMAIL = `mailto:${COORDONNEES.email}`;
+export const LIEN_WHATSAPP = `https://wa.me/212663666627`;

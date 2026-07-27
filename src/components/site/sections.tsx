@@ -1,6 +1,6 @@
 import { useEffect, useId, useState } from "react";
 
-import { COORDONNEES, LIEN_TELEPHONE } from "../../lib/coordonnees";
+import { COORDONNEES, LIEN_TELEPHONE, RESEAUX_SOCIAUX, LIEN_WHATSAPP } from "../../lib/coordonnees";
 import { useRevelation } from "../../lib/use-revelation";
 import { Wordmark } from "../brand/logo";
 import { EtudeCta } from "../cta/etude-cta";
@@ -72,7 +72,7 @@ export function SiteNav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <EtudeCta className="hidden px-5 py-3 md:inline-flex" />
+          <EtudeCta className="hidden md:inline-flex px-5 py-3" />
 
           <button
             aria-controls={panneauId}
@@ -104,15 +104,15 @@ export function SiteNav() {
       </div>
 
       <div
-        className={`border-t border-rule bg-encre/95 backdrop-blur-2xl transition-all duration-300 md:hidden ${
+        className={`border-t border-rule bg-encre/98 backdrop-blur-2xl transition-all duration-300 md:hidden ${
           ouvert ? "block" : "hidden"
         }`}
         id={panneauId}
       >
-        <nav aria-label="Navigation principale mobile" className="px-5 py-4 space-y-1">
+        <nav aria-label="Navigation principale mobile" className="px-5 py-3 space-y-1">
           {LIENS.map((lien) => (
             <a
-              className="flex min-h-14 items-center justify-between border-b border-rule/50 font-display text-xl text-chalk hover:text-blueprint transition-colors"
+              className="flex min-h-12 items-center justify-between border-b border-rule/40 font-display text-lg text-chalk hover:text-blueprint transition-colors"
               href={lien.href}
               key={lien.href}
               onClick={() => setOuvert(false)}
@@ -121,19 +121,38 @@ export function SiteNav() {
               <span className="font-mono text-xs text-graphite">→</span>
             </a>
           ))}
-          <a
-            className="flex min-h-14 items-center justify-between gap-4 border-b border-rule/50 font-display text-xl text-chalk hover:text-blueprint transition-colors"
-            href={LIEN_TELEPHONE}
-            onClick={() => setOuvert(false)}
-          >
-            <span>Appeler</span>
-            <span className="font-mono text-xs text-blueprint font-medium">
-              {COORDONNEES.telephone.affichage}
-            </span>
-          </a>
-          <div className="pt-6 pb-2">
+
+          {/* Réseaux Sociaux dans le Menu Mobile */}
+          <div className="pt-4 pb-2 flex items-center justify-around border-b border-rule/40 font-mono text-xs uppercase tracking-wider text-graphite">
+            <a
+              className="hover:text-blueprint transition-colors py-1.5"
+              href={RESEAUX_SOCIAUX.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+            <a
+              className="hover:text-blueprint transition-colors py-1.5"
+              href={RESEAUX_SOCIAUX.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+            <a
+              className="hover:text-emerald-400 transition-colors py-1.5 text-emerald-400 font-medium"
+              href={LIEN_WHATSAPP}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp
+            </a>
+          </div>
+
+          <div className="pt-3 pb-2">
             <EtudeCta
-              className="w-full text-center py-4 text-xs font-semibold shadow-xl shadow-blueprint/10"
+              className="w-full text-center py-3.5 text-xs font-semibold shadow-xl shadow-blueprint/10"
               href="/#contact"
               onClick={() => setOuvert(false)}
             />

@@ -220,21 +220,9 @@
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ss-accent) 40%, transparent);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .scroll-scrub__route {
-    right: 50%;
-    transform: translateX(50%);
-    bottom: 1rem;
-    gap: 0.15rem;
-    padding: 0.2rem;
-    max-width: calc(100vw - 2rem);
-  }
-
-  .scroll-scrub__route-button {
-    min-height: 1.85rem;
-    padding: 0.35rem 0.65rem;
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
+    display: none !important;
   }
 }
 
