@@ -65,13 +65,13 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
         paragraphes: [
           "Le protocole KNX est le seul standard mondial ouvert et normalisé (ISO/IEC 14543-3, EN 50090, ANSI/ASHRAE 135) dédié au contrôle et à l'automatisation des bâtiments résidentiels et tertiaires.",
           "À la différence des systèmes domotiques propriétaires ou grand public (Wi-Fi, Zigbee, Z-Wave), KNX repose sur un câble bus vert torsadé blindé à très basse tension de sécurité (29V SELV). Ce câble relie tous les équipements de la maison en une topologie d'une fiabilité absolue.",
-          "La grande force de KNX réside dans son architecture décentralisée : chaque participant (interrupteur, variateur, passerelle CVC, détecteur) intègre son propre microprocesseur. Il n'existe pas de centrale unique dont la panne paralyserait la maison entière.",
+          "La grande force de KNX réside dans son architecture décentralisée : chaque participant (appareillage, variateur, passerelle CVC, détecteur) intègre son propre microprocesseur. Il n'existe pas de centrale unique dont la panne paralyserait la maison entière.",
         ],
         citation:
           "KNX n'est pas une marque commerciale, c'est une norme internationale partagée par plus de 500 fabricants mondiaux certifiés.",
         imageSection: {
           src: "/assets/world/clavier-poster.jpg",
-          alt: "Bouton poussoir et interrupteur KNX haut de gamme",
+          alt: "Bouton poussoir et appareillages KNX haut de gamme",
           legende: "Commande murale KNX avec finition métal brossé et thermostat intégré.",
         },
       },
@@ -175,7 +175,7 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
       {
         sectionTitre: "Le câble bus KNX : 29V de stabilité absolue",
         paragraphes: [
-          "Le standard KNX (ISO/IEC 14543-3) repose sur un principe décentralisé : chaque participant (interrupteur, variateur, détecteur, passerelle CVC) possède sa propre intelligence intégrée dans un microcontrôleur EEPROM. Si un composant tombe en panne, le reste du bâtiment continue de fonctionner parfaitement.",
+          "Le standard KNX (ISO/IEC 14543-3) repose sur un principe décentralisé : chaque participant (appareillage, variateur, détecteur, passerelle CVC) possède sa propre intelligence intégrée dans un microcontrôleur EEPROM. Si un composant tombe en panne, le reste du bâtiment continue de fonctionner parfaitement.",
           "De plus, avec plus de 500 fabricants mondiaux certifiés (Gira, JUNG, Basalte, Ekinex, ABB, Schneider Electric), votre installation n'est jamais prisonnière d'une seule marque. Vous gardez la liberté absolue de faire évoluer votre appareillage mural dans 10 ou 20 ans sans refaire le câblage.",
         ],
       },

@@ -28,7 +28,7 @@ const SCENES: ScrollScrubScene[] = [
     body: "Intégration domotique sur-mesure pour villas et projets d'exception au Maroc. Norme mondiale ouverte filaire (ISO/IEC 14543-3), interconnectant les meilleures marques certifiées.",
     id: "seuil",
     kicker: "Standard ISO/IEC 14543-3",
-    label: "Interrupteurs",
+    label: "Appareillages",
     mobileObjectPosition: "50% 50%",
     mobilePoster: "/assets/world/clavier-mobile-poster.webp",
     objectPosition: "92% 50%",

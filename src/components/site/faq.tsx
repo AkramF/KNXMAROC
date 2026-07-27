@@ -18,7 +18,7 @@ const QUESTIONS_FAQ: QuestionFaq[] = [
   {
     question: "Quelle est la différence entre KNX et une domotique sans-fil (Zigbee, Wi-Fi) ?",
     reponse:
-      "Les solutions sans-fil grand public conviennent au petit retrofit mais s'épuisent sur les grandes superficies. Pour une villa ou un hôtel, le câble bus KNX garantit zéro latence, aucune saturation radio, aucune dépendance aux batteries ou au cloud, et une réactivité instantanée à chaque pression d'interrupteur.",
+      "Les solutions sans-fil grand public conviennent au petit retrofit mais s'épuisent sur les grandes superficies. Pour une villa ou un hôtel, le câble bus KNX garantit zéro latence, aucune saturation radio, aucune dépendance aux batteries ou au cloud, et une réactivité instantanée à chaque pression d'appareillage.",
   },
   {
     question: "Suis-je bloqué avec un seul fabricant ou un installateur unique ?",
