@@ -7,7 +7,7 @@
 import type { ReactNode } from "react";
 
 const SURFACE =
-  "group relative inline-flex min-h-12 items-center justify-center gap-3 overflow-hidden bg-blueprint px-7 py-4 font-mono text-xs uppercase tracking-[0.14em] text-encre transition-transform duration-200 active:translate-y-px motion-reduce:transition-none";
+  "group relative min-h-12 items-center justify-center gap-3 overflow-hidden bg-blueprint px-7 py-4 font-mono text-xs uppercase tracking-[0.14em] text-encre transition-transform duration-200 active:translate-y-px motion-reduce:transition-none";
 
 const LABEL = "Demander une étude";
 
@@ -27,7 +27,7 @@ function Contenu({ children = LABEL }: { children?: ReactNode }) {
 
 export function EtudeCta({
   href = "#contact",
-  className,
+  className = "inline-flex",
   onClick,
 }: {
   href?: string;

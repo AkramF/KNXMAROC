@@ -82,7 +82,11 @@ export function SiteNav() {
           </nav>
 
           <div className="flex items-center gap-3">
-            {!ouvert && <EtudeCta className="hidden lg:inline-flex px-5 py-3" />}
+            {!ouvert && (
+              <div className="hidden lg:block">
+                <EtudeCta className="inline-flex px-5 py-3" />
+              </div>
+            )}
 
             <button
               aria-controls={panneauId}
