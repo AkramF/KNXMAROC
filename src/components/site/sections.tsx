@@ -125,20 +125,17 @@ export function SiteNav() {
         >
           <nav
             aria-label="Navigation principale mobile"
-            className="px-6 py-6 max-h-[calc(100dvh-76px)] overflow-y-auto flex flex-col justify-between space-y-6"
+            className="px-6 py-5 max-h-[calc(100dvh-76px)] overflow-y-auto flex flex-col justify-between space-y-6"
           >
             <div className="space-y-1">
-              {LIENS.map((lien, index) => (
+              {LIENS.map((lien) => (
                 <a
-                  className="group flex min-h-14 items-center justify-between border-b border-rule/40 font-display text-xl tracking-wide text-chalk transition-all duration-200 hover:text-blueprint hover:pl-2"
+                  className="group flex min-h-13 items-center justify-between border-b border-rule/40 font-display text-lg text-chalk transition-all duration-200 hover:text-blueprint"
                   href={lien.href}
                   key={lien.href}
                   onClick={() => setOuvert(false)}
                 >
-                  <span className="flex items-center gap-3">
-                    <span className="font-mono text-xs text-blueprint/70">0{index + 1}</span>
-                    <span>{lien.label}</span>
-                  </span>
+                  <span>{lien.label}</span>
                   <span className="font-mono text-xs text-graphite transition-transform duration-200 group-hover:translate-x-1 group-hover:text-blueprint">
                     →
                   </span>
@@ -146,43 +143,15 @@ export function SiteNav() {
               ))}
             </div>
 
-            {/* Réseaux Sociaux & Contact Direct */}
-            <div className="pt-4 space-y-4">
-              <div className="flex items-center justify-between gap-2 border-y border-rule/40 py-3 font-mono text-xs uppercase tracking-wider">
+            <div className="pt-2 space-y-4">
+              {/* Bouton CTA d'Étude */}
+              <div>
                 <a
-                  className="border border-rule/60 bg-ardoise/40 px-3 py-1.5 text-graphite transition-colors hover:border-blueprint hover:text-chalk"
-                  href={RESEAUX_SOCIAUX.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  LinkedIn
-                </a>
-                <a
-                  className="border border-rule/60 bg-ardoise/40 px-3 py-1.5 text-graphite transition-colors hover:border-blueprint hover:text-chalk"
-                  href={RESEAUX_SOCIAUX.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Instagram
-                </a>
-                <a
-                  className="border border-emerald-400/40 bg-emerald-400/10 px-3 py-1.5 text-emerald-400 font-semibold transition-colors hover:bg-emerald-400/20"
-                  href={LIEN_WHATSAPP}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  WhatsApp 💬
-                </a>
-              </div>
-
-              {/* Bouton CTA d'Étude Plein-Largeur */}
-              <div className="pt-1">
-                <a
-                  className="group relative flex w-full items-center justify-center gap-3 overflow-hidden bg-blueprint py-4 px-6 font-mono text-xs uppercase tracking-[0.16em] text-encre font-bold shadow-lg shadow-blueprint/20 transition-all duration-200 active:scale-[0.99]"
+                  className="group relative flex w-full items-center justify-center gap-3 overflow-hidden bg-blueprint py-3.5 px-6 font-mono text-xs uppercase tracking-[0.16em] text-encre font-semibold shadow-lg shadow-blueprint/20 transition-all duration-200 active:scale-[0.99]"
                   href="/#contact"
                   onClick={() => setOuvert(false)}
                 >
-                  <span className="relative z-10">Demander une étude →</span>
+                  <span className="relative z-10">Demander une étude</span>
                   <span
                     aria-hidden="true"
                     className="absolute inset-0 origin-left scale-x-0 bg-chalk transition-transform duration-300 ease-out group-hover:scale-x-100"
@@ -190,8 +159,34 @@ export function SiteNav() {
                 </a>
               </div>
 
-              <div className="pt-1 text-center font-mono text-[0.65rem] text-graphite">
-                Intégrateur Domotique KNX Certifié · Maroc
+              {/* Réseaux Sociaux (RS) APRÈS le bouton Demander une étude */}
+              <div className="flex items-center justify-center gap-6 pt-2 font-mono text-xs uppercase tracking-wider text-graphite">
+                <a
+                  className="hover:text-chalk transition-colors py-1"
+                  href={RESEAUX_SOCIAUX.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  LinkedIn
+                </a>
+                <span>·</span>
+                <a
+                  className="hover:text-chalk transition-colors py-1"
+                  href={RESEAUX_SOCIAUX.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Instagram
+                </a>
+                <span>·</span>
+                <a
+                  className="hover:text-emerald-400 text-emerald-400 transition-colors py-1 font-medium"
+                  href={LIEN_WHATSAPP}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp
+                </a>
               </div>
             </div>
           </nav>
