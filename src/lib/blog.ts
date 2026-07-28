@@ -88,10 +88,10 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
             "Consultez notre expertise sur l'interfaçage des passerelles DALI-2 et la gestion circadienne de l'éclairage.",
         },
         imageSection: {
-          src: "/assets/world/sejour-poster.jpg",
-          alt: "Éclairage architectural et confort dans un séjour de villa",
+          src: "/assets/world/installation-poster.jpg",
+          alt: "Armoire électrique KNX : modules de commande alignés sur rail DIN",
           legende:
-            "Gestion des scènes lumineuses DALI-2 et régulation thermique unifiée dans un séjour d'exception.",
+            "C'est ici que se joue la gestion de l'éclairage : passerelle DALI-2 et modules de commande sur rail DIN, dans l'armoire.",
         },
       },
       {
@@ -197,8 +197,8 @@ export const ARTICLES_BLOG: ArticleBlog[] = [
     tempsLecture: "5 min",
     datePublication: "18 Juillet 2026",
     imageCouverture: {
-      src: "/assets/world/sejour-poster.jpg",
-      alt: "Éclairage architectural séjour villa",
+      src: "/assets/world/installation-poster.jpg",
+      alt: "Armoire électrique KNX : modules de commande alignés sur rail DIN",
     },
     auteur: {
       nom: "Bureau d'Ingénierie Éclairage",

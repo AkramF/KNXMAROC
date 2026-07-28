@@ -1,17 +1,21 @@
-/* Intention primaire, une seule identité, un seul libellé.
+/* Intention primaire.
  *
  * Sur fond sombre, le bloc encre du site clair disparaîtrait. L'action prend
  * la couleur du bus : bloc blueprint plein, texte encre — 7.9:1. C'est le
- * seul aplat saturé de la page, donc le seul endroit où l'œil va d'abord. */
+ * seul aplat saturé de la page, donc le seul endroit où l'œil va d'abord.
+ *
+ * Les libellés et les conditions de l'offre vivent dans src/lib/offre.ts :
+ * ce sont du contenu, pas un détail d'habillage, et ils étaient recopiés en
+ * dur dans quatre fichiers avant d'y être rassemblés. */
 
 import type { ReactNode } from "react";
+
+import { LABEL_ENVOI, LABEL_ETUDE } from "../../lib/offre";
 
 const SURFACE =
   "group relative min-h-12 items-center justify-center gap-3 overflow-hidden bg-blueprint px-7 py-4 font-mono text-xs uppercase tracking-[0.14em] text-encre transition-transform duration-200 active:translate-y-px motion-reduce:transition-none";
 
-const LABEL = "Demander une étude";
-
-function Contenu({ children = LABEL }: { children?: ReactNode }) {
+function Contenu({ children = LABEL_ETUDE }: { children?: ReactNode }) {
   return (
     <>
       {/* Balayage clair au survol : le bloc s'éclaircit depuis la gauche
@@ -26,7 +30,11 @@ function Contenu({ children = LABEL }: { children?: ReactNode }) {
 }
 
 export function EtudeCta({
-  href = "#contact",
+  /* Chemin absolu : ce bouton vit dans la barre de navigation, partagée avec
+   * le blog. Une ancre nue s'y résoudrait en /blog#contact, qui n'existe pas —
+   * le bouton principal du site ne faisait donc rien sur deux pages sur
+   * trois. */
+  href = "/#contact",
   className = "inline-flex",
   onClick,
 }: {
@@ -55,7 +63,7 @@ export function EtudeSubmit({
       disabled={pending}
       type="submit"
     >
-      <Contenu>{pending ? "Envoi en cours…" : LABEL}</Contenu>
+      <Contenu>{pending ? "Envoi en cours…" : LABEL_ENVOI}</Contenu>
     </button>
   );
 }

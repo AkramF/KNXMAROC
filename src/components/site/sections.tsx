@@ -70,7 +70,14 @@ export function SiteNav() {
         }`}
       >
         <div className="mx-auto flex h-[76px] w-full max-w-[1480px] items-center justify-between px-5 md:px-10">
-          <a aria-label="KNX MAROC, accueil" href="#seuil" onClick={() => setOuvert(false)}>
+          {/* Chemin absolu, pas une ancre nue.
+           *
+           * `#seuil` se résout relativement à la page courante : depuis le
+           * blog, le lien du logo pointait vers /blog#seuil, une ancre qui
+           * n'existe nulle part — le clic ne faisait donc rien. La barre de
+           * navigation est partagée entre l'accueil et le blog : toutes ses
+           * cibles doivent être absolues. */}
+          <a aria-label="KNX MAROC, accueil" href="/#seuil" onClick={() => setOuvert(false)}>
             <Wordmark />
           </a>
 
@@ -145,22 +152,14 @@ export function SiteNav() {
             </div>
 
             <div className="pt-2 space-y-4">
-              {/* Bouton CTA d'Étude */}
-              <div>
-                <a
-                  className="group relative flex w-full items-center justify-center gap-3 overflow-hidden bg-blueprint py-3.5 px-6 font-mono text-xs uppercase tracking-[0.16em] text-encre font-semibold shadow-lg shadow-blueprint/20 transition-all duration-200 active:scale-[0.99]"
-                  href="/#contact"
-                  onClick={() => setOuvert(false)}
-                >
-                  <span className="relative z-10">Demander une étude</span>
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-0 origin-left scale-x-0 bg-chalk transition-transform duration-300 ease-out group-hover:scale-x-100"
-                  />
-                </a>
-              </div>
+              {/* Le composant partagé plutôt qu'une copie de son habillage :
+               * le bouton du menu mobile redéclarait la même surface, le même
+               * balayage au survol et le même libellé en dur — trois endroits
+               * à corriger au lieu d'un, et c'est ainsi que le libellé avait
+               * fini par diverger. */}
+              <EtudeCta className="flex w-full" onClick={() => setOuvert(false)} />
 
-              {/* Réseaux Sociaux (RS) APRÈS le bouton Demander une étude */}
+              {/* Réseaux sociaux, après le bouton principal */}
               <div className="flex items-center justify-center gap-6 pt-2 font-mono text-xs uppercase tracking-wider text-graphite">
                 <a
                   className="hover:text-chalk transition-colors py-1"
@@ -252,11 +251,39 @@ export function Positionnement() {
             sécurité et l&apos;hypervision sur une même infrastructure filaire, sans passerelle
             propriétaire et sans dépendance à un seul fabricant.
           </p>
+          {/* Recadrage de la catégorie de comparaison.
+           *
+           * Comparé à une ampoule connectée, KNX perd toujours : plus cher,
+           * plus long, moins spectaculaire à installer. Comparé à un tableau
+           * divisionnaire — un poste qu'on spécifie au CCTP, qu'on ne refait
+           * pas et qu'on ne confie pas à n'importe qui — tous ses attributs
+           * deviennent évidents au lieu de rester invisibles.
+           *
+           * C'est aussi ce qui nomme le vrai concurrent : ni un confrère, ni
+           * le sans-fil grand public, mais l'électricité classique qu'on pose
+           * sans y penser. */}
+          <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-graphite">
+            Ce n&apos;est pas un objet connecté qu&apos;on ajoute à une maison finie. C&apos;est un
+            lot d&apos;installation, au même titre que le tableau divisionnaire : il se décide au
+            cahier des charges, il se pose avec le réseau électrique, et il reste en place aussi
+            longtemps que le bâtiment.
+          </p>
           {/* Reconnaître une limite précise désarme l'objection au lieu de la
            * laisser vivre dans la tête du prospect. */}
           <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-graphite">
             Ce n&apos;est pas la solution la moins chère à installer. C&apos;est celle qui ne se
             refait pas.
+          </p>
+
+          {/* L'échéance du chantier, dite une seconde fois hors FAQ : c'est la
+           * seule urgence légitime du site, et elle est utile au lecteur —
+           * beaucoup découvrent trop tard que la fenêtre existait. */}
+          <p className="mt-9 flex max-w-[62ch] items-start gap-4 border-l-2 border-blueprint pl-6 text-lg leading-relaxed text-chalk">
+            <span>
+              KNX se décide avant la fermeture des saignées. Après, c&apos;est une autre
+              installation et un autre budget. Si votre chantier est en cours, c&apos;est maintenant
+              qu&apos;il faut en parler.
+            </span>
           </p>
         </div>
 
@@ -311,7 +338,7 @@ const DOMAINES_SOLUTIONS: DomaineDesign[] = [
   {
     id: "cvc",
     node: "MODULE 03",
-    icon: "/assets/icons/climatisation.png",
+    icon: "/assets/icons/cvc.png",
     label: "Climatisation & Chauffage CVC",
     body: "Régulation zone par zone, intégration des groupes VRV/VRF et pompes à chaleur. Basculement automatique selon présence et saisons.",
     specs: ["Inverter / VRF", "Zone par zone", CHIFFRES.economieCvc.court],
@@ -327,7 +354,7 @@ const DOMAINES_SOLUTIONS: DomaineDesign[] = [
   {
     id: "audio",
     node: "MODULE 05",
-    icon: "/assets/icons/musique.png",
+    icon: "/assets/icons/audio.png",
     label: "Audio Multiroom & Médias",
     body: "Diffusion sonore haute-fidélité intégrée par zone. Rappel des playlists préférées et synchronisation avec les scènes de vie.",
     specs: ["Multi-source", "Claviers muraux", "Zones indépendantes"],

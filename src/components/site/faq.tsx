@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useRevelation } from "../../lib/use-revelation";
 import { TitreRevele } from "../lumiere/titre-revele";
-import { CHIFFRES } from "../../lib/preuves";
+import { CHIFFRES, SOURCE_ENERGIE } from "../../lib/preuves";
 import { Eyebrow } from "./sections";
 
 export interface QuestionFaq {
@@ -38,12 +38,16 @@ const QUESTIONS_FAQ: QuestionFaq[] = [
   },
   {
     question: "À quel moment du projet de construction faut-il consulter KNX MAROC ?",
+    /* L'échéance est réelle et imposée par le chantier, pas par un
+     * argumentaire commercial. La dire sert le lecteur autant que nous : un
+     * prospect qui l'ignore rate sa fenêtre sans jamais savoir qu'elle
+     * existait. C'est le seul levier d'urgence honnête du site. */
     reponse:
-      "Le moment le plus fluide et efficace est la phase d'études (APS/APD), avant que le réseau électrique ne soit posé. Nous travaillons en coordination directe avec votre architecte et votre bureau d'études électricité pour concevoir l'infrastructure filaire optimale.",
+      "Le plus tôt possible, et impérativement avant la fermeture des saignées. KNX est filaire : le câble bus se pose en même temps que le réseau électrique. Une fois les gaines tirées et les murs refermés, l'installation devient un chantier de reprise — plus cher, plus limité, et parfois hors de portée. Le moment idéal est la phase d'études (APS/APD), en coordination avec votre architecte et votre bureau d'études électricité. Si votre chantier est déjà en cours, écrivez-nous : nous vous dirons franchement s'il est encore temps.",
   },
   {
     question: "KNX est-il adapté aux fortes exigences de climatisation au Maroc ?",
-    reponse: `Absolument. KNX excelle dans la régulation thermique multi-zones (FCU, plancher chauffant, VRV/VRF). En croisant la détection de présence, la position solaire des stores et les contacts d'ouverture de fenêtres, KNX réduit la facture de climatisation ${CHIFFRES.economieCvc.valeur} tout en maintenant un confort de consigne optimal.`,
+    reponse: `Absolument. KNX excelle dans la régulation thermique multi-zones (FCU, plancher chauffant, VRV/VRF). En croisant la détection de présence, la position solaire des stores et les contacts d'ouverture de fenêtres, la consigne s'ajuste pièce par pièce au lieu de tourner à vide. La norme ${SOURCE_ENERGIE.norme} chiffre le gain sur la consommation totale d'un logement à ${CHIFFRES.energie.residentiel.valeur}, et à ${CHIFFRES.energie.hotellerie.valeur} pour un hôtel — le poste climatisation en représente la part la plus lourde sous notre climat.`,
   },
 ];
 

@@ -30,3 +30,4 @@ dist-ssr
 # 15 Mo qui alourdiraient le clone pour rien — les fichiers retenus vivent
 # dans public/assets/, les autres restent en local.
 _candidats-hero/
+_clips-hors-ligne/

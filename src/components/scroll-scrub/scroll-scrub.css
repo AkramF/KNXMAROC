@@ -65,6 +65,41 @@
   z-index: 1;
 }
 
+/* Voile directionnel, réglable image par image.
+ *
+ * La vignette ci-dessous est calibrée pour une photo dont le sujet laisse le
+ * bord tranquille. Toutes ne le font pas : un plan produit cadre son sujet au
+ * centre, et la copie retombe alors sur une surface claire. Plutôt que
+ * d'assombrir toute l'image — ce qui l'aplatirait — on renforce le seul côté
+ * qui porte le texte, et seulement pour les scènes qui en ont besoin.
+ *
+ * --ss-voile vaut 0 par défaut : une image correctement composée ne paie rien.
+ * Voir le tableau de mesures dans src/routes/index.tsx. */
+.scroll-scrub__layer::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  content: "";
+  background: linear-gradient(to right, var(--ss-bg) 0%, transparent 62%);
+  opacity: var(--ss-voile, 0);
+  pointer-events: none;
+}
+
+.scroll-scrub__layer[data-align="right"]::before {
+  background: linear-gradient(to left, var(--ss-bg) 0%, transparent 62%);
+}
+
+/* Sur mobile la copie passe en bas : le voile bascule avec elle. La rampe
+ * monte plus haut qu'en desktop (85 % contre 62 %) parce que le bloc de texte
+ * y est bien plus grand — titre, corps et étiquettes occupent près de la
+ * moitié de l'écran, quand la colonne desktop n'en prend qu'un tiers. */
+@media (max-width: 860px) {
+  .scroll-scrub__layer::before,
+  .scroll-scrub__layer[data-align="right"]::before {
+    background: linear-gradient(to top, var(--ss-bg) 0%, transparent 85%);
+  }
+}
+
 /* Vignette : la lumière tombe vers les bords, la copie posée dessus gagne son
  * contraste sans qu'un aplat gris vienne aplatir l'image. */
 .scroll-scrub__layer::after {

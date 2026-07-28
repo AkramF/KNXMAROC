@@ -6,26 +6,61 @@ import { ADRESSE_UNE_LIGNE, COORDONNEES, LIEN_EMAIL } from "../lib/coordonnees";
 
 const URL_SITE = "https://knxmaroc.ma";
 
-const TITRE = "KNX MAROC — intégrateur KNX certifié à Rabat";
+const TITRE = "KNX MAROC — intégrateur KNX certifié à Rabat et Casablanca";
 const DESCRIPTION =
-  "Intégrateur domotique KNX certifié au Maroc. Éclairage, stores, climatisation, sécurité et supervision sur un seul bus, pour la villa, l'hôtel et le tertiaire.";
+  "Intégrateur domotique KNX certifié au Maroc. Éclairage, stores, climatisation, sécurité et supervision sur un seul bus filaire, pour la villa, l'hôtel, les bureaux et le point de vente. Étude, programmation ETS et mise en service à Rabat, Casablanca, Marrakech et Tanger.";
+
+/* Villes desservies, déclarées une fois et réutilisées.
+ *
+ * Le référencement local se joue sur l'accord entre trois choses : ce que dit
+ * la page, ce que déclarent les données structurées, et ce que porte la fiche
+ * d'établissement Google. Les trois doivent nommer les mêmes villes. */
+const VILLES = ["Rabat", "Casablanca", "Marrakech", "Tanger", "Salé", "Kénitra"] as const;
+
+const COORDONNEES_GEO = { latitude: 34.020882, longitude: -6.84165 };
 
 const ficheEntreprise = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
+  "@id": `${URL_SITE}#entreprise`,
   name: "KNX MAROC",
   description: DESCRIPTION,
   url: URL_SITE,
   image: `${URL_SITE}/assets/brand/knx-maroc-og.png`,
   telephone: COORDONNEES.telephone.affichage,
   email: COORDONNEES.email,
-  areaServed: "MA",
+  areaServed: VILLES.map((ville) => ({ "@type": "City", name: ville })),
   serviceType: "Intégration de systèmes KNX",
+  /* Un achat de projet, sans prix affiché : la fourchette large évite de faire
+   * fuir un maître d'ouvrage tout en écartant les demandes hors sujet. */
+  priceRange: "$$$",
   address: {
     "@type": "PostalAddress",
     streetAddress: `${COORDONNEES.adresse.rue}, ${COORDONNEES.adresse.quartier}`,
     addressLocality: COORDONNEES.adresse.ville,
     addressCountry: COORDONNEES.adresse.codePays,
+  },
+  geo: { "@type": "GeoCoordinates", ...COORDONNEES_GEO },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Prestations KNX",
+    itemListElement: [
+      "Étude et avant-projet KNX",
+      "Câblage et intégration du bus",
+      "Programmation ETS et mise en service",
+      "Maintenance et évolution",
+    ].map((nom) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: nom },
+    })),
   },
   knowsLanguage: ["fr", "ar", "en"],
 };
@@ -181,6 +216,24 @@ export const Route = createRootRoute({
         type: "application/ld+json",
         children: JSON.stringify(faqSchema),
       },
+      /* Mesure d'audience.
+       *
+       * Première recommandation du rapport marketing : sans mesure, aucune
+       * décision suivante n'est vérifiable — on ne sait ni si quelqu'un
+       * arrive, ni d'où, ni ce qu'il fait.
+       *
+       * Web Analytics de Vercel, appelé par son script plutôt que par le
+       * paquet npm. Deux raisons : le projet tient ses dépendances de
+       * production à cinq, et le script fait exactement la même chose.
+       *
+       * Sans cookie et sans identifiant persistant : pas de bandeau de
+       * consentement à imposer. Ça compte ici — un bandeau serait la première
+       * chose que verrait un visiteur, et le rapport met précisément en garde
+       * contre tout ce qui fait ressembler ce site à une boutique.
+       *
+       * ⚠ À activer une fois dans Vercel : projet → Analytics → Enable.
+       * Sans cette étape, le script renvoie 404 et rien n'est collecté. */
+      ...(import.meta.env.PROD ? [{ src: "/_vercel/insights/script.js", defer: true }] : []),
     ],
   }),
   shellComponent: RootShell,

@@ -39,18 +39,18 @@ troisième la détruit activement.
 
 Un propriétaire de villa n'engage pas un intégrateur pour obtenir « un standard
 ouvert décentralisé ISO/IEC 14543-3 ». Il l'engage pour une raison qu'il
-formule autrement : *ne pas avoir à refaire, ne pas dépendre d'un installateur
-qui disparaît, que la maison soit agréable sans qu'il ait à y penser.*
+formule autrement : _ne pas avoir à refaire, ne pas dépendre d'un installateur
+qui disparaît, que la maison soit agréable sans qu'il ait à y penser._
 
 Le site actuel décrit exhaustivement le **foret**. Le client veut le **trou**.
 
 Relève des trois titres du héros :
 
-| Titre affiché | Sujet réel de la phrase |
-|---|---|
-| « KNX : Le protocole domotique absolu. » | Le protocole |
-| « L'infrastructure filaire décentralisée. » | Le câblage |
-| « La maîtrise totale de votre bâtiment. » | **Le client** ✓ |
+| Titre affiché                               | Sujet réel de la phrase |
+| ------------------------------------------- | ----------------------- |
+| « KNX : Le protocole domotique absolu. »    | Le protocole            |
+| « L'infrastructure filaire décentralisée. » | Le câblage              |
+| « La maîtrise totale de votre bâtiment. »   | **Le client** ✓         |
 
 Deux titres sur trois ont pour sujet grammatical un objet technique. Seul le
 troisième parle au client — et c'est le plus fort des trois, ce qui n'est pas
@@ -132,13 +132,13 @@ la confiance à chaque lecture croisée.
 
 La même promesse d'économie apparaît sous **trois valeurs différentes** :
 
-| Emplacement | Valeur affirmée |
-|---|---|
+| Emplacement                          | Valeur affirmée     |
+| ------------------------------------ | ------------------- |
 | `sections.tsx` — carte Climatisation | **−32 % d'énergie** |
-| `segments.tsx` — badge Hôtellerie | **up to −32 %** |
-| `faq.tsx` — question climatisation | **jusqu'à 32 %** |
-| `blog.ts` — titre d'article | **40 %** |
-| `blog.ts` — deux liens contextuels | **35 % à 45 %** |
+| `segments.tsx` — badge Hôtellerie    | **up to −32 %**     |
+| `faq.tsx` — question climatisation   | **jusqu'à 32 %**    |
+| `blog.ts` — titre d'article          | **40 %**            |
+| `blog.ts` — deux liens contextuels   | **35 % à 45 %**     |
 
 Un prospect sérieux lit la page d'accueil **et** l'article. Il voit 32 % puis
 40 % puis 35-45 %. La conclusion qu'il tire n'est pas « c'est entre 32 et 45 % »,
@@ -190,7 +190,7 @@ lot électrique. » Cela qualifie en amont et positionne haut de gamme — le pr
 ### Regret Aversion — bien servi, mais enfoui
 
 Le meilleur argument anti-regret du site est **la remise du fichier ETS**. Il
-dit exactement : *vous n'êtes prisonnier de personne, même pas de nous.*
+dit exactement : _vous n'êtes prisonnier de personne, même pas de nous._
 
 C'est un argument remarquable. Il est aujourd'hui dispersé — un encadré dans
 Méthode, une ligne dans les repères, une question de FAQ, deux mentions de blog.
@@ -250,7 +250,7 @@ Une animation qu'on regarde est une démonstration. Une animation qu'on
 **actionne** est une expérience. La différence de mémorisation est considérable.
 
 **Recommandation forte : remettre le clavier**, ou une forme équivalente
-d'interaction. C'est le seul endroit du site où le visiteur peut *faire* quelque
+d'interaction. C'est le seul endroit du site où le visiteur peut _faire_ quelque
 chose, et c'est précisément ce qui distingue votre page de celle d'un
 concurrent qui décrirait les mêmes fonctions.
 
@@ -300,5 +300,5 @@ Cette analyse porte sur le code et la copie. Elle ne dit rien de :
   conduite, et cinq entretiens vaudraient plus que ce rapport entier.
 
 Les recommandations ci-dessus sont des hypothèses fondées sur des mécanismes
-psychologiques documentés, pas des certitudes sur *votre* marché. Les points 1
+psychologiques documentés, pas des certitudes sur _votre_ marché. Les points 1
 à 3 sont des corrections factuelles ; les autres méritent d'être testés.

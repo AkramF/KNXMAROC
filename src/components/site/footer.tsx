@@ -1,4 +1,5 @@
 import { Wordmark } from "../brand/logo";
+import { LABEL_ETUDE } from "../../lib/offre";
 import {
   COORDONNEES,
   LIEN_EMAIL,
@@ -9,6 +10,10 @@ import {
 
 const LIEN_PIED =
   "text-graphite transition-colors duration-200 hover:text-chalk hover:underline decoration-blueprint decoration-1 underline-offset-4 motion-reduce:transition-none";
+
+/* Ce pied de page est celui du blog : ses liens doivent donc être absolus.
+ * Une ancre nue comme `#contact` se résout relativement à la page courante et
+ * pointerait vers /blog#contact, qui n'existe pas. */
 
 export function SiteFooter() {
   return (
@@ -27,9 +32,9 @@ export function SiteFooter() {
             <div className="hidden md:flex mt-6 items-center gap-4">
               <a
                 className="inline-flex items-center gap-2 border border-blueprint/40 bg-blueprint/10 px-5 py-2 font-mono text-xs uppercase tracking-[0.14em] text-blueprint transition-colors hover:border-blueprint hover:bg-blueprint/20"
-                href="#contact"
+                href="/#contact"
               >
-                Demander une étude
+                {LABEL_ETUDE}
               </a>
               <a
                 className="inline-flex items-center gap-2 border border-rule bg-ardoise/40 px-5 py-2 font-mono text-xs uppercase tracking-[0.14em] text-chalk transition-colors hover:border-blueprint/60"
@@ -47,22 +52,22 @@ export function SiteFooter() {
             </h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <a className={LIEN_PIED} href="#solutions">
+                <a className={LIEN_PIED} href="/#solutions">
                   Éclairage DALI-2 & Gradation
                 </a>
               </li>
               <li>
-                <a className={LIEN_PIED} href="#solutions">
+                <a className={LIEN_PIED} href="/#solutions">
                   Climatisation CVC VRF
                 </a>
               </li>
               <li>
-                <a className={LIEN_PIED} href="#solutions">
+                <a className={LIEN_PIED} href="/#solutions">
                   Stores Bioclimatiques
                 </a>
               </li>
               <li>
-                <a className={LIEN_PIED} href="#solutions">
+                <a className={LIEN_PIED} href="/#solutions">
                   Hypervision Murale & Sécurité
                 </a>
               </li>

@@ -22,6 +22,10 @@ export interface ScrollScrubScene {
   linger?: number;
   objectPosition?: string;
   mobileObjectPosition?: string;
+  /* Renfort du voile du côté où se pose la copie, 0 → 1. À ne monter que si la
+   * mesure de contraste l'exige : chaque dixième mange du contraste dans
+   * l'image elle-même. */
+  voile?: number;
 }
 
 export interface ScrollScrubConnector {
@@ -60,6 +64,8 @@ interface Segment {
   linger: number;
   objectPosition: string;
   mobileObjectPosition: string;
+  voile: number;
+  align: "left" | "right";
   scene?: ScrollScrubScene;
 }
 
@@ -111,6 +117,7 @@ function buildSegments(
       throw new Error(`Scene ${scene.id} needs mobilePoster for mobileClip`);
     }
     result.push({
+      align: scene.align ?? "left",
       clip: scene.clip,
       key: `scene:${scene.id}`,
       kind: "scene",
@@ -123,6 +130,7 @@ function buildSegments(
       poster: scene.poster,
       scene,
       sectionIndex: index,
+      voile: scene.voile ?? 0,
       weight: scene.scroll ?? 1.4,
     });
 
@@ -133,6 +141,7 @@ function buildSegments(
       }
       const nextScene = scenes[index + 1];
       result.push({
+        align: nextScene.align ?? "left",
         clip: connector.clip,
         key: `connector:${scene.id}:${nextScene.id}`,
         kind: "connector",
@@ -145,6 +154,7 @@ function buildSegments(
         objectPosition: nextScene.objectPosition ?? "50% 50%",
         poster: connector.poster,
         sectionIndex: index,
+        voile: nextScene.voile ?? 0,
         weight: connector.scroll ?? 0.8,
       });
     }
@@ -576,10 +586,12 @@ export function ScrollScrub({
             const layerStyle: ThemeStyle = {
               "--ss-mobile-position": segment.mobileObjectPosition,
               "--ss-object-position": segment.objectPosition,
+              "--ss-voile": segment.voile,
             };
             return (
               <figure
                 className={`scroll-scrub__layer scroll-scrub__layer--${segment.kind}`}
+                data-align={segment.align}
                 data-scroll-scrub-layer=""
                 key={segment.key}
                 style={layerStyle}

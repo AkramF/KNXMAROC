@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ARTICLES_BLOG } from "../../lib/blog";
 import { SiteNav } from "../../components/site/sections";
 import { SiteFooter } from "../../components/site/footer.tsx";
+import { EtudeCta } from "../../components/cta/etude-cta";
 import { Wordmark } from "../../components/brand/logo";
 
 export const Route = createFileRoute("/blog/")({
@@ -117,12 +118,7 @@ function BlogPage() {
               faisabilité et une spécification technique sur mesure.
             </p>
           </div>
-          <a
-            className="shrink-0 inline-flex items-center gap-2 border border-blueprint bg-blueprint px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-encre font-semibold transition-colors hover:bg-chalk"
-            href="/#contact"
-          >
-            Demander une étude
-          </a>
+          <EtudeCta className="inline-flex shrink-0" />
         </section>
       </main>
 

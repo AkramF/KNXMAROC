@@ -1,4 +1,4 @@
-import { REFERENCES } from "../../lib/preuves";
+import { REFERENCES_PUBLIABLES } from "../../lib/preuves";
 import { useRevelation } from "../../lib/use-revelation";
 import { TitreRevele } from "../lumiere/titre-revele";
 import { Eyebrow } from "./sections";
@@ -15,13 +15,14 @@ import { Eyebrow } from "./sections";
  * projet, rien ne vient. Une seule étude de cas — surface, points bus, durée —
  * pèse plus que trois articles de blog supplémentaires.
  *
- * La section ne s'affiche pas tant que REFERENCES est vide : rien d'inventé
- * ne peut partir en production. Voir src/lib/preuves.ts pour la remplir.
+ * La section n'affiche que REFERENCES_PUBLIABLES : les gabarits de travail
+ * sont retirés à la compilation de production, et si tout est gabarit, la
+ * section entière disparaît du site publié. Voir src/lib/preuves.ts.
  * ───────────────────────────────────────────────────────────────────── */
 export function References() {
   const ref = useRevelation<HTMLElement>();
 
-  if (REFERENCES.length === 0) return null;
+  if (REFERENCES_PUBLIABLES.length === 0) return null;
 
   return (
     <section
@@ -40,40 +41,63 @@ export function References() {
         </div>
 
         <div className="mt-20 grid gap-px border border-rule-strong/40 bg-rule-strong/30 lg:grid-cols-2">
-          {REFERENCES.map((reference, index) => (
+          {REFERENCES_PUBLIABLES.map((reference, index) => (
             <article
-              className="revelation bg-encre p-8 md:p-10"
+              className="revelation flex flex-col bg-encre"
               key={reference.intitule}
               style={{ "--revelation-delai": `${index * 90}ms` } as React.CSSProperties}
             >
-              <h3 className="font-display text-2xl font-semibold tracking-tight text-chalk md:text-3xl">
-                {reference.intitule}
-              </h3>
-              <p className="mt-4 max-w-[52ch] leading-relaxed text-graphite">
-                {reference.contexte}
-              </p>
-
-              <dl className="mt-8 grid grid-cols-2 gap-x-8 gap-y-5">
-                {reference.faits.map((fait) => (
-                  <div key={fait.cle}>
-                    <dt className="font-mono text-[0.64rem] uppercase tracking-[0.14em] text-graphite">
-                      {fait.cle}
-                    </dt>
-                    <dd className="mt-1.5 font-display text-xl text-chalk">{fait.valeur}</dd>
-                  </div>
-                ))}
-              </dl>
-
-              {reference.citation ? (
-                <figure className="mt-9 border-l-2 border-blueprint pl-6">
-                  <blockquote className="text-lg leading-relaxed text-chalk">
-                    {reference.citation.texte}
-                  </blockquote>
-                  <figcaption className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-graphite">
-                    {reference.citation.auteur}
-                  </figcaption>
-                </figure>
+              {reference.image ? (
+                <img
+                  alt={reference.image.alt}
+                  className="aspect-[16/10] w-full object-cover"
+                  decoding="async"
+                  loading="lazy"
+                  src={reference.image.src}
+                />
               ) : null}
+
+              <div className="p-8 md:p-10">
+                {/* Repère de travail, absent du site publié : sans lui, un
+                 * gabarit ressemble à un vrai projet dans le navigateur du
+                 * développeur, et c'est exactement comme ça qu'une donnée
+                 * inventée finit par être prise pour vraie. */}
+                {reference.brouillon ? (
+                  <p className="mb-5 inline-flex items-center gap-2.5 border border-blueprint/40 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-blueprint">
+                    <span aria-hidden="true" className="h-1.5 w-1.5 bg-blueprint" />
+                    Gabarit — non publié
+                  </p>
+                ) : null}
+
+                <h3 className="font-display text-2xl font-semibold tracking-tight text-chalk md:text-3xl">
+                  {reference.intitule}
+                </h3>
+                <p className="mt-4 max-w-[52ch] leading-relaxed text-graphite">
+                  {reference.contexte}
+                </p>
+
+                <dl className="mt-8 grid grid-cols-2 gap-x-8 gap-y-5">
+                  {reference.faits.map((fait) => (
+                    <div key={fait.cle}>
+                      <dt className="font-mono text-[0.64rem] uppercase tracking-[0.14em] text-graphite">
+                        {fait.cle}
+                      </dt>
+                      <dd className="mt-1.5 font-display text-xl text-chalk">{fait.valeur}</dd>
+                    </div>
+                  ))}
+                </dl>
+
+                {reference.citation ? (
+                  <figure className="mt-9 border-l-2 border-blueprint pl-6">
+                    <blockquote className="text-lg leading-relaxed text-chalk">
+                      {reference.citation.texte}
+                    </blockquote>
+                    <figcaption className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-graphite">
+                      {reference.citation.auteur}
+                    </figcaption>
+                  </figure>
+                ) : null}
+              </div>
             </article>
           ))}
         </div>

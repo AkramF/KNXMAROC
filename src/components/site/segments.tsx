@@ -1,37 +1,41 @@
 import { COORDONNEES, LIEN_EMAIL, LIEN_TELEPHONE } from "../../lib/coordonnees";
 import { useRevelation } from "../../lib/use-revelation";
 import { Monogram } from "../brand/logo";
-import { CHIFFRES } from "../../lib/preuves";
+import { CHIFFRES, SOURCE_ENERGIE } from "../../lib/preuves";
 import { TitreRevele } from "../lumiere/titre-revele";
 import { Eyebrow } from "./sections";
 
+/* Chaque terrain porte le gain d'énergie de sa propre typologie plutôt qu'une
+ * moyenne qui ne décrit personne. Les quatre valeurs viennent de la même
+ * source, citée sous la section — un directeur d'hôtel qui lit 25 % et un
+ * directeur immobilier qui lit 39 % savent tous deux qu'on parle d'eux. */
 const SEGMENTS = [
   {
     id: "residentiel",
     titre: "Résidentiel haut de gamme",
     body: "Villas et riads où l'appareillage est visible et où la finition compte autant que la fonction. Nous travaillons sur plan, avant que les gaines soient tirées.",
-    badgeMetrique: "Projets 300 à 2500 m² · ~350 points bus",
+    badgeMetrique: `${CHIFFRES.energie.residentiel.valeur} d'énergie en moins · 300 à 2500 m²`,
     points: ["Scènes par pièce", "Claviers affleurants", "Extension par phases"],
   },
   {
     id: "hotellerie",
     titre: "Hôtellerie & Hospitality",
     body: "Chambres, suites et parties communes. Logique d'occupation reliée au PMS, consigne de température réduite chambre vide, contrôle centralisé depuis la réception.",
-    badgeMetrique: `${CHIFFRES.economieCvc.valeur} d'économie sur la climatisation`,
-    points: ["Logique occupation", "Économie sur la climatisation", "Supervision centralisée"],
+    badgeMetrique: `${CHIFFRES.energie.hotellerie.valeur} d'énergie en moins sur le bâtiment`,
+    points: ["Logique occupation", "Consigne réduite chambre vide", "Supervision centralisée"],
   },
   {
     id: "tertiaire",
     titre: "Tertiaire et bureaux",
     body: "Plateaux ouverts, salles de réunion, circulations. Détection de présence et gradation sur la lumière du jour, mesure des consommations par zone.",
-    badgeMetrique: "Conformité HQE / BREEAM · Daylight Harvesting",
+    badgeMetrique: `${CHIFFRES.energie.bureaux.valeur} d'énergie en moins · comptage par zone`,
     points: ["Détection de présence", "Gradation lumière du jour", "Comptage par zone"],
   },
   {
     id: "retail",
     titre: "Retail et showroom",
     body: "Ambiances par plage horaire, mise en valeur des produits, ouverture et fermeture automatiques. Un même programme reproduit sur plusieurs points de vente.",
-    badgeMetrique: "Scénographies programmables & contrôle à distance",
+    badgeMetrique: `${CHIFFRES.energie.commerce.valeur} d'énergie en moins · programme reproductible`,
     points: ["Ambiances horaires", "Programme reproductible", "Pilotage à distance"],
   },
 ];
@@ -87,6 +91,15 @@ export function Segments() {
             </article>
           ))}
         </div>
+
+        {/* La source sous les chiffres, pas dans une page de mentions que
+         * personne n'ouvre. Un chiffre sourcé est une preuve, un chiffre nu
+         * est une affirmation publicitaire — et sur ce marché, la différence
+         * est exactement ce qui sépare l'intégrateur du vendeur. */}
+        <p className="revelation mt-14 max-w-[78ch] font-mono text-[0.68rem] leading-relaxed uppercase tracking-[0.1em] text-graphite">
+          Gains d&apos;énergie : {SOURCE_ENERGIE.norme} ({SOURCE_ENERGIE.ancienNom}),{" "}
+          {SOURCE_ENERGIE.etude}. {SOURCE_ENERGIE.note}
+        </p>
       </div>
     </section>
   );

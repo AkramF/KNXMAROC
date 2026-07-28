@@ -2,6 +2,8 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { obteinArticleParSlug } from "../../lib/blog";
 import { SiteNav } from "../../components/site/sections";
 import { SiteFooter } from "../../components/site/footer.tsx";
+import { EtudeCta } from "../../components/cta/etude-cta";
+import { MENTION_ETUDE } from "../../lib/offre";
 import { Wordmark } from "../../components/brand/logo";
 
 export const Route = createFileRoute("/blog/$slug")({
@@ -156,16 +158,12 @@ function ArticlePage() {
               <h3 className="mt-3 font-display text-xl font-semibold text-chalk">
                 Besoin d&apos;un conseil technique sur votre projet ?
               </h3>
-              <p className="mt-1 text-sm text-graphite">
-                Nos ingénieurs vous répondent sous 24h ouvrées.
-              </p>
+              {/* Le délai était annoncé ici à 24 h ouvrées et à deux jours
+               * ouvrés ailleurs. Une seule promesse, tenue depuis un seul
+               * endroit. */}
+              <p className="mt-1 text-sm text-graphite">{MENTION_ETUDE.join(" · ")}</p>
             </div>
-            <a
-              className="shrink-0 inline-flex items-center gap-2 border border-blueprint bg-blueprint/15 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.14em] text-blueprint hover:bg-blueprint hover:text-encre transition-colors"
-              href="/#contact"
-            >
-              Contactez-nous
-            </a>
+            <EtudeCta className="inline-flex shrink-0" />
           </div>
         </div>
       </article>

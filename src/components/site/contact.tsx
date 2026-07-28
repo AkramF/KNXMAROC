@@ -11,6 +11,7 @@ import { COORDONNEES, LIEN_EMAIL } from "../../lib/coordonnees";
 import { useRevelation } from "../../lib/use-revelation";
 import { AppelCta } from "../cta/appel-cta";
 import { EtudeSubmit } from "../cta/etude-cta";
+import { DELAI_REPONSE, MENTION_ETUDE } from "../../lib/offre";
 import { TitreRevele } from "../lumiere/titre-revele";
 import { Eyebrow } from "./sections";
 
@@ -110,10 +111,33 @@ export function Contact() {
             className="mt-7 max-w-[12ch] font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-chalk md:text-[4.25rem]"
             texte="Parlons du projet."
           />
+          {/* L'offre, nommée avec ses termes.
+           *
+           * Elle existait déjà ici, mais rédigée comme une formalité de prise
+           * de contact. Dite comme une prestation — ce qu'on envoie, ce qu'on
+           * reçoit, en combien de temps, et ce qu'il en reste si la suite ne
+           * se fait pas — elle devient une première marche franchissable au
+           * lieu d'un engagement commercial. */}
           <p className="mt-9 max-w-[50ch] text-lg leading-relaxed text-graphite">
-            Envoyez-nous les plans et la phase d&apos;avancement. Nous revenons vers vous avec un
-            schéma de principe et un ordre de grandeur budgétaire.
+            Envoyez-nous vos plans et la phase d&apos;avancement du chantier. Vous recevez en retour
+            un schéma de principe, le nombre de circuits à prévoir, les points de vigilance sur
+            votre projet, et un ordre de grandeur budgétaire.
           </p>
+          <p className="mt-5 max-w-[50ch] text-lg leading-relaxed text-chalk">
+            Le document vous reste, que vous travailliez avec nous ou non.
+          </p>
+
+          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+            {MENTION_ETUDE.map((mention) => (
+              <li
+                className="flex items-center gap-2.5 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-graphite"
+                key={mention}
+              >
+                <span aria-hidden="true" className="h-[5px] w-[5px] bg-blueprint" />
+                {mention}
+              </li>
+            ))}
+          </ul>
 
           {/* Un visiteur qui ne veut pas remplir de formulaire doit trouver un
            * téléphone et une adresse, pas une fiche signalétique. */}
@@ -150,6 +174,39 @@ export function Contact() {
           </dl>
 
           <AppelCta className="mt-10 w-full sm:w-auto" />
+
+          {/* La page se terminait sur un champ de saisie.
+           *
+           * On juge une expérience par son sommet et par sa fin : finir en
+           * demandant laisse le visiteur sur une dette. Ces trois lignes
+           * donnent quelque chose d'utilisable même à qui n'écrira jamais —
+           * et elles abrègent la conversation de ceux qui écriront. */}
+          <div className="mt-16 border-t border-rule pt-10">
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-blueprint">
+              Avant même de nous écrire
+            </p>
+            <p className="mt-5 max-w-[50ch] leading-relaxed text-graphite">
+              Trois réflexes qui vous feront gagner du temps, avec nous ou avec un autre intégrateur
+              certifié :
+            </p>
+            <ol className="mt-7 grid gap-5">
+              {[
+                "Faites poser une gaine en attente vers chaque point de commande, même si vous ne tranchez pas tout de suite. Elle ne coûte presque rien au gros œuvre et garde la porte ouverte.",
+                "Demandez à votre électricien de prévoir un tableau divisionnaire surdimensionné d'un tiers. Les modules s'y logent ; un tableau saturé oblige à en poser un second.",
+                "Exigez la remise du fichier de programmation à la réception, quel que soit votre prestataire. C'est ce qui vous rend libre d'en changer.",
+              ].map((conseil, index) => (
+                <li className="flex gap-5" key={conseil}>
+                  <span
+                    aria-hidden="true"
+                    className="font-mono text-[0.72rem] leading-relaxed text-blueprint"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="max-w-[46ch] leading-relaxed text-graphite">{conseil}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
 
         <div className="revelation md:col-span-6 md:col-start-7">
@@ -163,10 +220,14 @@ export function Contact() {
                 Demande envoyée
               </p>
               <p className="mt-6 font-display text-3xl font-semibold leading-tight tracking-tight text-chalk">
-                Merci. Nous vous répondons sous deux jours ouvrés.
+                Merci. Vos plans sont entre nos mains.
               </p>
+              {/* Dire ce qui va se passer, et par qui : après un envoi, le
+               * silence est la principale cause de doute. */}
               <p className="mt-5 text-lg leading-relaxed text-graphite">
-                Si le projet est urgent, appelez le {COORDONNEES.telephone.affichage}.
+                Un intégrateur lit votre dossier et vous répond sous {DELAI_REPONSE}, avec le schéma
+                de principe et l&apos;ordre de grandeur budgétaire. Si le chantier presse, appelez
+                le {COORDONNEES.telephone.affichage}.
               </p>
               <button
                 className="mt-9 min-h-11 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-chalk underline decoration-blueprint decoration-2 underline-offset-4"
@@ -180,11 +241,15 @@ export function Contact() {
             <form className="grid gap-9" noValidate onSubmit={onSubmit}>
               {/* Le visiteur sait ce que ça lui coûte avant de commencer : un
                * formulaire dont on ne voit pas la fin décourage plus que sa
-               * longueur réelle. */}
+               * longueur réelle.
+               *
+               * Le délai a été retiré d'ici : il est annoncé juste à gauche,
+               * avec les autres termes de l'offre. Répéter une promesse à
+               * deux endroits est le meilleur moyen de la voir diverger. */}
               <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-graphite">
                 <span>Deux minutes</span>
                 <span aria-hidden="true">·</span>
-                <span>Réponse sous deux jours ouvrés</span>
+                <span>Huit champs</span>
                 <span aria-hidden="true">·</span>
                 <span>Sans engagement</span>
               </p>
